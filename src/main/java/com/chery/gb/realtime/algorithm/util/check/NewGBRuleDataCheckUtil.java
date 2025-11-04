@@ -52,9 +52,8 @@ public class NewGBRuleDataCheckUtil {
 
     }
 
-
     //新国标数据治理校验流程（规则配置模式-固定配置）
-    public static void checkDataFromRule(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+    public static void checkDataFromConfig(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         try {
             List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
             for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {

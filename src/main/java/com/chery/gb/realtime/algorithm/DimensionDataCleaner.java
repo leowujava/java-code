@@ -6,12 +6,9 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.util.*;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
 import com.chery.gb.realtime.algorithm.util.check.CheckRuleDataByHandNewUtil;
-import com.chery.gb.realtime.algorithm.util.check.CheckRuleDataItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.state.*;
@@ -20,7 +17,6 @@ import org.apache.flink.streaming.api.functions.co.KeyedBroadcastProcessFunction
 import org.apache.flink.util.Collector;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, String, String, String> {
@@ -219,8 +215,8 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         }
         JSONArray retData = new JSONArray();
         Map<String, Map<String, List<RuleDetailBO>>> ruleMap = ruleDetailDataTransToMap(ctx);
-        //国标数据检测
-        NewGBRuleDataCheckUtil.checkDataFromRule(signalMap, getRuleMap(ruleMap, "gb-"), retData);
+        //新国标数据检测
+        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, getRuleMap(ruleMap, "gb-"), retData);
         //手动添加规则检测
         CheckRuleDataByHandNewUtil.checkData(signalMap, getRuleMap(ruleMap, "hand-"), retData);
         //校验规则数据

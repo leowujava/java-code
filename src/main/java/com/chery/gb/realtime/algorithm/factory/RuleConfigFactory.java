@@ -101,13 +101,15 @@ public class RuleConfigFactory {
 
     private static RuleConfigBO getRuleConfigBO(Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap, String ruleCode) {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        Map<String, List<RuleDetailBO>> stringListMap = ruleDetailMap.get(ruleCode);
-        if (stringListMap != null) {
-            ArrayList<RuleDetailBO> conditions = new ArrayList<>();
-            for (List<RuleDetailBO> value : stringListMap.values()) {
-                conditions.addAll(value);
+        if (ruleDetailMap != null) {
+            Map<String, List<RuleDetailBO>> stringListMap = ruleDetailMap.get(ruleCode);
+            if (stringListMap != null) {
+                ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+                for (List<RuleDetailBO> value : stringListMap.values()) {
+                    conditions.addAll(value);
+                }
+                ruleConfigBO.setConditions(conditions);
             }
-            ruleConfigBO.setConditions(conditions);
         }
         return ruleConfigBO;
     }

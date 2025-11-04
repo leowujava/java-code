@@ -46,6 +46,6 @@ public class RuleValidateTest {
         JSONArray retData = new JSONArray();
         HashMap<String, Object> signalMap = new HashMap<>();
         HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
-        NewGBRuleDataCheckUtil.checkDataFromRule(signalMap, ruleMap, retData);
+        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, ruleMap, retData);
     }
 }

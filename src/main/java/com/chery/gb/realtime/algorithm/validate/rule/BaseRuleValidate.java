@@ -10,7 +10,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
+import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
+import com.chery.gb.realtime.algorithm.validate.config.BaseConfig;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,14 +28,14 @@ public abstract class BaseRuleValidate {
     public abstract void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData);
 
     public void checkReturn(boolean flag) {
-        if (flag) {
+        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
+        if ((config != null && config.isReturn() && flag) || (config == null && flag)) {
             RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
             NewGbRuleCodeEnum rule = declaredAnnotation.rule();
             if (declaredAnnotation != null) {
                 throw new GbException(rule);
             }
             throw new GbException();
-
         }
     }
 

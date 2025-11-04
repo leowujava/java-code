@@ -14,12 +14,10 @@ import java.util.Map;
  * @date 2025/11/3 星期一
  *
  */
-@RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL)
-public class RuleValidate_StateIsNull extends BaseRuleValidate {
+@RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_31)
+public class RuleValidate_31 extends BaseRuleValidate {
     @Override
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
-        boolean flag = true;
-        checkReturn(flag);
+
     }
 }

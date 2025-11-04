@@ -211,6 +211,7 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         }
         int colType = Integer.parseInt(command.toString());
         if (colType != 2 && colType != 3) {
+            System.out.println("报文类型不对：" + colType);
             return null;
         }
         JSONArray retData = new JSONArray();

@@ -1,4 +1,5 @@
 import com.alibaba.fastjson2.JSONArray;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
@@ -7,6 +8,8 @@ import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidate;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wugaoyang
@@ -26,7 +29,7 @@ public class RuleValidateTest {
                 ruleValidate.validate(null
                         , null
                         , retData);
-            }catch (GbException e){
+            } catch (GbException e) {
                 e.printStackTrace();
             }
             System.out.println(retData);
@@ -39,8 +42,10 @@ public class RuleValidateTest {
     }
 
     @Test
-    public void test2(){
+    public void test2() {
         JSONArray retData = new JSONArray();
-        NewGBRuleDataCheckUtil.checkDataFromRule(new HashMap<>(), new HashMap<>(), retData);
+        HashMap<String, Object> signalMap = new HashMap<>();
+        HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
+        NewGBRuleDataCheckUtil.checkDataFromRule(signalMap, ruleMap, retData);
     }
 }

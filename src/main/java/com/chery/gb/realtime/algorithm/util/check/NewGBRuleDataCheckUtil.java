@@ -55,15 +55,19 @@ public class NewGBRuleDataCheckUtil {
 
     //新国标数据治理校验流程（规则配置模式-固定配置）
     public static void checkDataFromRule(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
-        for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
-            String ruleCode = newGbRuleCodeEnum.getCode();
-            BaseRuleValidate ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode);
-            if (ruleValidate != null) {
-                ruleValidate.validate(signalMap, ruleMap, retData);
-            } else {
-                GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
+        try {
+            List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
+            for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
+                String ruleCode = newGbRuleCodeEnum.getCode();
+                BaseRuleValidate ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode);
+                if (ruleValidate != null) {
+                    ruleValidate.validate(signalMap, ruleMap, retData);
+                } else {
+                    GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
+                }
             }
+        }catch (GbException e){
+            e.printStackTrace();
         }
     }
 

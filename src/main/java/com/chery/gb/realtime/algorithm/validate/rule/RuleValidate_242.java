@@ -7,6 +7,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
+import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 
 import java.util.HashMap;
@@ -23,11 +24,8 @@ public class RuleValidate_242 extends BaseRuleValidate {
     @Override
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         System.out.println("RuleValidate_" + getRuleCode() + ".validate");
-        boolean flag = true;
-        if (flag) {
-            Map<String, Object> gbValueMap = new HashMap<>();
-            retData.add(JSONObject.parseObject(JSON.toJSONString(RetDataUtil.buildRetMap(getRuleCode(), gbValueMap))));
-        }
+        boolean flag = checkNullByGroup(signalMap, SignalGroupEnum.DRIVE);
+        wrapErrorData(retData, flag);
         checkReturn(flag);
     }
 }

@@ -8,6 +8,8 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
+import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.validate.config.BaseConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -119,7 +121,7 @@ public class GbRuleCheckUtil {
         return flag2;
     }
 
-    public static void checkByRuleCodes(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, String[] ruleCodes) {
+    public static void checkByRuleCode(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, String[] ruleCodes) {
         for (String ruleCode : ruleCodes) {
             GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
         }
@@ -130,6 +132,49 @@ public class GbRuleCheckUtil {
         if (CollectionUtil.isEmpty(ruleDetailMap)) {
             return true;
         }
+        BaseConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
+
+        Boolean flag0 = null;
+        if (config != null && CollectionUtil.isNotEmpty(config.getPreCondition())) {
+                for (RuleDetailBO ruleDetailBO : config.getPreCondition()) {
+                    String signalId = ruleDetailBO.getSignalId();
+                    SignalEnum signal = SignalEnum.getByCode(signalId);
+                    if (signal != null && StrUtil.isNotBlank(signal.getParent())) {
+                        Object o = signalMap.get(signal.getParent());
+                        if (Objects.isNull(o)) {
+                            flag0 = validateRule(ruleDetailBO, "", flag0);
+                            continue;
+                        }
+                        if (o instanceof List) {
+                            List<?> list = (List<?>) o;
+                            Boolean flag2 = null;
+                            for (Object item : list) {
+                                JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(item));
+                                Object signalValue = jsonObject.get(signalId);
+                                Object value = signalValue;
+                                if (!Objects.isNull(signalValue) && signalValue instanceof List) {
+                                    if (((List<?>) signalValue).size() == 0) {
+                                        value = null;
+                                    }
+                                }
+                                flag2 = validateRule(ruleDetailBO, String.valueOf(value), flag2);
+                                if (flag0 == null) {
+                                    flag0 = flag2;
+                                } else {
+                                    flag0 = flag2 || flag0;
+                                }
+                            }
+                        }
+                    } else {
+                        Object signalValue = signalMap.get(signalId);
+                        flag0 = validateRule(ruleDetailBO, String.valueOf(signalValue), flag0);
+                    }
+                }
+            }
+            if (!flag0) {
+                return false;
+            }
+
         JSONObject resultDetailData = new JSONObject();
         resultDetailData.put("ruleCode", ruleCode);
         JSONObject gbValue = new JSONObject();
@@ -184,47 +229,5 @@ public class GbRuleCheckUtil {
             retData.add(resultDetailData);
         }
         return flag == null ? true : flag;
-    }
-
-    public static void checkByRuleCode278(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
-        List<String> signalIds = Arrays.asList("200F", "219F", "220D");
-
-        Boolean flag = null;
-        JSONObject resultDetailData = new JSONObject();
-        resultDetailData.put("ruleCode", "278");
-        JSONObject gbValue = new JSONObject();
-        for (String signalId : signalIds) {
-            SignalEnum signal = SignalEnum.getByCode(signalId);
-            if (signal != null && StrUtil.isNotBlank(signal.getParent())) {
-                Object o = signalMap.get(signal.getParent());
-                if (Objects.isNull(o)) {
-                    continue;
-                }
-                if (o instanceof List) {
-                    List<?> list = (List<?>) o;
-                    for (Object item : list) {
-                        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(item));
-                        Object signalValue = jsonObject.get(signalId);
-                        flag = signalValue != null && StrUtil.isNotBlank(String.valueOf(signalValue));
-                        if (flag) {
-                            gbValue.put(signalId, signalValue);
-                            break;
-                        }
-                    }
-                }
-            } else {
-                Object signalValue = signalMap.get(signalId);
-                flag = signalValue != null && StrUtil.isNotBlank(String.valueOf(signalValue));
-                if (flag) {
-                    gbValue.put(signalId, signalValue);
-                    break;
-                }
-            }
-        }
-
-        if (flag != null && flag) {
-            resultDetailData.put("gbValue", gbValue);
-            retData.add(resultDetailData);
-        }
     }
 }

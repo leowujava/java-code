@@ -9,10 +9,8 @@ import com.chery.gb.realtime.algorithm.validate.config.RuleConfig_VehicleStateIs
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 规则配置工厂
@@ -76,7 +74,7 @@ public class RuleConfigFactory {
         return config.isReturn();
     }
 
-    public static BaseConfig getConfig(String ruleCode, Map<String, Map<String, List<String>>> ruleDetailMap) {
+    public static BaseConfig getConfig(String ruleCode, Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap) {
         if (ruleConfigMap == null) {
             synchronized (RuleConfigFactory.class) {
                 if (ruleConfigMap == null) {
@@ -89,10 +87,28 @@ public class RuleConfigFactory {
             baseConfig = new BaseConfig() {
                 @Override
                 public RuleConfigBO getRuleConfigBO() {
-                    return new  RuleConfigBO();
+                    return RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
                 }
             };
+        } else {
+            if (baseConfig.getCondition() == null) {
+                RuleConfigBO ruleConfigBO = getRuleConfigBO(ruleDetailMap, ruleCode);
+                baseConfig.getRuleConfigBO().setConditions(ruleConfigBO.getConditions());
+            }
         }
         return baseConfig;
+    }
+
+    private static RuleConfigBO getRuleConfigBO(Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap, String ruleCode) {
+        RuleConfigBO ruleConfigBO = new RuleConfigBO();
+        Map<String, List<RuleDetailBO>> stringListMap = ruleDetailMap.get(ruleCode);
+        if (stringListMap != null) {
+            ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+            for (List<RuleDetailBO> value : stringListMap.values()) {
+                conditions.addAll(value);
+            }
+            ruleConfigBO.setConditions(conditions);
+        }
+        return ruleConfigBO;
     }
 }

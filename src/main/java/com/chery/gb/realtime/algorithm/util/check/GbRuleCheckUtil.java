@@ -119,14 +119,14 @@ public class GbRuleCheckUtil {
         return flag2;
     }
 
-    public static void checkByRuleCodes(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData, String[] ruleCodes) {
+    public static void checkByRuleCodes(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, String[] ruleCodes) {
         for (String ruleCode : ruleCodes) {
             GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
         }
     }
 
-    public static boolean checkByRuleCode(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData, String ruleCode) {
-        Map<String, List<String>> ruleDetailMap = ruleMap.get(ruleCode);
+    public static boolean checkByRuleCode(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, String ruleCode) {
+        Map<String, List<RuleDetailBO>> ruleDetailMap = ruleMap.get(ruleCode);
         if (CollectionUtil.isEmpty(ruleDetailMap)) {
             return true;
         }
@@ -134,9 +134,8 @@ public class GbRuleCheckUtil {
         resultDetailData.put("ruleCode", ruleCode);
         JSONObject gbValue = new JSONObject();
         Boolean flag = null;
-        for (List<String> rule : ruleDetailMap.values()) {
-            for (String ruleDetail : rule) {
-                RuleDetailBO ruleDetailBO = JSONObject.parseObject(ruleDetail, RuleDetailBO.class);
+        for (List<RuleDetailBO> rule : ruleDetailMap.values()) {
+            for (RuleDetailBO ruleDetailBO : rule) {
                 String signalId = ruleDetailBO.getSignalId();
                 SignalEnum signal = SignalEnum.getByCode(signalId);
                 if (signal != null && StrUtil.isNotBlank(signal.getParent())) {

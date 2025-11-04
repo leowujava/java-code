@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
+import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.validate.config.BaseConfig;
 import com.chery.gb.realtime.algorithm.validate.config.RuleConfig_VehicleStateIsNull;
@@ -52,7 +53,7 @@ public class RuleConfigFactory {
     }
 
     public static List<RuleDetailBO> getCondition(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode);
+        BaseConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return null;
         }
@@ -60,7 +61,7 @@ public class RuleConfigFactory {
     }
 
     public static List<RuleDetailBO> getPreCondition(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode);
+        BaseConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return null;
         }
@@ -68,14 +69,14 @@ public class RuleConfigFactory {
     }
 
     public static boolean isReturn(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode);
+        BaseConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return false;
         }
         return config.isReturn();
     }
 
-    public static BaseConfig getConfig(String ruleCode) {
+    public static BaseConfig getConfig(String ruleCode, Map<String, Map<String, List<String>>> ruleDetailMap) {
         if (ruleConfigMap == null) {
             synchronized (RuleConfigFactory.class) {
                 if (ruleConfigMap == null) {
@@ -83,6 +84,15 @@ public class RuleConfigFactory {
                 }
             }
         }
-        return ruleConfigMap.get(ruleCode);
+        BaseConfig baseConfig = ruleConfigMap.get(ruleCode);
+        if (baseConfig == null) {
+            baseConfig = new BaseConfig() {
+                @Override
+                public RuleConfigBO getRuleConfigBO() {
+                    return new  RuleConfigBO();
+                }
+            };
+        }
+        return baseConfig;
     }
 }

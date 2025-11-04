@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.EnvEnum;
 import com.chery.gb.realtime.algorithm.util.KafkaEnvUtil;
 import com.chery.gb.realtime.algorithm.util.MysqlEnvUtil;
@@ -38,8 +39,8 @@ public class RealtimeAlgorithmApplication {
         env.setParallelism(4);
 
         // 定义广播状态描述符
-        MapStateDescriptor<String, Map<String, List<String>>> dimensionDescriptor = new MapStateDescriptor<>(
-                "dimensionState", TypeInformation.of(String.class), TypeInformation.of(new TypeHint<Map<String, List<String>>>() {
+        MapStateDescriptor<String, Map<String, List<RuleDetailBO>>> dimensionDescriptor = new MapStateDescriptor<>(
+                "dimensionState", TypeInformation.of(String.class), TypeInformation.of(new TypeHint<Map<String, List<RuleDetailBO>>>() {
         }));
 
         // 1. 创建MySQL CDC源，捕获维度表变更。从 MySQL 读取维度数据并监听变化

@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.util.*;
@@ -24,12 +25,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, String, String, String> {
 
-    private final MapStateDescriptor<String, Map<String, List<String>>> dimensionDescriptor;
+    private final MapStateDescriptor<String, Map<String, List<RuleDetailBO>>> dimensionDescriptor;
 
     private ListState<String> actionState;
 
     public DimensionDataCleaner(
-            MapStateDescriptor<String, Map<String, List<String>>> dimensionDescriptor) {
+            MapStateDescriptor<String, Map<String, List<RuleDetailBO>>> dimensionDescriptor) {
         this.dimensionDescriptor = dimensionDescriptor;
     }
 
@@ -85,7 +86,7 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         JSONObject json = JSONObject.parseObject(value);
 
         //维度数据map
-        BroadcastState<String, Map<String, List<String>>> dimensionState = ctx.getBroadcastState(dimensionDescriptor);
+        BroadcastState<String, Map<String, List<RuleDetailBO>>> dimensionState = ctx.getBroadcastState(dimensionDescriptor);
         String op = json.getString("op");
         if (json.get("after") != null && op != null) {
             JSONObject afterData = json.getJSONObject("after");
@@ -120,11 +121,11 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         }
     }
 
-    private void handleHandRules(String op, JSONObject afterData, BroadcastState<String, Map<String, List<String>>> dimensionState) throws Exception {
+    private void handleHandRules(String op, JSONObject afterData, BroadcastState<String, Map<String, List<RuleDetailBO>>> dimensionState) throws Exception {
         String ruleCode = "hand-" + afterData.getString("rule_id") + "";
         String id = afterData.getInteger("id") + "";
         String signalId = afterData.getString("signal_id");
-        Map<String, List<String>> detailMap = dimensionState.get(ruleCode);
+        Map<String, List<RuleDetailBO>> detailMap = dimensionState.get(ruleCode);
 //        String key = ruleCode+"_"+id;
         if (detailMap == null || detailMap.isEmpty()) {
             detailMap = new HashMap<>();
@@ -138,13 +139,13 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
                     dimensionState.remove(ruleCode);
                 }
             } else {
-                List<String> dataList = detailMap.get(signalId);
+                List<RuleDetailBO> dataList = detailMap.get(signalId);
                 if (Objects.nonNull(dataList)) {
-                    dataList.add(afterData.toJSONString());
+                    dataList.add(JSON.parseObject(afterData.toJSONString(), RuleDetailBO.class));
                     detailMap.put(signalId, dataList);
                 } else {
                     dataList = new ArrayList<>();
-                    dataList.add(afterData.toJSONString());
+                    dataList.add(JSON.parseObject(afterData.toJSONString(), RuleDetailBO.class));
                     detailMap.put(signalId, dataList);
                 }
                 // 插入或更新维度数据
@@ -160,10 +161,10 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         }
     }
 
-    private void handleGBRules(String op, JSONObject afterData, BroadcastState<String, Map<String, List<String>>> dimensionState) throws Exception {
+    private void handleGBRules(String op, JSONObject afterData, BroadcastState<String, Map<String, List<RuleDetailBO>>> dimensionState) throws Exception {
         String ruleCode = "gb-" + afterData.getInteger("rule_id");
         String signalId = afterData.getString("signal_id");
-        Map<String, List<String>> detailMap = dimensionState.get(ruleCode);
+        Map<String, List<RuleDetailBO>> detailMap = dimensionState.get(ruleCode);
         if (CollUtil.isEmpty(detailMap)) {
             detailMap = new HashMap<>();
         }
@@ -176,13 +177,13 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
                     dimensionState.remove(ruleCode);
                 }
             } else {
-                List<String> dataList = detailMap.get(signalId);
+                List<RuleDetailBO> dataList = detailMap.get(signalId);
                 if (Objects.nonNull(dataList)) {
-                    dataList.add(afterData.toJSONString());
+                    dataList.add(JSON.parseObject(afterData.toJSONString(), RuleDetailBO.class));
                     detailMap.put(signalId, dataList);
                 } else {
                     dataList = new ArrayList<>();
-                    dataList.add(afterData.toJSONString());
+                    dataList.add(JSON.parseObject(afterData.toJSONString(), RuleDetailBO.class));
                     detailMap.put(signalId, dataList);
                 }
                 // 插入或更新维度数据
@@ -217,127 +218,18 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
             return null;
         }
         JSONArray retData = new JSONArray();
-
-        //采集时间校验，车辆数据采集时间格式无效或未上传。280
-        Object ct = signalMap.get("ct");
-        if (Objects.isNull(ct) || ct.toString().length() < 13) {
-            return RetDataUtil.buildResult("280", result);
-        }
-
-        //整车数据 287
-        if (!CheckRuleDataItem.checkByGroup(signalMap, SignalGroupEnum.HOLE_VEHICLE)) {
-            return RetDataUtil.buildResult("287", result);
-        }
-
-        //车辆位置 288
-        if (!CheckRuleDataItem.checkByGroup(signalMap, SignalGroupEnum.VEHICLE_POS)) {
-            return RetDataUtil.buildResult("288", result);
-        }
-
-        //极值数据 289
-        if (!CheckRuleDataItem.checkByGroup(signalMap, SignalGroupEnum.ENGINE)) {
-            return RetDataUtil.buildResult("289", result);
-        }
-
-        //报警数据 290
-        if (!CheckRuleDataItem.checkByGroup(signalMap, SignalGroupEnum.ALERT)) {
-            return RetDataUtil.buildResult("290", result);
-        }
-
-        //上传实时报文的报文时间与服务器接收的标准时间误差超过 30 秒。113
-        CheckRuleDataItem.check113(signalMap, retData);
-
-        //实时数据时间与服务器时间相差超过 180 秒 269
-        CheckRuleDataItem.check269(signalMap, retData);
-
-        CheckRuleDataItem.checkCode266(signalMap, retData);
-        CheckRuleDataItem.checkCode135(signalMap, retData);
-        //121 单体电压精确度不足
-        CheckRuleDataItem.check121(signalMap, retData);
-        //281 经度精确度不足
-        CheckRuleDataItem.check281(signalMap, retData);
-        //282 纬度精确度不足
-        CheckRuleDataItem.check282(signalMap, retData);
-        //判断是否是三级告警
-        Object highestAlertLevelObj = signalMap.get("220B");
-        if (Objects.nonNull(highestAlertLevelObj) && Integer.parseInt(highestAlertLevelObj.toString()) == 3) {
-            result.put("type", 3);//type:3 三级告警报文
-            Map<String, Object> valueMap = new HashMap<>();
-            valueMap.put("vin", vin);
-            Object ct2 = signalMap.get("ct");
-            valueMap.put("ct", ct2);
-            valueMap.put("st", signalMap.get("st"));
-            Iterable<String> strings = actionState.get();
-            if (CollUtil.isNotEmpty(strings)) {
-                long maxCt = 0L;
-                int size = 0;
-                for (String string : strings) {
-                    JSONObject jsonObject = JSON.parseObject(string);
-                    Long ct1 = jsonObject.getLong("ct");
-                    if (ct1 > maxCt) {
-                        maxCt = ct1;
-                    }
-                    size++;
-                }
-                long l = Long.valueOf(ct2.toString()) - maxCt;
-                if (l >= 2000) {
-                    Map<String, Object> gbValueMap = new HashMap<>();
-                    gbValueMap.put("size", size);
-                    retData.add(JSONObject.parseObject(JSON.toJSONString(RetDataUtil.buildRetMap("129", gbValueMap))));
-                    actionState.clear();
-                }
-            }
-            actionState.add(JSON.toJSONString(valueMap));
-            System.out.println(JSON.toJSONString(actionState.get()));
-        } else {
-            Iterable<String> strings = actionState.get();
-            int size = 0;
-            Set<String> set = new HashSet<>();
-            for (String str : strings) {
-                JSONObject jsonObject = JSON.parseObject(str);
-                size++;
-                set.add(jsonObject.getString("ct"));
-            }
-            if (size > 0 && size < 31) {
-                Map<String, Object> gbValueMap = new HashMap<>();
-                gbValueMap.put("size", size);
-                retData.add(JSONObject.parseObject(JSON.toJSONString(RetDataUtil.buildRetMap("129", gbValueMap))));
-            }
-            if (size > 31) {
-                List<String> list = set.stream().sorted().collect(Collectors.toList());
-                String ctStr = null;
-                for (String s : list) {
-                    if (ctStr == null) {
-                        ctStr = s;
-                    } else {
-                        long l = Long.parseLong(s) - Long.parseLong(ctStr);
-                        ctStr = s;
-                        if (l >= 2000) {
-                            Map<String, Object> gbValueMap = new HashMap<>();
-                            gbValueMap.put("size", size);
-                            retData.add(JSONObject.parseObject(JSON.toJSONString(RetDataUtil.buildRetMap("129", gbValueMap))));
-                            break;
-                        }
-                    }
-                }
-            }
-            actionState.clear();
-        }
-        Map<String, Map<String, List<String>>> ruleMap = ruleDetailDataTransToMap(ctx);
-
+        Map<String, Map<String, List<RuleDetailBO>>> ruleMap = ruleDetailDataTransToMap(ctx);
         //国标数据检测
-        NewGBRuleDataCheckUtil.checkData(signalMap, getRuleMap(ruleMap, "gb-"), retData);
+        NewGBRuleDataCheckUtil.checkDataFromRule(signalMap, getRuleMap(ruleMap, "gb-"), retData);
         //手动添加规则检测
         CheckRuleDataByHandNewUtil.checkData(signalMap, getRuleMap(ruleMap, "hand-"), retData);
         //校验规则数据
         result.put("data", retData);
-        result.put(SignalEnum.SIGNAL_1BC2.getCode(), signalMap.get(SignalEnum.SIGNAL_1BC2.getCode()));
-        result.put(SignalEnum.SIGNAL_2009.getCode(), signalMap.get(SignalEnum.SIGNAL_2009.getCode()));
         return result;
     }
 
-    private Map<String, Map<String, List<String>>> getRuleMap(Map<String, Map<String, List<String>>> ruleMap, String ruleType) {
-        Map<String, Map<String, List<String>>> dataMap = new HashMap<>();
+    private Map<String, Map<String, List<RuleDetailBO>>> getRuleMap(Map<String, Map<String, List<RuleDetailBO>>> ruleMap, String ruleType) {
+        Map<String, Map<String, List<RuleDetailBO>>> dataMap = new HashMap<>();
         ruleMap.forEach((code, data) -> {
             if (code.startsWith(ruleType)) {
                 dataMap.put(code.replace(ruleType, ""), data);
@@ -350,12 +242,12 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
     /**
      * 规则数据转Map
      */
-    private Map<String, Map<String, List<String>>> ruleDetailDataTransToMap(KeyedBroadcastProcessFunction<String, String, String, String>.ReadOnlyContext ctx) throws Exception {
-        Map<String, Map<String, List<String>>> ruleDetailMap = new HashMap<>();
-        ReadOnlyBroadcastState<String, Map<String, List<String>>> broadcastState = ctx.getBroadcastState(dimensionDescriptor);
-        for (Map.Entry<String, Map<String, List<String>>> immutableEntry : broadcastState.immutableEntries()) {
+    private Map<String, Map<String, List<RuleDetailBO>>> ruleDetailDataTransToMap(KeyedBroadcastProcessFunction<String, String, String, String>.ReadOnlyContext ctx) throws Exception {
+        Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap = new HashMap<>();
+        ReadOnlyBroadcastState<String, Map<String, List<RuleDetailBO>>> broadcastState = ctx.getBroadcastState(dimensionDescriptor);
+        for (Map.Entry<String, Map<String, List<RuleDetailBO>>> immutableEntry : broadcastState.immutableEntries()) {
             String entryKey = immutableEntry.getKey();
-            Map<String, List<String>> entryValue = immutableEntry.getValue();
+            Map<String, List<RuleDetailBO>> entryValue = immutableEntry.getValue();
             ruleDetailMap.put(entryKey, entryValue);
         }
         return ruleDetailMap;

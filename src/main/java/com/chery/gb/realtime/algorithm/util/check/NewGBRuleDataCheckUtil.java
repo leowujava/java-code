@@ -1,6 +1,7 @@
 package com.chery.gb.realtime.algorithm.util.check;
 
 import com.alibaba.fastjson2.JSONArray;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class NewGBRuleDataCheckUtil {
 
     //新国标数据治理校验流程（固定模式）
-    public static void checkData(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    public static void checkData(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         try {
             //前置数据检测
             PreDataCheckUtil.checkPreData(signalMap, retData);
@@ -44,7 +45,7 @@ public class NewGBRuleDataCheckUtil {
     }
 
     //新国标数据治理校验流程（规则配置模式-固定配置）
-    public static void checkDataFromRule(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    public static void checkDataFromRule(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
         for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
             BaseRuleValidate ruleValidate = RuleValidateFactory.getRuleValidate(newGbRuleCodeEnum.getCode());
@@ -57,7 +58,7 @@ public class NewGBRuleDataCheckUtil {
     }
 
     //新国标数据治理校验流程（规则配置模式-读取数据库）
-    public static void checkDataFromDB(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    public static void checkDataFromDB(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
         for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
             BaseRuleValidate ruleValidate = RuleValidateFactory.getRuleValidate(newGbRuleCodeEnum.getCode());
@@ -69,11 +70,11 @@ public class NewGBRuleDataCheckUtil {
         }
     }
 
-    private static void checkDataRelationLogic(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkDataRelationLogic(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
     }
 
-    private static void checkChargingState(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkChargingState(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
     }
 

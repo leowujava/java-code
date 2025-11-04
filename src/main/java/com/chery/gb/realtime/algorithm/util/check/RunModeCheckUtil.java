@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm.util.check;
 
 
 import com.alibaba.fastjson2.JSONArray;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class RunModeCheckUtil {
 
-    public static void checkRunModeData(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    public static void checkRunModeData(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
         //检测前置数据
         checkPreData(signalMap, retData);
@@ -26,7 +27,7 @@ public class RunModeCheckUtil {
 
     }
 
-    private static void checkMode(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkMode(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         //充电模式（21AA）!="1" & 车辆状态（220C）!="2"
 
         //检测运行模式（21AB）1
@@ -43,15 +44,15 @@ public class RunModeCheckUtil {
 
     }
 
-    private static void checkMode1(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkMode1(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
     }
 
-    private static void checkMode2(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkMode2(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
     }
 
-    private static void checkMode3(Map<String, Object> signalMap, Map<String, Map<String, List<String>>> ruleMap, JSONArray retData) {
+    private static void checkMode3(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 
     }
 }

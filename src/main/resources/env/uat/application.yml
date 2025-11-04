@@ -1,0 +1,13 @@
+mysql:
+  hostname: lionbigdatauat.internal.cn-east-3.mysql.rds.myhuaweicloud.com
+  port: 3306
+  username: lioncloud_landmarkgb_rw
+  password: 2513_0_Vd4WZ_EqD
+  database: lioncloud_landmarkgb
+  table: lioncloud_landmarkgb.gb_data_admin_rule_detail
+
+kafka:
+  servers: 172.25.171.251:9092,172.25.171.206:9092,172.25.171.226:9092
+  consumerTopic: ntsp_gb_data_message
+  producerTopic: gb_data_errors
+  groupId: flink-group

@@ -1,0 +1,13 @@
+mysql:
+  hostname: 172.25.171.71
+  port: 3306
+  username: lioncloud_landmarkgb_rw
+  password: 1bTAxVWTlsWVBE7a
+  database: lioncloud_landmarkgb
+  table: lioncloud_landmarkgb.gb_data_admin_rule_detail
+
+kafka:
+  servers: 172.25.171.72:9092,172.25.171.106:9092,172.25.171.113:9092
+  consumerTopic: ntsp_gb_data_message
+  producerTopic: gb_data_errors
+  groupId: flink-group

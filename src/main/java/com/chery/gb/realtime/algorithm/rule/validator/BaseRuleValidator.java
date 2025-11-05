@@ -11,7 +11,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;

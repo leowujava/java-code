@@ -1,8 +1,9 @@
-package com.chery.gb.realtime.algorithm.factory;
+package com.chery.gb.realtime.algorithm.signal.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
-import com.chery.gb.realtime.algorithm.converter.BaseSignalConverter;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.signal.converter.BaseSignalConverter;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -50,7 +51,7 @@ public class SignalConverterFactory {
 
     public static BaseSignalConverter getByCode(String code) {
         if (signalConverterMap == null) {
-            synchronized (RuleValidateFactory.class) {
+            synchronized (SignalConverterFactory.class) {
                 if (signalConverterMap == null) {
                     init();
                 }

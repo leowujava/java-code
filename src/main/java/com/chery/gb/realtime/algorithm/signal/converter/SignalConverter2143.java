@@ -1,8 +1,8 @@
-package com.chery.gb.realtime.algorithm.converter;
+package com.chery.gb.realtime.algorithm.signal.converter;
 
 
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
-import com.chery.gb.realtime.algorithm.bo.ConvertBO;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 /**
@@ -14,12 +14,12 @@ public class SignalConverter2143 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal2143Obj) {
         //最高温度值 0x2143 offset: 40
-        ConvertBO convertBO = ConvertBO.builder()
+        SignalConfigBO signalConfigBO = SignalConfigBO.builder()
                 .offset(40)
                 .errorValue("254")
                 .invalidValue("255")
                 .build();
-        return convert(signal2143Obj, convertBO);
+        return convert(signal2143Obj, signalConfigBO);
     }
 
 }

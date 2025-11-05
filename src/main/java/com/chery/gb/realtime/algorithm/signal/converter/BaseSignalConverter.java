@@ -1,8 +1,8 @@
-package com.chery.gb.realtime.algorithm.converter;
+package com.chery.gb.realtime.algorithm.signal.converter;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.chery.gb.realtime.algorithm.bo.ConvertBO;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,7 +22,7 @@ public abstract class BaseSignalConverter {
      */
     public abstract Object convert(Object param);
 
-    public Object convert(Object param, ConvertBO bo) {
+    public Object convert(Object param, SignalConfigBO bo) {
         if (Objects.nonNull(param) && StrUtil.isNotBlank(param.toString()) && !Objects.equals(bo.getInvalidValue(), param.toString()) && !Objects.equals(bo.getErrorValue(), param.toString())) {
             Double divide = divide(param.toString(), bo.getScale(), bo.getPoint());
             return getOffset(divide.toString(), bo.getOffset());

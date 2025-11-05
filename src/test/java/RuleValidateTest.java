@@ -4,7 +4,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.SignalBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.util.SignalUtil;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
@@ -52,6 +52,7 @@ public class RuleValidateTest {
         SignalBO tmpl = BaseDataTest.getTmpl();
         tmpl.set_220C(2);
         tmpl.set_2001(60);
+        tmpl.set_21AA(254);
         HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));

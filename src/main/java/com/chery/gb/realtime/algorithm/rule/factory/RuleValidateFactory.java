@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.factory;
+package com.chery.gb.realtime.algorithm.rule.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;

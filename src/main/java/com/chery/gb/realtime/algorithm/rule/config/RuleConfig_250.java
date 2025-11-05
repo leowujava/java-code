@@ -4,11 +4,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 车辆状态为熄火车速不为 0
@@ -24,7 +20,7 @@ public class RuleConfig_250 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        RuleConditionBO condition = CommonCondition.vehicleStateIS2AndSpeedGt50();
+        RuleConditionBO condition = CommonCondition.vehicleStateIS2AndSpeedGt5(false);
         ruleConfigBO.setCondition(condition);
         return ruleConfigBO;
     }

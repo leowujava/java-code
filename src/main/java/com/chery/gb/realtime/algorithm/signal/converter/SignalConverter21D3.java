@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.converter;
+package com.chery.gb.realtime.algorithm.signal.converter;
 
 
 import cn.hutool.core.util.StrUtil;

@@ -1,6 +1,6 @@
 package com.chery.gb.realtime.algorithm.enums;
 
-import com.chery.gb.realtime.algorithm.converter.*;
+import com.chery.gb.realtime.algorithm.signal.converter.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,8 +24,8 @@ public class RuleConfig_26 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        List<RuleDetailBO> conditions = new ArrayList<>();
-        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());
+        ruleConfigBO.setPreCondition(CommonCondition.chargingStateIsNull(true));
+        ruleConfigBO.setCondition(CommonCondition.chargingStateIsInvalid(false));
         return ruleConfigBO;
     }
 

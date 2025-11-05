@@ -8,7 +8,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
 import lombok.extern.slf4j.Slf4j;
 

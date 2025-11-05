@@ -1,17 +1,11 @@
 package com.chery.gb.realtime.algorithm.util;
 
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.chery.gb.realtime.algorithm.converter.BaseSignalConverter;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-import com.chery.gb.realtime.algorithm.factory.SignalConverterFactory;
+import com.chery.gb.realtime.algorithm.signal.converter.BaseSignalConverter;
+import com.chery.gb.realtime.algorithm.signal.factory.SignalConverterFactory;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,4 +50,30 @@ public class SignalUtil {
         }
     }
 
+    public static Object getSignalValue(Map<String, Object> signalMap, String signalCode) {
+        SignalEnum signalEnum = SignalEnum.getByCode(signalCode);
+        if (signalEnum == null) {
+            return null;
+        }
+        SignalEnum parent = SignalEnum.getByCode(signalEnum.getParent());
+        if (parent != null) {
+            Object signalValue = getSignalValue(signalMap, parent.getCode());
+            if (signalValue == null) {
+                return null;
+            }else {
+                if (signalValue instanceof JSONObject) {
+                    return  ((JSONObject) signalValue).get(signalCode);
+                }else if (signalValue instanceof JSONArray) {
+                    for (Object object : ((JSONArray) signalValue)) {
+                        if (object instanceof JSONObject) {
+                            return  ((JSONObject) object).get(signalCode);
+                        }
+                    }
+                }
+                return signalValue;
+            }
+        } else {
+            return signalMap.get(signalCode);
+        }
+    }
 }

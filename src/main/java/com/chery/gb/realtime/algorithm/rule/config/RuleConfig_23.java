@@ -25,8 +25,7 @@ public class RuleConfig_23 extends BaseConfig {
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
 
-        RuleConditionBO preConditions = CommonCondition.vehicleStateIsNull();
-        preConditions.setReturn(true);
+        RuleConditionBO preConditions = CommonCondition.vehicleStateIsNull(true);
         ruleConfigBO.setPreCondition(preConditions);
 
         List<RuleDetailBO> conditions = new ArrayList<>();

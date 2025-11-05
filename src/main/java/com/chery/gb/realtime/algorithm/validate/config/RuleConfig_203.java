@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 超级电容温度探针总数不匹配
+ * 超级电容温度探针总数≠探针温度值个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

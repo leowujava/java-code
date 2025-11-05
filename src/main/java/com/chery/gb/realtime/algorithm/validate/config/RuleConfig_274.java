@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 平台再次登录流水号不大于上一次登录流水号
+ * 再次登录流水号<=上一次登录流水号
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 可充电储能装置故障总数 N1不匹配
+ * 可充电储能装置故障总数 N1≠可充电储能装置故障代码列表中可充电储能装置故障信息个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

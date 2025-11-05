@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 通用报警故障总数不匹配
+ * 通用报警故障总数≠通用报警故障等级列表中通用报警故障等级个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

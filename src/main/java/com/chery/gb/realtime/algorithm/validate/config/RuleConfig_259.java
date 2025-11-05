@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 车辆状态非 1 启动且非 2 熄火
+ * 车辆状态既不是启动也不是熄火
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

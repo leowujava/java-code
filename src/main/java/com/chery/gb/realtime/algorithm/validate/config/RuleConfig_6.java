@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 电池管理系统对应动力蓄电池包个数越界
+ * 不在[0,50]范围内
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

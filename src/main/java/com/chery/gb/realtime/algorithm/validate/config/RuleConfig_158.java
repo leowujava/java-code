@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 下高压后三/四级报警报文上报帧数不足
+ * 车辆下高压后触发三/四级报警的车辆数据报文,上报帧数不足 30 帧
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

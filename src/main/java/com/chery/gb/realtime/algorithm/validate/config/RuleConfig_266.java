@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 平台登入报文延时>180s
+ * 平台登入报文时间与服务端平台服务器接收时间相差超过 180 秒
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

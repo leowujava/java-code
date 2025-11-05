@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 车辆登出报文延时>30s
+ * 车辆登出报文数据采集时间与服务端平台服务器接收时间相差超过 30秒
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

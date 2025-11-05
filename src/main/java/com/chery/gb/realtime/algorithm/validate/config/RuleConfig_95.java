@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 车载氢系统中最高温度异常
+ * 0xFF,0xFE
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

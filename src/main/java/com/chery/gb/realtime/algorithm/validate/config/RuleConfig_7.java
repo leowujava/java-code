@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 动力蓄电池包编码异常
+ * 动力蓄电池包编码非 24 位
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 车辆状态为熄火车速不为 0
+ * 车辆熄火, 但车速>5km/h
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

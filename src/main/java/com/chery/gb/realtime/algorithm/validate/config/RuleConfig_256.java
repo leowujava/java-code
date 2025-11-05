@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 总电压不匹配
+ * 总电压≠最小并联单元电压之和(偏差超出 5V)
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

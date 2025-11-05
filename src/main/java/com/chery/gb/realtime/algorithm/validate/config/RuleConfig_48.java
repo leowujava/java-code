@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * DC-DC 状态无定义
+ * 不在[0x01、0x02]范围内
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

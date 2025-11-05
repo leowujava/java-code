@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 熄火切换到启动状态里程值变化
+ * 熄火最后一帧到启动第一帧里程变化超过 4km
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

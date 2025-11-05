@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 本帧最小并联单元数量不匹配
+ * 最小并联单元总数≠最小并联单元电压个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

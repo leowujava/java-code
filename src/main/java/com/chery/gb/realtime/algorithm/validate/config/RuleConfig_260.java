@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 高压下电监测报文缺失
+ * 车辆下高压未上报 59min30s 至 1h 监测报文
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

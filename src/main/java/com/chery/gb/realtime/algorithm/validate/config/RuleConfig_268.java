@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 最小并联单元电压精确度不足
+ * 电压精度不满足 0.001V
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

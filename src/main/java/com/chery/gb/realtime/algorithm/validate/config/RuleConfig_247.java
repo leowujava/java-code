@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 未上传超级电容器数据
+ * 超级电容汽车未上传超级电容器数据
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

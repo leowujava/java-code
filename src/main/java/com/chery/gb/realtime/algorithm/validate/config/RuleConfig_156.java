@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 三/四级报警报文采集频率异常
+ * 触发三/四级报警的车辆数据报文,采集频率不足 1s 一帧
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

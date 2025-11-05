@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 燃料电池电堆数量不匹配
+ * 燃料电池电堆个数≠燃料电池电堆信息表中燃料电池电堆信息个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 发动机故障总数 N3 异常
+ * 0xFE
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

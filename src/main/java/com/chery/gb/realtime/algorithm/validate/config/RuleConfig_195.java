@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 超级电容单体总数越界
+ * 不在[1,65531]范围内
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

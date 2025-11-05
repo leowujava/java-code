@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 动力蓄电池包总编码个数不匹配
+ * 动力蓄电池包总编码个数≠各电池管理系统对应动力蓄电池包个数之和
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

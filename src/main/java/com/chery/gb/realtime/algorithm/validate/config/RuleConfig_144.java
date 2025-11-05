@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 冷却水出水口温度探针总数异常
+ * 0xFF,0xFE
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

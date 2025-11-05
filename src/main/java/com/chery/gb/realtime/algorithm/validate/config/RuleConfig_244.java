@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 未上传燃料电池电堆数据
+ * 燃料电池汽车未上传燃料电池电堆数据
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

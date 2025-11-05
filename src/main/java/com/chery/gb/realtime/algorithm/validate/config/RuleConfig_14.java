@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 当次车辆登入流水号与登出流水号不一致
+ * 当次车辆登入流水号≠登出流水号
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

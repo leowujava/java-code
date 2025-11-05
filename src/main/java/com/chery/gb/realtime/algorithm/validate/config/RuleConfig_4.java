@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * ICCID 异常
+ * ICCID 非 20 位数字码
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

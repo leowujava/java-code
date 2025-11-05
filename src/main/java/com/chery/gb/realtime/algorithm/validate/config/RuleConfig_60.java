@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 动力蓄电池包电压越界
+ * 不在[0,60000]范围内
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

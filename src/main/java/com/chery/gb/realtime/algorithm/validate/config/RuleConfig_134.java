@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 燃料电池电堆电流越界
+ * 不在[0,20000]范围内
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

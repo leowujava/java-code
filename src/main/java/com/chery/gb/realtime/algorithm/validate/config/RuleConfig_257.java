@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 车辆行驶中能量回收显示停车充电
+ * 纯电动车速>0 电流为负数 充电状态 1 同时出现
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

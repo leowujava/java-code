@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 档位状态位未定义
+ * 不符合 GB/T32960.3-2024 附录 A.1
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

@@ -17,7 +17,7 @@ public class GbCodeGenTest {
             String[] split = line.split("\t");
             System.out.println("RULE_CODE_" + split[0] + "(\"" + split[0] + "\",\"" + split[1] + "\",\"" + split[2] + "\",\"" + split[3] + "\",\"" + split[4] + "\"),");
 //            System.out.println("newGbRuleCodeEnums.add(RULE_CODE_"+split[0]+");");
-//            genConfigFile(split[0]);
+            genConfigFile(split[0], split[1], split[2]);
 //            genValidateFile(split[0]);
             line = br.readLine();
         }
@@ -55,7 +55,7 @@ public class GbCodeGenTest {
         fw.close();
     }
 
-    private static void genConfigFile(String ruleCode) throws IOException {
+    private static void genConfigFile(String ruleCode, String name, String desc) throws IOException {
 
         String content = "package com.chery.gb.realtime.algorithm.validate.config;\n" +
                 "\n" +
@@ -68,6 +68,9 @@ public class GbCodeGenTest {
                 "import java.util.ArrayList;\n" +
                 "\n" +
                 "/**\n" +
+                " * " + name + "\n" +
+                " * " +  desc + "\n" +
+                " * \n" +
                 " * @author wugaoyang\n" +
                 " * @date 2025/11/4 星期二\n" +
                 " *\n" +

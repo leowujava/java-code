@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 最高电压管理系统号异常
+ * 0xFE
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

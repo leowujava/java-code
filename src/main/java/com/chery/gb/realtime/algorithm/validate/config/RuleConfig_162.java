@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 最高报警等级不匹配
+ * 最高报警等级≠通用报警故障等级列表中的最高通用报警故障等级
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

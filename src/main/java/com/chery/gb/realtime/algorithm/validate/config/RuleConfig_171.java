@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 驱动电机故障总数 N2 不匹配
+ * 驱动电机故障总数 N2≠驱动电机故障代码列表中驱动电机故障信息个数
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

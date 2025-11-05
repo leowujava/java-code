@@ -9,6 +9,9 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import java.util.ArrayList;
 
 /**
+ * 最高报警等级无效
+ * 0xFF
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *

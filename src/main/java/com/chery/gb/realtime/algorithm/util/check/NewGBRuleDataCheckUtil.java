@@ -65,8 +65,9 @@ public class NewGBRuleDataCheckUtil {
                     GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
                 }
             }
-        }catch (GbException e){
-            e.printStackTrace();
+        } catch (GbException e) {
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
         }
     }
 

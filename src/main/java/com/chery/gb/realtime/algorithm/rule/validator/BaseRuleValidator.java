@@ -14,10 +14,12 @@ import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author wugaoyang
@@ -27,7 +29,7 @@ import java.util.Map;
 public abstract class BaseRuleValidator {
 
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
+//        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (preCondition != null) {
@@ -75,9 +77,10 @@ public abstract class BaseRuleValidator {
      */
     protected static boolean checkNullByGroup(Map<String, Object> signalMap, SignalGroupEnum signalGroupEnum) {
         List<SignalEnum> byGroup = SignalEnum.getByGroup(signalGroupEnum);
-        boolean flag = true;
+        boolean flag = CollectionUtils.isNotEmpty(byGroup);
         for (SignalEnum signalEnum : byGroup) {
-            flag = signalMap.get(signalEnum.getCode()) == null;
+            Object o = signalMap.get(signalEnum.getCode());
+            flag = Objects.equals(o, null) || Objects.equals("", o);
             if (!flag) {
                 break;
             }

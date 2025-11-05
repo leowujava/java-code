@@ -110,6 +110,10 @@ public enum SignalEnum {
         return group;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static List<SignalEnum> getByGroup(SignalGroupEnum group) {
         List<SignalEnum> signalGroups = new ArrayList();
         for (SignalEnum value : SignalEnum.values()) {

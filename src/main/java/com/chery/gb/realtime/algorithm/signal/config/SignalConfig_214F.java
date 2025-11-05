@@ -22,8 +22,8 @@ public class SignalConfig_214F extends BaseSignalConfig {
                 .scale(null)
                 .offset(null)
                 .range(null)
-                .max(null)
                 .min(null)
+                .max(null)
                 .errorValue(null)
                 .invalidValue(null)
                 .build();

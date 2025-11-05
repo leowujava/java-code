@@ -101,8 +101,8 @@ public class SignalConfigTest {
                 "                .scale(null)\n" +
                 "                .offset(null)\n" +
                 "                .range(null)\n" +
-                "                .max(null)\n" +
                 "                .min(null)\n" +
+                "                .max(null)\n" +
                 "                .errorValue(null)\n" +
                 "                .invalidValue(null)\n" +
                 "                .build();\n" +

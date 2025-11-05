@@ -64,7 +64,7 @@ public abstract class BaseRuleValidator {
         RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
         NewGbRuleCodeEnum rule = declaredAnnotation.rule();
         if (declaredAnnotation != null) {
-            desc = rule.getDesc();
+            desc = rule.getName() + ":" + rule.getDesc();
         } else if (config != null) {
             desc = config.getDesc();
         }

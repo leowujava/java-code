@@ -1,11 +1,15 @@
 package com.chery.gb.realtime.algorithm.rule.config;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.RuleRelationEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleSymbolEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
+import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
+import com.chery.gb.realtime.algorithm.signal.factory.SignalConfigFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +132,7 @@ public class CommonCondition {
         ruleConditionBO.setDesc("充电状态异常");
         return ruleConditionBO;
     }
+
     /**
      * 充电状态有效范围[1,2,3,4]
      *
@@ -170,6 +175,94 @@ public class CommonCondition {
         condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("1").detailRelation(RuleRelationEnum.AND.name()).build());
         condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("4").detailRelation(RuleRelationEnum.AND.name()).build());
         ruleConditionBO.setConditions(condition);
+        return ruleConditionBO;
+    }
+
+    /**
+     * 构建空值条件
+     *
+     * @param signalEnum
+     * @return
+     */
+    public static RuleConditionBO buildNullCondition(SignalEnum signalEnum) {
+        RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        List<RuleDetailBO> condition = new ArrayList<>();
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).detailRelation(RuleRelationEnum.AND.name()).build());
+        ruleConditionBO.setConditions(condition);
+        return ruleConditionBO;
+    }
+
+    /**
+     * 构建异常值条件
+     *
+     * @param signalEnum
+     * @return
+     */
+    public static RuleConditionBO buildErrorCondition(SignalEnum signalEnum) {
+        RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        List<RuleDetailBO> condition = new ArrayList<>();
+        BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
+        if (signalConfig == null || signalConfig.getSignalConfigBO() == null) {
+            return ruleConditionBO;
+        }
+        SignalConfigBO signalConfigBO = signalConfig.getSignalConfigBO();
+        String errorValue = signalConfigBO.getErrorValue();
+        if (StrUtil.isBlank(errorValue)) {
+            return ruleConditionBO;
+        }
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue(errorValue).detailRelation(RuleRelationEnum.AND.name()).build());
+        ruleConditionBO.setConditions(condition);
+        return ruleConditionBO;
+    }
+
+    /**
+     * 构建无效值条件
+     *
+     * @param signalEnum
+     * @return
+     */
+    public static RuleConditionBO buildInvalidCondition(SignalEnum signalEnum) {
+        RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        List<RuleDetailBO> condition = new ArrayList<>();
+        BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
+        if (signalConfig == null || signalConfig.getSignalConfigBO() == null) {
+            return ruleConditionBO;
+        }
+        SignalConfigBO signalConfigBO = signalConfig.getSignalConfigBO();
+        String invalidValue = signalConfigBO.getInvalidValue();
+        if (StrUtil.isBlank(invalidValue)) {
+            return ruleConditionBO;
+        }
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue(invalidValue).detailRelation(RuleRelationEnum.AND.name()).build());
+        ruleConditionBO.setConditions(condition);
+        return ruleConditionBO;
+    }
+
+    /**
+     * 构建有效值范围条件
+     *
+     * @param signalEnum
+     * @param isReturn
+     * @return
+     */
+    public static RuleConditionBO buildRangeCondition(SignalEnum signalEnum, boolean isReturn) {
+        RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        ruleConditionBO.setReturn(isReturn);
+        List<RuleDetailBO> condition = new ArrayList<>();
+        BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
+        if (signalConfig == null || signalConfig.getSignalConfigBO() == null) {
+            return ruleConditionBO;
+        }
+        SignalConfigBO signalConfigBO = signalConfig.getSignalConfigBO();
+        Integer max = signalConfigBO.getMax();
+        Integer min = signalConfigBO.getMin();
+        if (max == null || min == null) {
+            return ruleConditionBO;
+        }
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.GT.name()).signalValue(String.valueOf(max)).detailRelation(RuleRelationEnum.OR.name()).build());
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.LT.name()).signalValue(String.valueOf(min)).detailRelation(RuleRelationEnum.OR.name()).build());
+        ruleConditionBO.setConditions(condition);
+        ruleConditionBO.setDesc(signalEnum.getName() + "无定义");
         return ruleConditionBO;
     }
 }

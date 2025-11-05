@@ -1,6 +1,7 @@
 package com.chery.gb.realtime.algorithm.rule.validator;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
@@ -10,7 +11,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
@@ -29,17 +30,19 @@ import java.util.Objects;
 public abstract class BaseRuleValidator {
 
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-//        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
+        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
-        if (preCondition != null) {
-            boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, preCondition);
-            checkPreReturn(flag);
+        if (CollectionUtils.isNotEmpty(preCondition)) {
+            boolean preFlag = GbRuleCheckUtil.checkByCondition(signalMap, preCondition, retData, null);
+            checkPreReturn(preFlag);
+            if (preFlag) {
+                return;
+            }
         }
         List<RuleDetailBO> condition = config.getCondition();
-        if (condition != null) {
-            boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition);
-            wrapErrorData(retData, flag);
+        if (CollectionUtils.isNotEmpty(condition)) {
+            boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition, retData, getRuleCode());
             checkReturn(flag);
         }
     }
@@ -47,15 +50,28 @@ public abstract class BaseRuleValidator {
     public void checkPreReturn(boolean flag) {
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
         if ((config != null && config.isPreReturn() && flag) || (config == null && flag)) {
+            String preDesc = config.getPreDesc();
+            if (StrUtil.isNotBlank(preDesc)) {
+                System.out.println(getClass().getName() + ":" + preDesc);
+            }
             throw new GbException(config.getPreDesc());
         }
     }
 
     public void checkReturn(boolean flag) {
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
+        String desc = "";
+        RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
+        NewGbRuleCodeEnum rule = declaredAnnotation.rule();
+        if (declaredAnnotation != null) {
+            desc = rule.getDesc();
+        } else if (config != null) {
+            desc = config.getDesc();
+        }
+        if (StrUtil.isNotBlank(desc) && flag) {
+            System.out.println(getClass().getName() + ":" + desc);
+        }
         if ((config != null && config.isReturn() && flag) || (config == null && flag)) {
-            RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
-            NewGbRuleCodeEnum rule = declaredAnnotation.rule();
             if (declaredAnnotation != null) {
                 throw new GbException(rule);
             }
@@ -103,6 +119,7 @@ public abstract class BaseRuleValidator {
 
     /**
      * 获取配置
+     *
      * @param ruleMap
      * @return
      */

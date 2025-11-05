@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.enums;
 
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
 
 import java.util.ArrayList;
 import java.util.List;

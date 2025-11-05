@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter215C extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_215C)
+public class SignalConverter215C extends BaseSignalConverter {
     @Override
     public Object convert(Object signal215CObj) {
         //总电压 0x215C scale: 10

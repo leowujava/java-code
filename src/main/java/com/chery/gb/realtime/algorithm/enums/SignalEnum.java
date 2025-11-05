@@ -78,8 +78,8 @@ public enum SignalEnum {
     SIGNAL_220F("220F", "可充电储能子系统各温度探针检测到的温度值", null, new SignalConverter220F(), "1BC3"),
     SIGNAL_21AB("21AB", "运行模式", null, null, null),
     SIGNAL_219F("219F", "曲轴转速", null, null, null),
-    SIGNAL_2159("2159", "可充电储能装置电流", SignalGroupEnum.MINIMUM_PARALLEL_UNIT_VOLTAGE, null, null),
-    SIGNAL_2158("2158", "可充电储能装置电压", SignalGroupEnum.MINIMUM_PARALLEL_UNIT_VOLTAGE, null, null),
+    SIGNAL_2159("2159", "可充电储能装置电流", null, null, null),
+    SIGNAL_2158("2158", "可充电储能装置电压", null, null, null),
     SIGNAL_200F("200F", "发动机状态", null, null, null),
     SIGNAL_220D("220D", "燃料消耗率", null, new SignalConverter220D(), null),
     SIGNAL_1BC1("1BC1", "驱动电机列表", null, null, null),
@@ -91,10 +91,10 @@ public enum SignalEnum {
     private String code;
     private String name;
     private SignalGroupEnum group;
-    private SignalBaseConverter converter;
+    private BaseSignalConverter converter;
     private String parent;
 
-    SignalEnum(String code, String name, SignalGroupEnum group, SignalBaseConverter converter, String parent) {
+    SignalEnum(String code, String name, SignalGroupEnum group, BaseSignalConverter converter, String parent) {
         this.code = code;
         this.name = name;
         this.group = group;
@@ -129,7 +129,7 @@ public enum SignalEnum {
         return null;
     }
 
-    public SignalBaseConverter getConverter() {
+    public BaseSignalConverter getConverter() {
         return converter;
     }
 

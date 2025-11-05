@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter207A extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_207A)
+public class SignalConverter207A extends BaseSignalConverter {
     @Override
     public Object convert(Object signal207AObj) {
         //GPS经度 0x207A scale: 1000000 offset: 180

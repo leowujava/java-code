@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
+import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
@@ -24,8 +25,7 @@ public class RuleConfig_1 extends BaseConfig {
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
         List<RuleDetailBO> conditions = new ArrayList<>();
-        ruleConfigBO.setConditions(conditions);
-        ruleConfigBO.setReturn(false);
+        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());
         return ruleConfigBO;
     }
 

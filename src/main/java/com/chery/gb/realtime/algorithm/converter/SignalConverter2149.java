@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter2149 extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_2149)
+public class SignalConverter2149 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal2149Obj) {
         //电池单体电压最低值 0x2149 scale: 1000
@@ -18,7 +21,6 @@ public class SignalConverter2149 extends SignalBaseConverter {
             //System.out.println("信号：2149 scale: 1000 转换前："+signal2149Obj.toString()+" 转换后："+signal2149);
             return signal2149;
         }
-
         return signal2149Obj;
     }
 

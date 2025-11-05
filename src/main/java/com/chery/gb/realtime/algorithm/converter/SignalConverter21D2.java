@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter21D2 extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_21D2)
+public class SignalConverter21D2 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal21D2Obj) {
         //驱动电机温度 0x21D2 offset: 40

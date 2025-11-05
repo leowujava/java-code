@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import lombok.extern.slf4j.Slf4j;
 

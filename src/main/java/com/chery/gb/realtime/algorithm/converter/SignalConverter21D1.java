@@ -1,13 +1,16 @@
 package com.chery.gb.realtime.algorithm.converter;
 
 
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.bo.ConvertBO;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 /**
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter21D1 extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_21D1)
+public class SignalConverter21D1 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal21D1Obj) {
         //驱动电机转矩 0x21D1 offset: 20000 scale: 10

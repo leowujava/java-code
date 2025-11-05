@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
+import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
@@ -24,8 +25,7 @@ public class RuleConfig_VehicleStateIsNull extends BaseConfig {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
         ArrayList<RuleDetailBO> conditions = new ArrayList<>();
         conditions.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.EQ.name()).detailRelation(RuleRelationEnum.AND.name()).build());
-        ruleConfigBO.setConditions(conditions);
-        ruleConfigBO.setReturn(true);
+        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(true).build());
         return ruleConfigBO;
     }
 

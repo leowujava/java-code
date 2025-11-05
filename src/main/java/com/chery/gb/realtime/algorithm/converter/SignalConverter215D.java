@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -10,7 +12,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter215D extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_215D)
+public class SignalConverter215D extends BaseSignalConverter {
     @Override
     public Object convert(Object signal215DObj) {
         //总电流 0x215D offset:1000 scale: 10

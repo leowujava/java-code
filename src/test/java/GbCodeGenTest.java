@@ -17,8 +17,8 @@ public class GbCodeGenTest {
             String[] split = line.split("\t");
             System.out.println("RULE_CODE_" + split[0] + "(\"" + split[0] + "\",\"" + split[1] + "\",\"" + split[2] + "\",\"" + split[3] + "\",\"" + split[4] + "\"),");
 //            System.out.println("newGbRuleCodeEnums.add(RULE_CODE_"+split[0]+");");
-//            genConfigFile(split[0], split[1], split[2]);
-            genValidateFile(split[0], split[1]);
+            genConfigFile(split[0], split[1], split[2]);
+//            genValidateFile(split[0], split[1]);
             line = br.readLine();
         }
     }
@@ -44,7 +44,7 @@ public class GbCodeGenTest {
                 " *\n" +
                 " */\n" +
                 "@RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_" + ruleCode + ")\n" +
-                "public class RuleValidator_"+ ruleCode +" extends BaseRuleValidator {\n" +
+                "public class RuleValidator_" + ruleCode + " extends BaseRuleValidator {\n" +
                 "    @Override\n" +
                 "    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {\n" +
                 "        super.validate(signalMap, ruleMap, retData);\n" +
@@ -63,6 +63,7 @@ public class GbCodeGenTest {
                 "\n" +
                 "\n" +
                 "import com.chery.gb.realtime.algorithm.anotation.RuleConfig;\n" +
+                "import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;\n" +
                 "import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;\n" +
@@ -72,7 +73,7 @@ public class GbCodeGenTest {
                 "\n" +
                 "/**\n" +
                 " * " + name + "\n" +
-                " * " +  desc + "\n" +
+                " * " + desc + "\n" +
                 " * \n" +
                 " * @author wugaoyang\n" +
                 " * @date 2025/11/4 星期二\n" +
@@ -85,8 +86,7 @@ public class GbCodeGenTest {
                 "    public RuleConfigBO getRuleConfigBO() {\n" +
                 "        RuleConfigBO ruleConfigBO = new RuleConfigBO();\n" +
                 "        List<RuleDetailBO> conditions = new ArrayList<>();\n" +
-                "        ruleConfigBO.setConditions(conditions);\n" +
-                "        ruleConfigBO.setReturn(false);\n" +
+                "        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());\n" +
                 "        return ruleConfigBO;\n" +
                 "    }\n" +
                 "\n" +

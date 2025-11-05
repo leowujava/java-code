@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
 
 import java.util.List;

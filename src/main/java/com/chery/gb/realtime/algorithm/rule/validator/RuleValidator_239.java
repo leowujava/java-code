@@ -6,8 +6,6 @@ import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
-import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,6 @@ public class RuleValidator_239 extends BaseRuleValidator {
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         super.validate(signalMap, ruleMap, retData);
         boolean flag = checkNullByGroup(signalMap, SignalGroupEnum.HOLE_VEHICLE);
-        wrapErrorData(retData, flag);
         checkReturn(flag);
     }
 

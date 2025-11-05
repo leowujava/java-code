@@ -2,6 +2,8 @@ package com.chery.gb.realtime.algorithm.converter;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ import java.util.Objects;
  * @author wugaoyang
  * @date 2025/7/14 星期一
  */
-public class SignalConverter2145 extends SignalBaseConverter {
+@SignalConverter(SignalEnum.SIGNAL_2145)
+public class SignalConverter2145 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal2145Obj) {
         //最低温度值 0x2145 offset: 40

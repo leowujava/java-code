@@ -13,10 +13,24 @@ import java.util.List;
  */
 @Data
 public class RuleConfigBO {
-    //前置条件
+    /**
+     * 前置条件
+     */
     private List<RuleDetailBO> preConditions;
-    //校验条件
+    /**
+     * 校验条件
+     */
     private List<RuleDetailBO> conditions;
-    //是否中断流程返回
+    /**
+     * 是否中断流程返回-前置条件
+     */
+    private boolean isPreReturn;
+    /**
+     * 是否中断流程返回-校验条件
+     */
     private boolean isReturn;
+    /**
+     * 前置条件描述
+     */
+    private String preDesc;
 }

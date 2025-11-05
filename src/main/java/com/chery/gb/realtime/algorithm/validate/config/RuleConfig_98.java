@@ -7,6 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 车载氢系统中最高温度探针代号异常
@@ -22,7 +23,7 @@ public class RuleConfig_98 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+        List<RuleDetailBO> conditions = new ArrayList<>();
         ruleConfigBO.setConditions(conditions);
         ruleConfigBO.setReturn(false);
         return ruleConfigBO;

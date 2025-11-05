@@ -379,7 +379,7 @@ public enum NewGbRuleCodeEnum {
         newGbRuleCodeEnums.add(RULE_CODE_258);
 
         //前置状态检测
-        newGbRuleCodeEnums.add(RULE_CODE_VEHICLE_STATE_IS_NULL);
+//        newGbRuleCodeEnums.add(RULE_CODE_VEHICLE_STATE_IS_NULL);
         newGbRuleCodeEnums.add(RULE_CODE_22);
         newGbRuleCodeEnums.add(RULE_CODE_23);
         newGbRuleCodeEnums.add(RULE_CODE_24);
@@ -388,7 +388,7 @@ public enum NewGbRuleCodeEnum {
         newGbRuleCodeEnums.add(RULE_CODE_25);
         newGbRuleCodeEnums.add(RULE_CODE_26);
         newGbRuleCodeEnums.add(RULE_CODE_27);
-        newGbRuleCodeEnums.add(RULE_CODE_VEHICLE_CHARGING_STATE_CHECK);
+//        newGbRuleCodeEnums.add(RULE_CODE_VEHICLE_CHARGING_STATE_CHECK);
 
         //基础项检测
         //燃料电池数据检测

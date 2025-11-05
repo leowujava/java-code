@@ -7,6 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 可充电储能装置故障总数 N1无效
@@ -22,7 +23,7 @@ public class RuleConfig_165 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+        List<RuleDetailBO> conditions = new ArrayList<>();
         ruleConfigBO.setConditions(conditions);
         ruleConfigBO.setReturn(false);
         return ruleConfigBO;

@@ -17,13 +17,13 @@ public class GbCodeGenTest {
             String[] split = line.split("\t");
             System.out.println("RULE_CODE_" + split[0] + "(\"" + split[0] + "\",\"" + split[1] + "\",\"" + split[2] + "\",\"" + split[3] + "\",\"" + split[4] + "\"),");
 //            System.out.println("newGbRuleCodeEnums.add(RULE_CODE_"+split[0]+");");
-            genConfigFile(split[0], split[1], split[2]);
-//            genValidateFile(split[0]);
+//            genConfigFile(split[0], split[1], split[2]);
+            genValidateFile(split[0], split[1]);
             line = br.readLine();
         }
     }
 
-    private static void genValidateFile(String ruleCode) throws IOException {
+    private static void genValidateFile(String ruleCode, String name) throws IOException {
 
         String content = "package com.chery.gb.realtime.algorithm.validate.rule;\n" +
                 "\n" +
@@ -37,19 +37,21 @@ public class GbCodeGenTest {
                 "import java.util.Map;\n" +
                 "\n" +
                 "/**\n" +
+                " * " + name + "\n" +
+                " * \n" +
                 " * @author wugaoyang\n" +
                 " * @date 2025/11/3 星期一\n" +
                 " *\n" +
                 " */\n" +
                 "@RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_" + ruleCode + ")\n" +
-                "public class RuleValidate_"+ ruleCode +" extends BaseRuleValidate {\n" +
+                "public class RuleValidator_"+ ruleCode +" extends BaseRuleValidator {\n" +
                 "    @Override\n" +
                 "    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {\n" +
-                "\n" +
+                "        super.validate(signalMap, ruleMap, retData);\n" +
                 "    }\n" +
                 "}\n";
 
-        File file = new File("./validate", "RuleValidate_" + ruleCode + ".java");
+        File file = new File("./validate", "RuleValidator_" + ruleCode + ".java");
         FileWriter fw = new FileWriter(file);
         fw.write(content);
         fw.close();
@@ -66,6 +68,7 @@ public class GbCodeGenTest {
                 "import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;\n" +
                 "\n" +
                 "import java.util.ArrayList;\n" +
+                "import java.util.List;\n" +
                 "\n" +
                 "/**\n" +
                 " * " + name + "\n" +
@@ -81,7 +84,7 @@ public class GbCodeGenTest {
                 "    @Override\n" +
                 "    public RuleConfigBO getRuleConfigBO() {\n" +
                 "        RuleConfigBO ruleConfigBO = new RuleConfigBO();\n" +
-                "        ArrayList<RuleDetailBO> conditions = new ArrayList<>();\n" +
+                "        List<RuleDetailBO> conditions = new ArrayList<>();\n" +
                 "        ruleConfigBO.setConditions(conditions);\n" +
                 "        ruleConfigBO.setReturn(false);\n" +
                 "        return ruleConfigBO;\n" +

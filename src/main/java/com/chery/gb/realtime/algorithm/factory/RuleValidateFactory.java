@@ -2,9 +2,7 @@ package com.chery.gb.realtime.algorithm.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
-import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidate;
-import com.chery.gb.realtime.algorithm.validate.rule.RuleValidate_1;
+import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidator;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -21,14 +19,14 @@ import java.util.Set;
  */
 public class RuleValidateFactory {
 
-    private static volatile Map<String, BaseRuleValidate> ruleValidateMap = null;
+    private static volatile Map<String, BaseRuleValidator> ruleValidateMap = null;
 
     private RuleValidateFactory() {
     }
 
     private static void init() {
         ruleValidateMap = new HashMap();
-        Reflections reflections = new Reflections(RuleValidate_1.class.getPackage().getName(), Scanners.TypesAnnotated);
+        Reflections reflections = new Reflections(BaseRuleValidator.class.getPackage().getName(), Scanners.TypesAnnotated);
 
         // 找出所有带有 @RuleValidate 注解的类
         Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(RuleValidate.class);
@@ -41,7 +39,7 @@ public class RuleValidateFactory {
             annotatedClasses.forEach(clazz -> {
                 System.out.println(" - " + clazz.getName());
                 try {
-                    ruleValidateMap.put(clazz.getDeclaredAnnotation(RuleValidate.class).rule().getCode(), (BaseRuleValidate) clazz.newInstance());
+                    ruleValidateMap.put(clazz.getDeclaredAnnotation(RuleValidate.class).rule().getCode(), (BaseRuleValidator) clazz.newInstance());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -50,7 +48,7 @@ public class RuleValidateFactory {
 
     }
 
-    public static BaseRuleValidate getRuleValidate(String ruleCode) {
+    public static BaseRuleValidator getRuleValidate(String ruleCode) {
         if (ruleValidateMap == null) {
             synchronized (RuleValidateFactory.class) {
                 if (ruleValidateMap == null) {

@@ -7,6 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 30 秒内里程跳变大于 4 公里
@@ -22,7 +23,7 @@ public class RuleConfig_270 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+        List<RuleDetailBO> conditions = new ArrayList<>();
         ruleConfigBO.setConditions(conditions);
         ruleConfigBO.setReturn(false);
         return ruleConfigBO;

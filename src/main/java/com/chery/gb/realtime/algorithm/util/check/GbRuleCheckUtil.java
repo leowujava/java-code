@@ -134,46 +134,9 @@ public class GbRuleCheckUtil {
         }
         BaseConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
 
-        Boolean flag0 = null;
-        if (config != null && CollectionUtil.isNotEmpty(config.getPreCondition())) {
-                for (RuleDetailBO ruleDetailBO : config.getPreCondition()) {
-                    String signalId = ruleDetailBO.getSignalId();
-                    SignalEnum signal = SignalEnum.getByCode(signalId);
-                    if (signal != null && StrUtil.isNotBlank(signal.getParent())) {
-                        Object o = signalMap.get(signal.getParent());
-                        if (Objects.isNull(o)) {
-                            flag0 = validateRule(ruleDetailBO, "", flag0);
-                            continue;
-                        }
-                        if (o instanceof List) {
-                            List<?> list = (List<?>) o;
-                            Boolean flag2 = null;
-                            for (Object item : list) {
-                                JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(item));
-                                Object signalValue = jsonObject.get(signalId);
-                                Object value = signalValue;
-                                if (!Objects.isNull(signalValue) && signalValue instanceof List) {
-                                    if (((List<?>) signalValue).size() == 0) {
-                                        value = null;
-                                    }
-                                }
-                                flag2 = validateRule(ruleDetailBO, String.valueOf(value), flag2);
-                                if (flag0 == null) {
-                                    flag0 = flag2;
-                                } else {
-                                    flag0 = flag2 || flag0;
-                                }
-                            }
-                        }
-                    } else {
-                        Object signalValue = signalMap.get(signalId);
-                        flag0 = validateRule(ruleDetailBO, String.valueOf(signalValue), flag0);
-                    }
-                }
-            }
-            if (!flag0) {
-                return false;
-            }
+        if (config != null && checkByCondition(signalMap, config.getPreCondition())) {
+            return false;
+        }
 
         JSONObject resultDetailData = new JSONObject();
         resultDetailData.put("ruleCode", ruleCode);
@@ -229,5 +192,49 @@ public class GbRuleCheckUtil {
             retData.add(resultDetailData);
         }
         return flag == null ? true : flag;
+    }
+
+    public static boolean checkByCondition(Map<String, Object> signalMap, List<RuleDetailBO> condition) {
+        Boolean flag0 = null;
+            if (CollectionUtil.isNotEmpty(condition)) {
+                for (RuleDetailBO ruleDetailBO : condition) {
+                    String signalId = ruleDetailBO.getSignalId();
+                    SignalEnum signal = SignalEnum.getByCode(signalId);
+                    if (signal != null && StrUtil.isNotBlank(signal.getParent())) {
+                        Object o = signalMap.get(signal.getParent());
+                        if (Objects.isNull(o)) {
+                            flag0 = validateRule(ruleDetailBO, "", flag0);
+                            continue;
+                        }
+                        if (o instanceof List) {
+                            List<?> list = (List<?>) o;
+                            Boolean flag2 = null;
+                            for (Object item : list) {
+                                JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(item));
+                                Object signalValue = jsonObject.get(signalId);
+                                Object value = signalValue;
+                                if (!Objects.isNull(signalValue) && signalValue instanceof List) {
+                                    if (((List<?>) signalValue).size() == 0) {
+                                        value = null;
+                                    }
+                                }
+                                flag2 = validateRule(ruleDetailBO, String.valueOf(value), flag2);
+                                if (flag0 == null) {
+                                    flag0 = flag2;
+                                } else {
+                                    flag0 = flag2 || flag0;
+                                }
+                            }
+                        }
+                    } else {
+                        Object signalValue = signalMap.get(signalId);
+                        flag0 = validateRule(ruleDetailBO, String.valueOf(signalValue), flag0);
+                    }
+                }
+            }
+        if (flag0!=null && flag0) {
+            return true;
+        }
+        return false;
     }
 }

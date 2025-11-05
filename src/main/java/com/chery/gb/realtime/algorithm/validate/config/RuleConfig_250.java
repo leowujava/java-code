@@ -7,6 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 车辆状态为熄火车速不为 0
@@ -22,7 +23,7 @@ public class RuleConfig_250 extends BaseConfig {
     @Override
     public RuleConfigBO getRuleConfigBO() {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ArrayList<RuleDetailBO> conditions = new ArrayList<>();
+        List<RuleDetailBO> conditions = new ArrayList<>();
         ruleConfigBO.setConditions(conditions);
         ruleConfigBO.setReturn(false);
         return ruleConfigBO;

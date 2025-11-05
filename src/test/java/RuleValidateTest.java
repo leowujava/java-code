@@ -4,7 +4,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
-import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidate;
+import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidator;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class RuleValidateTest {
     public void test() {
         NewGbRuleCodeEnum ruleCode1 = NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL;
 
-        BaseRuleValidate ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode1.getCode());
+        BaseRuleValidator ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode1.getCode());
         JSONArray retData = new JSONArray();
         if (ruleValidate != null) {
             try {

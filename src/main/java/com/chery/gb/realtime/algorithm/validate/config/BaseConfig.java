@@ -23,7 +23,15 @@ public abstract class BaseConfig {
         return getRuleConfigBO().getPreConditions();
     }
 
+    public String getPreDesc(){
+        return getRuleConfigBO().getPreDesc();
+    }
+
     public boolean isReturn() {
+        return getRuleConfigBO().isReturn();
+    }
+
+    public boolean isPreReturn() {
         return getRuleConfigBO().isReturn();
     }
 

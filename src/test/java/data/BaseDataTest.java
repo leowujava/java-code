@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class BaseDataTest {
 
-    public SignalBO getTmpl() throws IOException {
+    public static SignalBO getTmpl() throws IOException {
 
         String filePath = "./data/data-tmpl.json"; // 你的JSON文件路径
 //        String path = new File(filePath).getPath();

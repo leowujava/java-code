@@ -25,7 +25,7 @@ public class RuleConfig_239 extends BaseConfig {
         RuleConfigBO ruleConfigBO = new RuleConfigBO();
         List<RuleDetailBO> conditions = new ArrayList<>();
         ruleConfigBO.setConditions(conditions);
-        ruleConfigBO.setReturn(false);
+        ruleConfigBO.setReturn(true);
         return ruleConfigBO;
     }
 

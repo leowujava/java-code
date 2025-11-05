@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.factory;
+package com.chery.gb.realtime.algorithm.rule.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
@@ -35,9 +35,9 @@ public class RuleValidateFactory {
         if (annotatedClasses.isEmpty()) {
             System.out.println("未找到带有 @RuleValidate 的类");
         } else {
-            System.out.println("找到以下类：");
+//            System.out.println("找到以下类：");
             annotatedClasses.forEach(clazz -> {
-                System.out.println(" - " + clazz.getName());
+//                System.out.println(" - " + clazz.getName());
                 try {
                     ruleValidateMap.put(clazz.getDeclaredAnnotation(RuleValidate.class).rule().getCode(), (BaseRuleValidator) clazz.newInstance());
                 } catch (Exception e) {

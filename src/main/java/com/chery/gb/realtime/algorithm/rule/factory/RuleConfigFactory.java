@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.factory;
+package com.chery.gb.realtime.algorithm.rule.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
@@ -36,9 +36,9 @@ public class RuleConfigFactory {
         if (annotatedClasses.isEmpty()) {
             System.out.println("未找到带有 @RuleConfig 的类");
         } else {
-            System.out.println("找到以下类：");
+//            System.out.println("找到以下类：");
             annotatedClasses.forEach(clazz -> {
-                System.out.println(" - " + clazz.getName());
+//                System.out.println(" - " + clazz.getName());
                 try {
                     ruleConfigMap.put(clazz.getDeclaredAnnotation(RuleConfig.class).rule().getCode(), (BaseConfig) clazz.newInstance());
                 } catch (Exception e) {

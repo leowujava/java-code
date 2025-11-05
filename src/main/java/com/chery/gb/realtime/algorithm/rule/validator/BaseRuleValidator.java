@@ -10,7 +10,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
@@ -27,6 +27,7 @@ import java.util.Map;
 public abstract class BaseRuleValidator {
 
     public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (preCondition != null) {
@@ -36,6 +37,7 @@ public abstract class BaseRuleValidator {
         List<RuleDetailBO> condition = config.getCondition();
         if (condition != null) {
             boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition);
+            wrapErrorData(retData, flag);
             checkReturn(flag);
         }
     }
@@ -94,5 +96,15 @@ public abstract class BaseRuleValidator {
             Map<String, Object> gbValueMap = new HashMap<>();
             retData.add(JSONObject.parseObject(JSON.toJSONString(RetDataUtil.buildRetMap(getRuleCode(), gbValueMap))));
         }
+    }
+
+    /**
+     * 获取配置
+     * @param ruleMap
+     * @return
+     */
+    protected BaseConfig getConfig(Map<String, Map<String, List<RuleDetailBO>>> ruleMap) {
+        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
+        return config;
     }
 }

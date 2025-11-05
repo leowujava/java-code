@@ -2,7 +2,7 @@ package com.chery.gb.realtime.algorithm.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
-import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidator;
+import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 

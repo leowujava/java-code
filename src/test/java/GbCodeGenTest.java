@@ -25,7 +25,7 @@ public class GbCodeGenTest {
 
     private static void genValidateFile(String ruleCode, String name) throws IOException {
 
-        String content = "package com.chery.gb.realtime.algorithm.validate.rule;\n" +
+        String content = "package com.chery.gb.realtime.algorithm.rule.validator;\n" +
                 "\n" +
                 "\n" +
                 "import com.alibaba.fastjson2.JSONArray;\n" +
@@ -59,7 +59,7 @@ public class GbCodeGenTest {
 
     private static void genConfigFile(String ruleCode, String name, String desc) throws IOException {
 
-        String content = "package com.chery.gb.realtime.algorithm.validate.config;\n" +
+        String content = "package com.chery.gb.realtime.algorithm.rule.config;\n" +
                 "\n" +
                 "\n" +
                 "import com.chery.gb.realtime.algorithm.anotation.RuleConfig;\n" +

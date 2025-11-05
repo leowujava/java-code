@@ -4,13 +4,12 @@ package com.chery.gb.realtime.algorithm.factory;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.validate.config.BaseConfig;
-import com.chery.gb.realtime.algorithm.validate.config.RuleConfig_VehicleStateIsNull;
+import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
+import com.chery.gb.realtime.algorithm.rule.config.RuleConfig_VehicleStateIsNull;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 规则配置工厂

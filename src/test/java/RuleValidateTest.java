@@ -4,7 +4,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
-import com.chery.gb.realtime.algorithm.validate.rule.BaseRuleValidator;
+import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import org.junit.Test;
 
 import java.util.HashMap;

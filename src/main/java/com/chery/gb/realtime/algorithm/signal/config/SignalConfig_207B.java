@@ -22,6 +22,8 @@ public class SignalConfig_207B extends BaseSignalConfig {
                 .scale(1000000)
                 .point(6)
                 .offset(90)
+                .min(0)
+                .max(90000000)
                 .build();
     }
 

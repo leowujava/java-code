@@ -3,6 +3,7 @@ package com.chery.gb.realtime.algorithm.signal.factory;
 
 import com.chery.gb.realtime.algorithm.anotation.SignalConfig;
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
 import com.chery.gb.realtime.algorithm.signal.converter.BaseSignalConverter;
@@ -60,5 +61,19 @@ public class SignalConfigFactory {
             }
         }
         return signalConfigMap.get(code);
+    }
+    public static SignalConfigBO getByConfigCode(String code) {
+        if (signalConfigMap == null) {
+            synchronized (SignalConfigFactory.class) {
+                if (signalConfigMap == null) {
+                    init();
+                }
+            }
+        }
+        BaseSignalConfig baseSignalConfig = signalConfigMap.get(code);
+        if (baseSignalConfig == null) {
+            return null;
+        }
+        return baseSignalConfig.getSignalConfigBO();
     }
 }

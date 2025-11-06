@@ -841,8 +841,8 @@ public enum NewGbRuleCodeEnum {
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_149.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_150.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_151.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_154.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_155.getCode(), null);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_154.getCode(), SignalEnum.SIGNAL_207A);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_155.getCode(), SignalEnum.SIGNAL_207B);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_159.getCode(), SignalEnum.SIGNAL_220B);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_160.getCode(), SignalEnum.SIGNAL_220B);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_161.getCode(), SignalEnum.SIGNAL_220B);

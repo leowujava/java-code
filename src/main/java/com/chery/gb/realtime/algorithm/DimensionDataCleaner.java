@@ -53,9 +53,6 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
             System.out.println(DateUtil.now() + " 接受kafka处理前的数据:" + businessData.toJSONString());
 
             Map<String, Object> tboxDataMapTmp = JSON.parseObject(value);
-//            Map<String,Object> tboxDataMap = new HashMap<>();
-            //转成map
-//            tboxDataToMap(tboxDataMapTmp,tboxDataMap);
             //处理偏移量
             SignalUtil.convert(tboxDataMapTmp);
             System.out.println(DateUtil.now() + " 接受kafka处理后的数据:" + JSONObject.toJSONString(tboxDataMapTmp));

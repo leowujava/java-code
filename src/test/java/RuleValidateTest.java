@@ -78,4 +78,18 @@ public class RuleValidateTest {
         NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, ruleMap, retData);
         System.out.println(retData);
     }
+
+    @Test
+    public void test4() throws IOException {
+
+        JSONArray retData = new JSONArray();
+        SignalBO tmpl = BaseDataTest.getTmpl();
+        tmpl = new SignalBO();
+        HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
+        SignalUtil.convert(signalMap);
+        System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));
+        HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
+        NewGBRuleDataCheckUtil.checkDataFromWorkFlow(signalMap, ruleMap, retData);
+        System.out.println(retData);
+    }
 }

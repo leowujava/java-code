@@ -28,7 +28,7 @@ public class CommonCondition {
      *
      * @return
      */
-    public static RuleConditionBO vehicleStateIsNull(boolean isReturn) {
+    public static RuleConditionBO buildVehicleStateIsNull(boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
         List<RuleDetailBO> condition = new ArrayList<>();
         condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue(null).detailRelation(RuleRelationEnum.AND.name()).build());
@@ -78,13 +78,14 @@ public class CommonCondition {
      *
      * @return
      */
-    public static RuleConditionBO vehicleStateNot1_2() {
+    public static RuleConditionBO vehicleStateNot1_2(boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
         List<RuleDetailBO> condition = new ArrayList<>();
         condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("1").detailRelation(RuleRelationEnum.AND.name()).build());
         condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("2").detailRelation(RuleRelationEnum.AND.name()).build());
         ruleConditionBO.setConditions(condition);
         ruleConditionBO.setDesc("车辆状态非 1 启动且非 2 熄火");
+        ruleConditionBO.setReturn(isReturn);
         return ruleConditionBO;
     }
 

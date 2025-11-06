@@ -2,10 +2,12 @@ package com.chery.gb.realtime.algorithm.util.check;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
+import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlow;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
+import com.chery.gb.realtime.algorithm.util.RuleValidateWorkFlowUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -82,4 +84,14 @@ public class NewGBRuleDataCheckUtil {
             }
         }
     }
+
+    //新国标数据治理校验流程（工作流模式）
+    public static void checkDataFromWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+        try {
+            RuleValidateWorkFlowUtil.run(signalMap, ruleMap, retData);
+        } catch (GbException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

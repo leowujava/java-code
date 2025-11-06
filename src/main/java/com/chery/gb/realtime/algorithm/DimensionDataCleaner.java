@@ -65,7 +65,6 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
             }
         } catch (Exception e) {
             e.printStackTrace();
-            e.printStackTrace();
             System.out.println(DateUtil.now() + " 清洗数据异常:" + e);
         }
 

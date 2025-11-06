@@ -730,12 +730,12 @@ public enum NewGbRuleCodeEnum {
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_34.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_35.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_36.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_37.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_38.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_39.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_40.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_41.getCode(), null);
-        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_42.getCode(), null);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_37.getCode(), SignalEnum.SIGNAL_215C);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_38.getCode(), SignalEnum.SIGNAL_215C);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_39.getCode(), SignalEnum.SIGNAL_215C);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_40.getCode(), SignalEnum.SIGNAL_215D);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_41.getCode(), SignalEnum.SIGNAL_215D);
+        signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_42.getCode(), SignalEnum.SIGNAL_215D);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_43.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_44.getCode(), null);
         signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_45.getCode(), null);

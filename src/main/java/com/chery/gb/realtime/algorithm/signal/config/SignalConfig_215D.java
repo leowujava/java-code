@@ -24,6 +24,8 @@ public class SignalConfig_215D extends BaseSignalConfig {
                 .offset(1000)
                 .errorValue("65534")
                 .invalidValue("65535")
+                .min(0)
+                .max(60000)
                 .build();
     }
 

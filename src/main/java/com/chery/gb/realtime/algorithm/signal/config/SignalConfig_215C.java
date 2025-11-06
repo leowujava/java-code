@@ -23,6 +23,8 @@ public class SignalConfig_215C extends BaseSignalConfig {
                 .point(1)
                 .errorValue("65534")
                 .invalidValue("65535")
+                .min(0)
+                .max(60000)
                 .build();
     }
 

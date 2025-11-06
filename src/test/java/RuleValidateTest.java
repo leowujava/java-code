@@ -5,13 +5,14 @@ import com.chery.gb.realtime.algorithm.bo.SignalBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import com.chery.gb.realtime.algorithm.util.SignalUtil;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
-import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import data.BaseDataTest;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,20 @@ public class RuleValidateTest {
         tmpl.set_220C(2);
         tmpl.set_2001(60);
         tmpl.set_21AA(0);
+        HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
+        SignalUtil.convert(signalMap);
+        System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));
+        HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
+        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, ruleMap, retData);
+        System.out.println(retData);
+    }
+
+    @Test
+    public void test3() throws IOException {
+
+        JSONArray retData = new JSONArray();
+        SignalBO tmpl = BaseDataTest.getTmpl();
+        tmpl.set_220B(5);
         HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));

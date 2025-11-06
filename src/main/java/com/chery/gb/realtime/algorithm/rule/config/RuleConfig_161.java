@@ -4,11 +4,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 最高报警等级无定义
@@ -21,12 +17,11 @@ import java.util.List;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_161)
 public class RuleConfig_161 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        List<RuleDetailBO> conditions = new ArrayList<>();
-        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());
-        return ruleConfigBO;
+    public RuleConfig_161() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = buildCondition();
+        ruleConfigBO.setCondition(condition);
     }
+
 
 }

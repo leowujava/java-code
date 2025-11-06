@@ -7,6 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.util.SignalUtil;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 
@@ -79,7 +80,17 @@ public abstract class BaseSignalConfig {
     public boolean validateRange(Map<String, Object> signalMap) {
         String signalCode = getSignalCode();
         Object signalValue = SignalUtil.getSignalValue(signalMap, signalCode);
-        return signalValue == null || StrUtil.isBlank(signalValue.toString());
+        if (signalValue == null) {
+            return false;
+        }
+        if (signalConfigBO == null || signalConfigBO.getMin() == null || signalConfigBO.getMax() == null) {
+            return false;
+        }
+        BigDecimal bigDecimal = new BigDecimal(signalValue.toString());
+        if (bigDecimal.compareTo(new BigDecimal(signalConfigBO.getMin())) <= 0) {
+
+        }
+        return false;
     }
 
     public String getSignalCode() {

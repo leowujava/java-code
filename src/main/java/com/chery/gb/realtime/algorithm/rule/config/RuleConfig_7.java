@@ -4,11 +4,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 动力蓄电池包编码异常
@@ -21,12 +17,10 @@ import java.util.List;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_7)
 public class RuleConfig_7 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        List<RuleDetailBO> conditions = new ArrayList<>();
-        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());
-        return ruleConfigBO;
+    public RuleConfig_7() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = new RuleConditionBO();
+        ruleConfigBO.setCondition(condition);
     }
 
 }

@@ -22,10 +22,10 @@ public class SignalConfig_220B extends BaseSignalConfig {
                 .scale(null)
                 .offset(null)
                 .range(null)
-                .min(null)
-                .max(null)
-                .errorValue(null)
-                .invalidValue(null)
+                .min(1)
+                .max(4)
+                .errorValue("254")
+                .invalidValue("255")
                 .build();
     }
 

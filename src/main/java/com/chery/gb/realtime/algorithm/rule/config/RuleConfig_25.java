@@ -17,12 +17,11 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_25)
 public class RuleConfig_25 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ruleConfigBO.setPreCondition(CommonCondition.chargingStateIsNull(true));
-        ruleConfigBO.setCondition(CommonCondition.chargingStateIsError(false));
-        return ruleConfigBO;
+    public RuleConfig_25() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = buildCondition();
+        ruleConfigBO.setCondition(condition);
     }
+
 
 }

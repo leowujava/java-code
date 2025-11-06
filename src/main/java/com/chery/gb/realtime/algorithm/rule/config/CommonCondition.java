@@ -182,10 +182,15 @@ public class CommonCondition {
      * 构建空值条件
      *
      * @param signalEnum
+     * @param isReturn
      * @return
      */
-    public static RuleConditionBO buildNullCondition(SignalEnum signalEnum) {
+    public static RuleConditionBO buildNullCondition(SignalEnum signalEnum, boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        ruleConditionBO.setReturn(isReturn);
+        if (signalEnum == null) {
+            return ruleConditionBO;
+        }
         List<RuleDetailBO> condition = new ArrayList<>();
         condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).detailRelation(RuleRelationEnum.AND.name()).build());
         ruleConditionBO.setConditions(condition);
@@ -196,10 +201,15 @@ public class CommonCondition {
      * 构建异常值条件
      *
      * @param signalEnum
+     * @param isReturn
      * @return
      */
-    public static RuleConditionBO buildErrorCondition(SignalEnum signalEnum) {
+    public static RuleConditionBO buildErrorCondition(SignalEnum signalEnum, boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        ruleConditionBO.setReturn(isReturn);
+        if (signalEnum == null) {
+            return ruleConditionBO;
+        }
         List<RuleDetailBO> condition = new ArrayList<>();
         BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
         if (signalConfig == null || signalConfig.getSignalConfigBO() == null) {
@@ -219,10 +229,15 @@ public class CommonCondition {
      * 构建无效值条件
      *
      * @param signalEnum
+     * @param isReturn
      * @return
      */
-    public static RuleConditionBO buildInvalidCondition(SignalEnum signalEnum) {
+    public static RuleConditionBO buildInvalidCondition(SignalEnum signalEnum, boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        ruleConditionBO.setReturn(isReturn);
+        if (signalEnum == null) {
+            return ruleConditionBO;
+        }
         List<RuleDetailBO> condition = new ArrayList<>();
         BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
         if (signalConfig == null || signalConfig.getSignalConfigBO() == null) {
@@ -247,6 +262,9 @@ public class CommonCondition {
      */
     public static RuleConditionBO buildRangeCondition(SignalEnum signalEnum, boolean isReturn) {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        if (signalEnum == null) {
+            return ruleConditionBO;
+        }
         ruleConditionBO.setReturn(isReturn);
         List<RuleDetailBO> condition = new ArrayList<>();
         BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());

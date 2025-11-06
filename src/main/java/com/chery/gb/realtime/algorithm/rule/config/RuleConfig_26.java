@@ -4,11 +4,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 充电状态无效
@@ -21,12 +17,11 @@ import java.util.List;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_26)
 public class RuleConfig_26 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        ruleConfigBO.setPreCondition(CommonCondition.chargingStateIsNull(true));
-        ruleConfigBO.setCondition(CommonCondition.chargingStateIsInvalid(false));
-        return ruleConfigBO;
+    public RuleConfig_26() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = buildCondition();
+        ruleConfigBO.setCondition(condition);
     }
+
 
 }

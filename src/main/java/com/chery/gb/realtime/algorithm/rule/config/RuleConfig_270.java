@@ -4,11 +4,7 @@ package com.chery.gb.realtime.algorithm.rule.config;
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 30 秒内里程跳变大于 4 公里
@@ -21,12 +17,10 @@ import java.util.List;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_270)
 public class RuleConfig_270 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        List<RuleDetailBO> conditions = new ArrayList<>();
-        ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).isReturn(false).build());
-        return ruleConfigBO;
+    public RuleConfig_270() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = new RuleConditionBO();
+        ruleConfigBO.setCondition(condition);
     }
 
 }

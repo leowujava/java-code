@@ -59,7 +59,7 @@ public class SignalConfigTest {
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));
         BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(SignalEnum.SIGNAL_220C.getCode());
-        boolean b = signalConfig.validateNull(signalMap);
+        boolean b = signalConfig.validateRange(signalMap);
         System.out.println(b);
     }
 

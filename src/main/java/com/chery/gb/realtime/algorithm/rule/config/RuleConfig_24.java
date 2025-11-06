@@ -9,7 +9,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 /**
  * 车辆状态无定义
  * 不在[0x01、0x02、0x03]范围内
- *
+ * 
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *
@@ -17,12 +17,11 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 @RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_24)
 public class RuleConfig_24 extends BaseConfig {
 
-    @Override
-    public RuleConfigBO getRuleConfigBO() {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
-        RuleConditionBO ruleConditionBO = CommonCondition.vehicleStateNot1_2_3(true);
-        ruleConfigBO.setCondition(ruleConditionBO);
-        return ruleConfigBO;
+    public RuleConfig_24() {
+        ruleConfigBO = new RuleConfigBO();
+        RuleConditionBO condition = buildCondition();
+        ruleConfigBO.setCondition(condition);
     }
+
 
 }

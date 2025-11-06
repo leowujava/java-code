@@ -1,12 +1,9 @@
 package com.chery.gb.realtime.algorithm.signal.converter;
 
 
-import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-
-import java.util.Objects;
 
 /**
  * @author wugaoyang

@@ -40,9 +40,9 @@ public class GbCodeGenTest {
                 continue;
             }
 //            System.out.println(string);
-            System.out.println("signaleMap.put(\"" + ruleCodeEnum.getCode() + "\", null);");
+            System.out.println("signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_" + ruleCodeEnum.getCode() + ".getCode(), null);");
 //            genConfigFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
-            genConfigFile2(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
+//            genConfigFile2(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
         }
     }
 

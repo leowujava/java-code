@@ -18,14 +18,11 @@ import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 public class SignalConfig_215C extends BaseSignalConfig {
 
     public SignalConfig_215C() {
-         signalConfigBO = SignalConfigBO.builder()
-                .scale(null)
-                .offset(null)
-                .range(null)
-                .min(null)
-                .max(null)
-                .errorValue(null)
-                .invalidValue(null)
+        signalConfigBO = SignalConfigBO.builder()
+                .scale(10)
+                .point(1)
+                .errorValue("65534")
+                .invalidValue("65535")
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.chery.gb.realtime.algorithm.signal.converter;
 
 import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.util.Objects;
@@ -16,12 +17,11 @@ public class SignalConverter220D extends BaseSignalConverter {
     @Override
     public Object convert(Object signal220DObj) {
         //燃料消耗率 220D scale: 100
-        if(Objects.nonNull(signal220DObj) && StrUtil.isNotBlank(signal220DObj.toString())){
-            double signal220D = divide(signal220DObj.toString(),100,2);
-            //System.out.println("信号：220D scale: 100 转换前："+signal220DObj.toString()+" 转换后："+signal220D);
-            return signal220D;
-        }
-        return signal220DObj;
+        SignalConfigBO signalConfigBO = SignalConfigBO.builder()
+                .scale(100)
+                .point(2)
+                .build();
+        return convert(signal220DObj, signalConfigBO);
     }
 
 }

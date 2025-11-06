@@ -1,11 +1,9 @@
 package com.chery.gb.realtime.algorithm.signal.converter;
 
 
-import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-
-import java.util.Objects;
 
 /**
  * @author wugaoyang
@@ -16,11 +14,13 @@ public class SignalConverter2001 extends BaseSignalConverter {
     @Override
     public Object convert(Object signal2001Obj) {
         //仪表车速 0x2001 scale: 10
-        if(Objects.nonNull(signal2001Obj) && StrUtil.isNotBlank(signal2001Obj.toString()) && !Objects.equals("65534", signal2001Obj.toString()) && !Objects.equals("65535", signal2001Obj.toString())){
-            return divide(signal2001Obj.toString(),10,1).intValue();
-            //System.out.println("信号：2001 scale: 10 转换前："+signal2001Obj.toString()+" 转换后："+signal2001);
-        }
-        return signal2001Obj;
+        SignalConfigBO signalConfigBO = SignalConfigBO.builder()
+                .scale(10)
+                .point(1)
+                .errorValue("65534")
+                .invalidValue("65535")
+                .build();
+        return convert(signal2001Obj, signalConfigBO);
     }
 
 }

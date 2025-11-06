@@ -3,6 +3,7 @@ package com.chery.gb.realtime.algorithm.signal.converter;
 
 import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.math.BigDecimal;
@@ -17,13 +18,14 @@ public class SignalConverter215D extends BaseSignalConverter {
     @Override
     public Object convert(Object signal215DObj) {
         //总电流 0x215D offset:1000 scale: 10
-        if(Objects.nonNull(signal215DObj) && StrUtil.isNotBlank(signal215DObj.toString()) && !Objects.equals("65534", signal215DObj.toString()) && !Objects.equals("65535", signal215DObj.toString())){
-            double signal215DValue = divide(signal215DObj.toString(),10,1);
-            Double signal215D = new BigDecimal(signal215DValue).subtract(new BigDecimal(1000)).doubleValue();
-//            System.out.println("信号：215D offset:1000 scale: 10 转换前："+signal215DObj.toString()+" 转换后："+signal215D);
-            return signal215D;
-        }
-        return signal215DObj;
+        SignalConfigBO signalConfigBO = SignalConfigBO.builder()
+                .scale(10)
+                .point(1)
+                .offset(1000)
+                .errorValue("65534")
+                .invalidValue("65535")
+                .build();
+        return convert(signal215DObj, signalConfigBO);
     }
 
 }

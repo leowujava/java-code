@@ -320,6 +320,15 @@ public enum NewGbRuleCodeEnum {
         this.group = group;
     }
 
+    public static NewGbRuleCodeEnum getByCode(String ruleCode) {
+        for (NewGbRuleCodeEnum value : NewGbRuleCodeEnum.values()) {
+            if (value.code.equals(ruleCode)) {
+                return value;
+            }
+        }
+        return null;
+    }
+
     public String getCode() {
         return code;
     }

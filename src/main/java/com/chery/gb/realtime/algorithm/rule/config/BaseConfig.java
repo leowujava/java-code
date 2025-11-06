@@ -72,11 +72,7 @@ public abstract class BaseConfig {
         return condition.getDesc();
     }
 
-    public RuleConditionBO buildCondition() {
-        RuleConfig ruleValidate = getClass().getDeclaredAnnotation(RuleConfig.class);
-        if (ruleValidate != null && ruleValidate.rule() != null) {
-            NewGbRuleCodeEnum ruleCodeEnum = ruleValidate.rule();
-
+    public RuleConditionBO buildCondition(NewGbRuleCodeEnum ruleCodeEnum) {
             String ruleSubType = ruleCodeEnum.getRuleSubType();
             if (ruleSubType.equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
                 return null;
@@ -94,7 +90,6 @@ public abstract class BaseConfig {
             if (Objects.equals(ruleSubType, "数据越界")) {
                 return CommonCondition.buildRangeCondition(signalEnum, false);
             }
-        }
         return null;
     }
 }

@@ -5,8 +5,10 @@ import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
+import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
 import com.chery.gb.realtime.algorithm.rule.config.RuleConfig_VehicleStateIsNull;
+import org.apache.commons.collections.CollectionUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -83,16 +85,35 @@ public class RuleConfigFactory {
             }
         }
         BaseConfig baseConfig = ruleConfigMap.get(ruleCode);
+        RuleConfigBO configBO = RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
         if (baseConfig == null) {
             baseConfig = new BaseConfig() {
                 @Override
                 public RuleConfigBO getRuleConfigBO() {
-                    return RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
+                    RuleConditionBO condition = configBO.getCondition();
+                    RuleConditionBO ruleConditionBO = buildCondition(NewGbRuleCodeEnum.getByCode(ruleCode));
+                    if (ruleConditionBO != null) {
+                        if (condition == null) {
+                            configBO.setCondition(ruleConditionBO);
+                        } else {
+                            List<RuleDetailBO> conditions = condition.getConditions();
+                            if (CollectionUtils.isEmpty(conditions)) {
+                                conditions = new ArrayList<>();
+                                condition.setConditions(conditions);
+                            }
+                            List<RuleDetailBO> conditions1 = ruleConditionBO.getConditions();
+                            if (CollectionUtils.isNotEmpty(conditions1)) {
+                                conditions.addAll(conditions1);
+                            }
+                        }
+                    }
+                    return configBO;
                 }
             };
+            ruleConfigMap.put(ruleCode, baseConfig);
         } else {
             if (baseConfig.getCondition() == null) {
-                RuleConfigBO ruleConfigBO = getRuleConfigBO(ruleDetailMap, ruleCode);
+                RuleConfigBO ruleConfigBO = configBO;
                 baseConfig.getRuleConfigBO().setCondition(ruleConfigBO.getCondition());
             }
         }

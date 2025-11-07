@@ -2,10 +2,9 @@ package com.chery.gb.realtime.algorithm.util.check;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlow;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import com.chery.gb.realtime.algorithm.util.RuleValidateWorkFlowUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +59,7 @@ public class NewGBRuleDataCheckUtil {
             List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
             for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
                 String ruleCode = newGbRuleCodeEnum.getCode();
-                BaseRuleValidator ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode);
+                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
                 if (ruleValidate != null) {
                     ruleValidate.validate(signalMap, ruleMap, retData);
                 } else {
@@ -76,7 +75,7 @@ public class NewGBRuleDataCheckUtil {
     //新国标数据治理校验流程（规则配置模式-读取数据库）
     public static void checkDataFromDB(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         for (String ruleCode : ruleMap.keySet()) {
-            BaseRuleValidator ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode);
+            BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
             if (ruleValidate != null) {
                 ruleValidate.validate(signalMap, ruleMap, retData);
             } else {

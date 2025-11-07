@@ -45,7 +45,7 @@ public class RuleValidateWorkFlow {
     private RuleValidateWorkFlow nextWorkFlow;
 
     /**
-     * 下一个工作流（如果是判断的工作流，则会有两个方向的工作流）；这个是判断结果为是的工作流
+     * 下一个工作流（如果是判断的工作流，则会有两个方向的工作流）；这个是判断结果为是的工作流，支流
      */
     private RuleValidateWorkFlow nextWorkFlow2;
 

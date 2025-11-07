@@ -19,10 +19,11 @@ import java.util.Map;
 @RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL)
 public class RuleValidator_VehicleStateIsNull extends BaseRuleValidator {
     @Override
-    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+    public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         boolean flag = true;
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
 
         checkReturn(flag);
+        return flag;
     }
 }

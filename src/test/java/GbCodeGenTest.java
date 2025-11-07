@@ -20,10 +20,10 @@ public class GbCodeGenTest {
         String line = br.readLine();
         while (line != null) {
             String[] split = line.split("\t");
-            System.out.println("RULE_CODE_" + split[0] + "(\"" + split[0] + "\",\"" + split[1] + "\",\"" + split[2] + "\",\"" + split[3] + "\",\"" + split[4] + "\"),");
+//            System.out.println("RULE_CODE_" + split[0] + "(\"" + split[0] + "\",\"" + split[1] + "\",\"" + split[2] + "\",\"" + split[3] + "\",\"" + split[4] + "\"),");
 //            System.out.println("newGbRuleCodeEnums.add(RULE_CODE_"+split[0]+");");
-            genConfigFile(split[0], split[1], split[2]);
-//            genValidateFile(split[0], split[1]);
+//            genConfigFile(split[0], split[1], split[2]);
+            genValidateFile(split[0], split[1]);
             line = br.readLine();
         }
     }
@@ -31,18 +31,24 @@ public class GbCodeGenTest {
 
     @Test
     public void test3() throws IOException {
-        List<NewGbRuleCodeEnum> ruleSubTypes = NewGbRuleCodeEnum.getByRuleSubTypes(Arrays.asList("异常值", "数据越界", "无效值", "缺失"));
-        for (NewGbRuleCodeEnum ruleCodeEnum : ruleSubTypes) {
-            String string = ruleCodeEnum.getCode() + "\t" + ruleCodeEnum.getName() + "\t" + ruleCodeEnum.getDesc() + "\t" + ruleCodeEnum.getRuleSubType();
 
-            if (ruleCodeEnum.getRuleSubType().equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
+        List<String> list = Arrays.asList("异常值", "数据越界", "无效值", "缺失");
+        for (NewGbRuleCodeEnum ruleCodeEnum : NewGbRuleCodeEnum.values()) {
+            if (!list.contains(ruleCodeEnum.getRuleSubType())) {
+                genValidateFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName());
+            }else {
+                String string = ruleCodeEnum.getCode() + "\t" + ruleCodeEnum.getName() + "\t" + ruleCodeEnum.getDesc() + "\t" + ruleCodeEnum.getRuleSubType();
+
+                if (ruleCodeEnum.getRuleSubType().equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
 //                genConfigFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
-                continue;
-            }
+                    continue;
+                }
 //            System.out.println(string);
-            System.out.println("signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_" + ruleCodeEnum.getCode() + ".getCode(), null);");
+                System.out.println("signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_" + ruleCodeEnum.getCode() + ".getCode(), null);");
 //            genConfigFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
 //            genConfigFile2(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
+            }
+
         }
     }
 
@@ -69,8 +75,9 @@ public class GbCodeGenTest {
                 "@RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_" + ruleCode + ")\n" +
                 "public class RuleValidator_" + ruleCode + " extends BaseRuleValidator {\n" +
                 "    @Override\n" +
-                "    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {\n" +
-                "        super.validate(signalMap, ruleMap, retData);\n" +
+                "    public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {\n" +
+                "       boolean flag = super.validate(signalMap, ruleMap, retData);\n" +
+                "       return flag;\n" +
                 "    }\n" +
                 "}\n";
 

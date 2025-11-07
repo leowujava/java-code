@@ -1,12 +1,16 @@
 package com.chery.gb.realtime.algorithm.rule.factory;
 
 
+import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
+import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
+import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,11 +21,11 @@ import java.util.Set;
  * @date 2025/11/3 星期一
  *
  */
-public class RuleValidateFactory {
+public class RuleValidatorFactory {
 
     private static volatile Map<String, BaseRuleValidator> ruleValidateMap = null;
 
-    private RuleValidateFactory() {
+    private RuleValidatorFactory() {
     }
 
     private static void init() {
@@ -50,12 +54,23 @@ public class RuleValidateFactory {
 
     public static BaseRuleValidator getRuleValidate(String ruleCode) {
         if (ruleValidateMap == null) {
-            synchronized (RuleValidateFactory.class) {
+            synchronized (RuleValidatorFactory.class) {
                 if (ruleValidateMap == null) {
                     init();
                 }
             }
         }
-        return ruleValidateMap.get(ruleCode);
+        BaseRuleValidator baseRuleValidator = ruleValidateMap.get(ruleCode);
+        if (baseRuleValidator == null && NewGbRuleCodeEnum.getByCode(ruleCode) != null) {
+            baseRuleValidator = new BaseRuleValidator() {
+                @Override
+                public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+                    return super.validate(signalMap, ruleMap, retData);
+                }
+            };
+            baseRuleValidator.setRuleCode(ruleCode);
+            ruleValidateMap.put(ruleCode, baseRuleValidator);
+        }
+        return baseRuleValidator;
     }
 }

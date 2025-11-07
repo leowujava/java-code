@@ -15,6 +15,7 @@ import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
+import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.HashMap;
@@ -27,24 +28,29 @@ import java.util.Objects;
  * @date 2025/11/3 星期一
  *
  */
+@Data
 public abstract class BaseRuleValidator {
 
-    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        System.out.println("RuleValidate_" + getRuleCode() + ".validate");
+    private String ruleCode;
+
+    public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+        System.out.println("校验器：" + getRuleCode());
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (CollectionUtils.isNotEmpty(preCondition)) {
             boolean preFlag = GbRuleCheckUtil.checkByCondition(signalMap, preCondition, retData, null);
             checkPreReturn(preFlag);
             if (preFlag) {
-                return;
+                return true;
             }
         }
         List<RuleDetailBO> condition = config.getCondition();
         if (CollectionUtils.isNotEmpty(condition)) {
             boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition, retData, getRuleCode());
             checkReturn(flag);
+            return flag;
         }
+        return false;
     }
 
     public void checkPreReturn(boolean flag) {
@@ -62,7 +68,7 @@ public abstract class BaseRuleValidator {
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
         String desc = "";
         RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
-        NewGbRuleCodeEnum rule = declaredAnnotation.rule();
+        NewGbRuleCodeEnum rule = NewGbRuleCodeEnum.getByCode(getRuleCode());
         if (declaredAnnotation != null) {
             desc = rule.getName() + ":" + rule.getDesc();
         } else if (config != null) {
@@ -84,7 +90,7 @@ public abstract class BaseRuleValidator {
         if (ruleValidate != null && ruleValidate.rule() != null) {
             return ruleValidate.rule().getCode();
         }
-        return null;
+        return ruleCode;
     }
 
     /**

@@ -19,7 +19,8 @@ import java.util.Map;
 @RuleValidate(rule = NewGbRuleCodeEnum.RULE_CODE_157)
 public class RuleValidator_157 extends BaseRuleValidator {
     @Override
-    public void validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        super.validate(signalMap, ruleMap, retData);
+    public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
+       boolean flag = super.validate(signalMap, ruleMap, retData);
+       return flag;
     }
 }

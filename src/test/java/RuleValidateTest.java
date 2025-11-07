@@ -4,7 +4,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.SignalBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import com.chery.gb.realtime.algorithm.util.SignalUtil;
 import com.chery.gb.realtime.algorithm.util.check.NewGBRuleDataCheckUtil;
@@ -12,7 +12,6 @@ import data.BaseDataTest;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class RuleValidateTest {
     public void test() {
         NewGbRuleCodeEnum ruleCode1 = NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL;
 
-        BaseRuleValidator ruleValidate = RuleValidateFactory.getRuleValidate(ruleCode1.getCode());
+        BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode1.getCode());
         JSONArray retData = new JSONArray();
         if (ruleValidate != null) {
             try {
@@ -84,7 +83,8 @@ public class RuleValidateTest {
 
         JSONArray retData = new JSONArray();
         SignalBO tmpl = BaseDataTest.getTmpl();
-        tmpl = new SignalBO();
+//        tmpl = new SignalBO();
+        tmpl.set_220C(254);
         HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));

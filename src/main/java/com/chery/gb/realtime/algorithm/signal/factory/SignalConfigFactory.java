@@ -2,11 +2,8 @@ package com.chery.gb.realtime.algorithm.signal.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.SignalConfig;
-import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
-import com.chery.gb.realtime.algorithm.rule.factory.RuleValidateFactory;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
-import com.chery.gb.realtime.algorithm.signal.converter.BaseSignalConverter;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 

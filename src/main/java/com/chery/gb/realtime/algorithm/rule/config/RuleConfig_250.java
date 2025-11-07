@@ -19,7 +19,7 @@ public class RuleConfig_250 extends BaseConfig {
 
     public RuleConfig_250() {
         ruleConfigBO = new RuleConfigBO();
-        RuleConditionBO condition = new RuleConditionBO();
+        RuleConditionBO condition = CommonCondition.vehicleStateIS2AndSpeedGt5(false);
         ruleConfigBO.setCondition(condition);
     }
 

@@ -84,7 +84,7 @@ public class RuleValidateTest {
         JSONArray retData = new JSONArray();
         SignalBO tmpl = BaseDataTest.getTmpl();
 //        tmpl = new SignalBO();
-        tmpl.set_220C(254);
+        tmpl.set_220C(null);
         HashMap<String, Object> signalMap = JSON.parseObject(JSON.toJSONString(tmpl), HashMap.class);
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));

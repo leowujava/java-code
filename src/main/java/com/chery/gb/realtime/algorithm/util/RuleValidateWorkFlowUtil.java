@@ -1,11 +1,13 @@
 package com.chery.gb.realtime.algorithm.util;
 
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlow;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
+import com.chery.gb.realtime.algorithm.enums.WorkFlowEnums;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.config.CommonCondition;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
@@ -35,7 +37,9 @@ public class RuleValidateWorkFlowUtil {
      * @param retData
      */
     public static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        run(signalMap, ruleMap, retData, initWorkFlow());
+//        RuleValidateWorkFlow workFlow = initWorkFlow();
+        RuleValidateWorkFlow workFlow = buildFlowFromEnums();
+        run(signalMap, ruleMap, retData, workFlow);
     }
 
     /**
@@ -50,67 +54,53 @@ public class RuleValidateWorkFlowUtil {
         return workFlow;
     }
 
-    /**
-     * 初始化工作流（配置模式）
-     *
-     * @return
-     */
-    private static RuleValidateWorkFlow initWorkFlowFromConfig() {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
-
-        return workFlow;
-    }
-
     static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
         //1、判断工作流是否为空
         if (workFlow == null) {
             return;
         }
         System.out.println("执行工作流：" + workFlow.getName());
-        boolean result = runValidateWorkFlow(signalMap, ruleMap, retData, workFlow);
+        boolean result;
+
         //2、获取处理结果进行下一步
         //2-1、如果是判断的工作流，并且结果为true，则进入支流
         RuleValidateWorkFlow subWorkFlow = workFlow.getSubWorkFlow();
-        if (result && subWorkFlow != null) {
-            //把主流给支流的下一步
-            RuleValidateWorkFlow next = getNextWorkFlow(workFlow);
-            subWorkFlow.setNextWorkFlow(next);
-            run(signalMap, ruleMap, retData, subWorkFlow);
-        } else {
-            //2-2、进入主流下一步
-            run(signalMap, ruleMap, retData, workFlow.getNextWorkFlow());
+        //把主流给支流的下一步
+        RuleValidateWorkFlow next = getNextWorkFlow(workFlow);
+        if (subWorkFlow != null) {
+            RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
+            if (ruleConditionBO != null) {
+                result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
+                if (result) {
+                    run(signalMap, ruleMap, retData, subWorkFlow);
+//                    workFlow.setNextWorkFlow(next);
+                }
+            } else {
+                run(signalMap, ruleMap, retData, subWorkFlow);
+            }
+        }
+        runWorkFlow(signalMap, ruleMap, retData, workFlow);
+        //2-2、进入主流下一步
+        if (next != null) {
+            run(signalMap, ruleMap, retData, next);
         }
     }
 
     private static RuleValidateWorkFlow getNextWorkFlow(RuleValidateWorkFlow workFlow) {
-        for (int i = 0; i < workFlow.getSkip(); i++) {
+        workFlow = workFlow.getNextWorkFlow();
+        if (workFlow == null) {
+            return null;
+        }
+        for (int i = 1; i < workFlow.getSkip(); i++) {
             if (workFlow == null) {
                 break;
             }
             workFlow = workFlow.getNextWorkFlow();
+            if (workFlow == null) {
+                break;
+            }
         }
         return workFlow;
-    }
-
-    /**
-     * 运行判断工作流
-     *
-     * @param signalMap
-     * @param ruleMap
-     * @param retData
-     * @param workFlow
-     * @return
-     */
-    private static boolean runCheckWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
-        RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
-        if (ruleConditionBO == null) {
-            return false;
-        }
-        boolean check = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
-        if (check && workFlow.isReturn()) {
-            throw new GbException(workFlow.getName());
-        }
-        return check;
     }
 
     /**
@@ -122,7 +112,7 @@ public class RuleValidateWorkFlowUtil {
      * @param workFlow
      * @return
      */
-    private static boolean runValidateWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
+    private static boolean runWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
         List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
         if (CollectionUtils.isNotEmpty(ruleCodeList)) {
             for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
@@ -138,7 +128,7 @@ public class RuleValidateWorkFlowUtil {
                 }
             }
         }
-        return runCheckWorkFlow(signalMap, ruleMap, retData, workFlow);
+        return false;
     }
 
     /**
@@ -167,7 +157,9 @@ public class RuleValidateWorkFlowUtil {
     private static void setNextFlow(RuleValidateWorkFlow preWorkFlow, RuleValidateWorkFlow workFlow, RuleValidateWorkFlow subWorkFlow) {
         if (preWorkFlow != null) {
             preWorkFlow.setNextWorkFlow(workFlow);
-            preWorkFlow.setSubWorkFlow(subWorkFlow);
+            if (subWorkFlow != null) {
+                preWorkFlow.setSubWorkFlow(subWorkFlow);
+            }
         }
     }
 
@@ -286,5 +278,39 @@ public class RuleValidateWorkFlowUtil {
         return ruleValidateWorkFlow;
     }
 
+    private static RuleValidateWorkFlow buildFlowFromEnums() {
+        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+        workFlow.setName("开始");
+        List<WorkFlowEnums> topFlows = WorkFlowEnums.getTopFlow();
+        RuleValidateWorkFlow preWorkFlow = null;
+        for (WorkFlowEnums topFlow : topFlows) {
+            if (preWorkFlow == null) {
+                preWorkFlow = buildFlowFromEnums2(workFlow, topFlow);
+            } else {
+                preWorkFlow = buildFlowFromEnums2(preWorkFlow, topFlow);
+            }
+        }
+        return workFlow;
+    }
+
+    private static RuleValidateWorkFlow buildFlowFromEnums2(RuleValidateWorkFlow preWorkFlow, WorkFlowEnums topFlow) {
+        RuleValidateWorkFlow workFlow = BeanUtil.copyProperties(topFlow, RuleValidateWorkFlow.class);
+        List<WorkFlowEnums> subEnums = WorkFlowEnums.getSubFlow(topFlow);
+        RuleValidateWorkFlow subFlow = null;
+        if (CollectionUtils.isNotEmpty(subEnums)) {
+            for (WorkFlowEnums s : subEnums) {
+                if (subFlow == null) {
+                    subFlow = buildFlowFromEnums2(new RuleValidateWorkFlow(), s);
+                    setNextFlow(preWorkFlow, workFlow, null);
+                    setNextFlow(workFlow, null, subFlow);
+                } else {
+                    subFlow = buildFlowFromEnums2(subFlow, s);
+                }
+            }
+        } else {
+            setNextFlow(preWorkFlow, workFlow, null);
+        }
+        return workFlow;
+    }
 
 }

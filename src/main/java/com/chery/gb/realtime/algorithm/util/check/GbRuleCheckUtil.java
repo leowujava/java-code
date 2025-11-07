@@ -238,7 +238,7 @@ public class GbRuleCheckUtil {
             }
         }
         if (flag0 != null && flag0) {
-            if (StrUtil.isNotBlank(ruleCode)) {
+            if (StrUtil.isNotBlank(ruleCode) && ruleCode.matches("\\d+")) {
                 resultDetailData.put("gbValue", gbValue);
                 retData.add(resultDetailData);
             }

@@ -20,6 +20,10 @@ import java.util.List;
 public class RuleConditionBO {
 
     /**
+     * 规则code
+     */
+    private String ruleCode;
+    /**
      * 条件
      */
     private List<RuleDetailBO> conditions;

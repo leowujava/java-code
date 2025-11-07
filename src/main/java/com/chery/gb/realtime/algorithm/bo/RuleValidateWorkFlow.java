@@ -2,7 +2,10 @@ package com.chery.gb.realtime.algorithm.bo;
 
 
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -12,41 +15,37 @@ import java.util.List;
  *
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RuleValidateWorkFlow {
-
     /**
      * 名字
      */
     private String name;
-
     /**
      * 是否返回
      */
     private boolean isReturn;
-
     /**
-     * 工作流类型：1-判断；2-校验
+     * 跳过工作流；步数
      */
-    private Integer type;
-
+    private int skip;
     /**
-     * 判断条件；当工作流为判断时有用
+     * 判断条件
      */
     private RuleConditionBO ruleConditionBO;
-
     /**
      * 校验的规则
      */
     private List<NewGbRuleCodeEnum> ruleCodeList;
-
     /**
      * 下一个工作流
      */
     private RuleValidateWorkFlow nextWorkFlow;
-
     /**
-     * 下一个工作流（如果是判断的工作流，则会有两个方向的工作流）；这个是判断结果为是的工作流，支流
+     * 支流
      */
-    private RuleValidateWorkFlow nextWorkFlow2;
+    private RuleValidateWorkFlow subWorkFlow;
 
 }

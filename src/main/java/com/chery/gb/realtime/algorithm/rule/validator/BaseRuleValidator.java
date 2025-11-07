@@ -34,7 +34,12 @@ public abstract class BaseRuleValidator {
     private String ruleCode;
 
     public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        System.out.println("校验器：" + getRuleCode());
+        NewGbRuleCodeEnum gbRuleCodeEnum = NewGbRuleCodeEnum.getByCode(getRuleCode());
+        String desc = getRuleCode();
+        if (gbRuleCodeEnum != null) {
+            desc += ":" + gbRuleCodeEnum.getName();
+        }
+        System.out.println("执行校验器：" + desc);
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (CollectionUtils.isNotEmpty(preCondition)) {

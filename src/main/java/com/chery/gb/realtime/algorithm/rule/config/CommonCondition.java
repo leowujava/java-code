@@ -3,11 +3,14 @@ package com.chery.gb.realtime.algorithm.rule.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
+import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
+import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleRelationEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleSymbolEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
 import com.chery.gb.realtime.algorithm.signal.factory.SignalConfigFactory;
 
@@ -282,6 +285,18 @@ public class CommonCondition {
         condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.LT.name()).signalValue(String.valueOf(min)).detailRelation(RuleRelationEnum.OR.name()).build());
         ruleConditionBO.setConditions(condition);
         ruleConditionBO.setDesc(signalEnum.getName() + "无定义");
+        return ruleConditionBO;
+    }
+
+    public static RuleConditionBO buildVehicleByRule(NewGbRuleCodeEnum newGbRuleCodeEnum) {
+        BaseConfig config = RuleConfigFactory.getConfig(newGbRuleCodeEnum.getCode(), null);
+        if (config == null) {
+            return null;
+        }
+        RuleConditionBO ruleConditionBO = new RuleConditionBO();
+        ruleConditionBO.setDesc(newGbRuleCodeEnum.getDesc());
+        ruleConditionBO.setRuleCode(newGbRuleCodeEnum.getCode());
+        ruleConditionBO.setConditions(ruleConditionBO.getConditions());
         return ruleConditionBO;
     }
 }

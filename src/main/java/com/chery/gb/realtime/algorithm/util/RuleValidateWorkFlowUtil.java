@@ -39,7 +39,7 @@ public class RuleValidateWorkFlowUtil {
     }
 
     /**
-     * 初始化工作流
+     * 初始化工作流（手动模式）
      *
      * @return
      */
@@ -50,20 +50,46 @@ public class RuleValidateWorkFlowUtil {
         return workFlow;
     }
 
+    /**
+     * 初始化工作流（配置模式）
+     *
+     * @return
+     */
+    private static RuleValidateWorkFlow initWorkFlowFromConfig() {
+        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+
+        return workFlow;
+    }
+
     static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
         //1、判断工作流是否为空
         if (workFlow == null) {
             return;
         }
-        System.out.println("工作流：" + workFlow.getName());
+        System.out.println("执行工作流：" + workFlow.getName());
         boolean result = runValidateWorkFlow(signalMap, ruleMap, retData, workFlow);
         //2、获取处理结果进行下一步
         //2-1、如果是判断的工作流，并且结果为true，则进入支流
-        if (result && 1 == workFlow.getType()) {
-            run(signalMap, ruleMap, retData, workFlow.getNextWorkFlow2());
+        RuleValidateWorkFlow subWorkFlow = workFlow.getSubWorkFlow();
+        if (result && subWorkFlow != null) {
+            //把主流给支流的下一步
+            RuleValidateWorkFlow next = getNextWorkFlow(workFlow);
+            subWorkFlow.setNextWorkFlow(next);
+            run(signalMap, ruleMap, retData, subWorkFlow);
+        } else {
+            //2-2、进入主流下一步
+            run(signalMap, ruleMap, retData, workFlow.getNextWorkFlow());
         }
-        //2-2、进入主流下一步
-        run(signalMap, ruleMap, retData, workFlow.getNextWorkFlow());
+    }
+
+    private static RuleValidateWorkFlow getNextWorkFlow(RuleValidateWorkFlow workFlow) {
+        for (int i = 0; i < workFlow.getSkip(); i++) {
+            if (workFlow == null) {
+                break;
+            }
+            workFlow = workFlow.getNextWorkFlow();
+        }
+        return workFlow;
     }
 
     /**
@@ -80,7 +106,7 @@ public class RuleValidateWorkFlowUtil {
         if (ruleConditionBO == null) {
             return false;
         }
-        boolean check = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, null);
+        boolean check = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
         if (check && workFlow.isReturn()) {
             throw new GbException(workFlow.getName());
         }
@@ -123,7 +149,6 @@ public class RuleValidateWorkFlowUtil {
      */
     private static RuleValidateWorkFlow buildPreStateValidateFow(RuleValidateWorkFlow preWorkFlow) {
         RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
-        workFlow.setType(2);
         workFlow.setName("前置状态检测工作流");
         setNextFlow(preWorkFlow, workFlow, null);
         RuleValidateWorkFlow vehicleStateIsNullFlow = buildVehicleStateIsNullFlow(workFlow);
@@ -132,10 +157,17 @@ public class RuleValidateWorkFlowUtil {
         return vehicleStateValidate2;
     }
 
-    private static void setNextFlow(RuleValidateWorkFlow preWorkFlow, RuleValidateWorkFlow workFlow, RuleValidateWorkFlow workFlow2) {
+    /**
+     * 设置下一步的工作流
+     *
+     * @param preWorkFlow
+     * @param workFlow
+     * @param subWorkFlow
+     */
+    private static void setNextFlow(RuleValidateWorkFlow preWorkFlow, RuleValidateWorkFlow workFlow, RuleValidateWorkFlow subWorkFlow) {
         if (preWorkFlow != null) {
             preWorkFlow.setNextWorkFlow(workFlow);
-            preWorkFlow.setNextWorkFlow2(workFlow2);
+            preWorkFlow.setSubWorkFlow(subWorkFlow);
         }
     }
 
@@ -150,7 +182,6 @@ public class RuleValidateWorkFlowUtil {
         setNextFlow(preWorkFlow, workFlow, null);
         workFlow.setName("车辆状态=2（熄火）并且车速大于5");
         workFlow.setReturn(false);
-        workFlow.setType(2);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
         ruleCodeList.add(RULE_CODE_250);
         return workFlow;
@@ -166,7 +197,6 @@ public class RuleValidateWorkFlowUtil {
         RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
         setNextFlow(preWorkFlow, workFlow, null);
         workFlow.setReturn(false);
-        workFlow.setType(2);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
         ruleCodeList.add(RULE_CODE_250);
         return workFlow;
@@ -181,7 +211,6 @@ public class RuleValidateWorkFlowUtil {
         RuleValidateWorkFlow ruleValidateWorkFlow = new RuleValidateWorkFlow();
         ruleValidateWorkFlow.setName("数据完整性校验");
         ruleValidateWorkFlow.setReturn(true);
-        ruleValidateWorkFlow.setType(2);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
         ruleCodeList.add(RULE_CODE_239);
         ruleCodeList.add(RULE_CODE_240);
@@ -202,9 +231,8 @@ public class RuleValidateWorkFlowUtil {
     private static RuleValidateWorkFlow buildVehicleStateIsNullFlow(RuleValidateWorkFlow preWorkFlow) {
         RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
         workFlow.setName("车辆状态为null的校验");
-        workFlow.setType(1);
         workFlow.setReturn(true);
-        workFlow.setRuleConditionBO(CommonCondition.buildVehicleStateIsNull(true));
+        workFlow.setRuleConditionBO(CommonCondition.buildVehicleByRule(RULE_CODE_VEHICLE_STATE_IS_NULL));
         setNextFlow(preWorkFlow, workFlow, null);
         return workFlow;
     }
@@ -217,9 +245,8 @@ public class RuleValidateWorkFlowUtil {
      */
     private static RuleValidateWorkFlow buildVehicleStateValidate(RuleValidateWorkFlow preWorkFlow) {
         RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
-        workFlow.setName("车辆状态校验");
+        workFlow.setName("车辆状态校验工作流：异常、无效、无定义");
         workFlow.setReturn(true);
-        workFlow.setType(2);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
         ruleCodeList.add(RULE_CODE_22);
         ruleCodeList.add(RULE_CODE_23);
@@ -240,10 +267,24 @@ public class RuleValidateWorkFlowUtil {
         RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
         workFlow.setName("车辆状态校验：不等于1并且不等于2");
         workFlow.setReturn(true);
-        workFlow.setType(1);
         workFlow.setRuleConditionBO(CommonCondition.vehicleStateNot1_2(true));
         setNextFlow(preWorkFlow, workFlow, null);
         return workFlow;
     }
+
+    /**
+     * 构建工作流
+     *
+     * @param name
+     * @param ruleCodeList
+     * @return
+     */
+    private static RuleValidateWorkFlow buildFlowWithRuleCodeList(String name, List<NewGbRuleCodeEnum> ruleCodeList) {
+        RuleValidateWorkFlow ruleValidateWorkFlow = new RuleValidateWorkFlow();
+        ruleValidateWorkFlow.setName(name);
+        ruleValidateWorkFlow.setRuleCodeList(ruleCodeList);
+        return ruleValidateWorkFlow;
+    }
+
 
 }

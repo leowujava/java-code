@@ -17,7 +17,7 @@ import java.util.Objects;
  *
  */
 @Data
-public abstract class BaseSignalConfig {
+public class BaseSignalConfig {
 
     protected SignalConfigBO signalConfigBO;
 

@@ -36,7 +36,7 @@ public class GbCodeGenTest {
         for (NewGbRuleCodeEnum ruleCodeEnum : NewGbRuleCodeEnum.values()) {
             if (!list.contains(ruleCodeEnum.getRuleSubType())) {
                 genValidateFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName());
-            }else {
+            } else {
                 String string = ruleCodeEnum.getCode() + "\t" + ruleCodeEnum.getName() + "\t" + ruleCodeEnum.getDesc() + "\t" + ruleCodeEnum.getRuleSubType();
 
                 if (ruleCodeEnum.getRuleSubType().equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
@@ -165,4 +165,5 @@ public class GbCodeGenTest {
         fw.write(content);
         fw.close();
     }
+
 }

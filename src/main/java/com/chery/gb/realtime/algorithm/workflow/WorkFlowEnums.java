@@ -1,7 +1,8 @@
-package com.chery.gb.realtime.algorithm.enums;
+package com.chery.gb.realtime.algorithm.workflow;
 
 
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
+import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;

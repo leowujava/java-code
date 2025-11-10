@@ -168,6 +168,12 @@
             <resource>
                 <directory>src/main/resources/env/${resource.env}</directory>
             </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <includes>
+                    <include>config/*</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 

@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.util;
+package com.chery.gb.realtime.algorithm.workflow;
 
 
 import cn.hutool.core.bean.BeanUtil;
@@ -7,7 +7,6 @@ import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlow;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-import com.chery.gb.realtime.algorithm.enums.WorkFlowEnums;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.config.CommonCondition;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;

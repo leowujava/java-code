@@ -6,7 +6,7 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
-import com.chery.gb.realtime.algorithm.util.RuleValidateWorkFlowUtil;
+import com.chery.gb.realtime.algorithm.workflow.RuleValidateWorkFlowUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

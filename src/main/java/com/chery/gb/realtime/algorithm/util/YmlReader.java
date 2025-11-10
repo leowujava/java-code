@@ -45,7 +45,7 @@ public class YmlReader {
         return kafkaConfigBO;
     }
 
-    private static Map<String, Object> readConfig(String configFile) {
+    public static Map<String, Object> readConfig(String configFile) {
         if (configMap != null) {
             return configMap;
         }

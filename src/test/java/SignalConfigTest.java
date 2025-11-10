@@ -1,6 +1,7 @@
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.chery.gb.realtime.algorithm.bo.SignalBO;
+import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
 import com.chery.gb.realtime.algorithm.signal.factory.SignalConfigFactory;
@@ -114,5 +115,41 @@ public class SignalConfigTest {
         FileWriter fw = new FileWriter(file);
         fw.write(content);
         fw.close();
+    }
+
+    @Test
+    public void test5() throws IOException {
+        StringBuffer content = new StringBuffer();
+        content.append("signal: \n");
+        for (SignalEnum signalEnum : SignalEnum.values()) {
+            BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
+            if (signalConfig == null) {
+                continue;
+            }
+            SignalConfigBO signalConfigBO = signalConfig.getSignalConfigBO();
+            if (signalConfigBO.getMin() != null) {
+                content.append(genConfigFile2(signalEnum, signalConfigBO));
+            }
+
+        }
+        System.out.println(content.toString());
+    }
+
+
+    private static String genConfigFile2(SignalEnum signalEnum, SignalConfigBO signalConfigBO) throws IOException {
+        StringBuilder content = new StringBuilder();
+
+        String name = signalEnum.getCode();
+        String desc = signalEnum.getName();
+        String code = signalEnum.getCode();
+        content.append("#" + signalEnum.getName() + "\n");
+        content.append("  " + code + ": \n");
+        content.append("    scale: " + signalConfigBO.getScale() + "\n");
+        content.append("    offset: " + signalConfigBO.getOffset() + "\n");
+        content.append("    min: " + signalConfigBO.getMin() + "\n");
+        content.append("    max: " + signalConfigBO.getMax() + "\n");
+        content.append("    errorValue: " + signalConfigBO.getErrorValue() + "\n");
+        content.append("    invalidValue: " + signalConfigBO.getInvalidValue() + "\n");
+        return content.toString();
     }
 }

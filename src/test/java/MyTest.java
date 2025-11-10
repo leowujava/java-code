@@ -25,12 +25,4 @@ public class MyTest {
             System.out.println(newGbRuleCodeEnum.getCode() + "\t" + newGbRuleCodeEnum.getName() + "\t" + newGbRuleCodeEnum.getGroup() + "\t" + newGbRuleCodeEnum.getDesc());
         }
     }
-
-    @Test
-    public void test3() {
-        List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
-        for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
-            System.out.println(newGbRuleCodeEnum.getPreCondition() + "\t" + newGbRuleCodeEnum.getCode() + "\t" + newGbRuleCodeEnum.getName() + "\t" + newGbRuleCodeEnum.getGroup() + "\t" + newGbRuleCodeEnum.getDesc());
-        }
-    }
 }

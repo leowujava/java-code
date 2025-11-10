@@ -6,8 +6,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
-import com.chery.gb.realtime.algorithm.rule.config.RuleConfig_VehicleStateIsNull;
+import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
 import org.apache.commons.collections.CollectionUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -23,14 +22,14 @@ import java.util.*;
  */
 public class RuleConfigFactory {
 
-    private static volatile Map<String, BaseConfig> ruleConfigMap = null;
+    private static volatile Map<String, BaseRuleConfig> ruleConfigMap = null;
 
     private RuleConfigFactory() {
     }
 
     private static void init() {
         ruleConfigMap = new HashMap();
-        Reflections reflections = new Reflections(RuleConfig_VehicleStateIsNull.class.getPackage().getName(), Scanners.TypesAnnotated);
+        Reflections reflections = new Reflections(BaseRuleConfig.class.getPackage().getName(), Scanners.TypesAnnotated);
 
         // 找出所有带有 @RulePreCondition 注解的类
         Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(RuleConfig.class);
@@ -43,7 +42,7 @@ public class RuleConfigFactory {
             annotatedClasses.forEach(clazz -> {
 //                System.out.println(" - " + clazz.getName());
                 try {
-                    ruleConfigMap.put(clazz.getDeclaredAnnotation(RuleConfig.class).rule().getCode(), (BaseConfig) clazz.newInstance());
+                    ruleConfigMap.put(clazz.getDeclaredAnnotation(RuleConfig.class).rule().getCode(), (BaseRuleConfig) clazz.newInstance());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -53,7 +52,7 @@ public class RuleConfigFactory {
     }
 
     public static List<RuleDetailBO> getCondition(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode, null);
+        BaseRuleConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return null;
         }
@@ -61,7 +60,7 @@ public class RuleConfigFactory {
     }
 
     public static List<RuleDetailBO> getPreCondition(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode, null);
+        BaseRuleConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return null;
         }
@@ -69,14 +68,14 @@ public class RuleConfigFactory {
     }
 
     public static boolean isReturn(String ruleCode) {
-        BaseConfig config = getConfig(ruleCode, null);
+        BaseRuleConfig config = getConfig(ruleCode, null);
         if (config == null) {
             return false;
         }
         return config.isReturn();
     }
 
-    public static BaseConfig getConfig(String ruleCode, Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap) {
+    public static BaseRuleConfig getConfig(String ruleCode, Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap) {
         if (ruleConfigMap == null) {
             synchronized (RuleConfigFactory.class) {
                 if (ruleConfigMap == null) {
@@ -84,10 +83,10 @@ public class RuleConfigFactory {
                 }
             }
         }
-        BaseConfig baseConfig = ruleConfigMap.get(ruleCode);
+        BaseRuleConfig baseRuleConfig = ruleConfigMap.get(ruleCode);
         RuleConfigBO configBO = RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
-        if (baseConfig == null) {
-            baseConfig = new BaseConfig() {
+        if (baseRuleConfig == null) {
+            baseRuleConfig = new BaseRuleConfig() {
                 @Override
                 public RuleConfigBO getRuleConfigBO() {
                     RuleConditionBO condition = configBO.getCondition();
@@ -110,14 +109,14 @@ public class RuleConfigFactory {
                     return configBO;
                 }
             };
-            ruleConfigMap.put(ruleCode, baseConfig);
+            ruleConfigMap.put(ruleCode, baseRuleConfig);
         } else {
-            if (baseConfig.getCondition() == null) {
+            if (baseRuleConfig.getCondition() == null) {
                 RuleConfigBO ruleConfigBO = configBO;
-                baseConfig.getRuleConfigBO().setCondition(ruleConfigBO.getCondition());
+                baseRuleConfig.getRuleConfigBO().setCondition(ruleConfigBO.getCondition());
             }
         }
-        return baseConfig;
+        return baseRuleConfig;
     }
 
     private static RuleConfigBO getRuleConfigBO(Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap, String ruleCode) {

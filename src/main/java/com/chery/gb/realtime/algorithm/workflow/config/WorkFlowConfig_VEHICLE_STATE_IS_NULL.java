@@ -2,7 +2,10 @@ package com.chery.gb.realtime.algorithm.workflow.config;
 
 
 import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
+import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
+import com.chery.gb.realtime.algorithm.rule.config.CommonCondition;
 import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
 
 import java.util.Arrays;
@@ -15,7 +18,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_NULL)
 public class WorkFlowConfig_VEHICLE_STATE_IS_NULL extends BaseWorkFlowConfig {
     public WorkFlowConfig_VEHICLE_STATE_IS_NULL() {
-        setRuleConditionBO(null);
-        setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL));
+        setRuleConditionBO(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_220C, true));
+        setRuleCodeList(null);
     }
 }

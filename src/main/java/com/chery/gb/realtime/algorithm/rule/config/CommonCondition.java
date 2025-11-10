@@ -3,7 +3,6 @@ package com.chery.gb.realtime.algorithm.rule.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
-import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
@@ -196,7 +195,7 @@ public class CommonCondition {
             return ruleConditionBO;
         }
         List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).detailRelation(RuleRelationEnum.AND.name()).build());
+        condition.add(RuleDetailBO.builder().signalId(signalEnum.getCode()).signalRule(RuleSymbolEnum.EQ.name()).detailRelation(RuleRelationEnum.AND.name()).build());
         ruleConditionBO.setConditions(condition);
         return ruleConditionBO;
     }
@@ -289,7 +288,7 @@ public class CommonCondition {
     }
 
     public static RuleConditionBO buildVehicleByRule(NewGbRuleCodeEnum newGbRuleCodeEnum) {
-        BaseConfig config = RuleConfigFactory.getConfig(newGbRuleCodeEnum.getCode(), null);
+        BaseRuleConfig config = RuleConfigFactory.getConfig(newGbRuleCodeEnum.getCode(), null);
         if (config == null) {
             return null;
         }

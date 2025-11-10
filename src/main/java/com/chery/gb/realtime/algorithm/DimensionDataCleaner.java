@@ -213,7 +213,7 @@ public class DimensionDataCleaner extends KeyedBroadcastProcessFunction<String, 
         JSONArray retData = new JSONArray();
         Map<String, Map<String, List<RuleDetailBO>>> ruleMap = ruleDetailDataTransToMap(ctx);
         //新国标数据检测
-        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, getRuleMap(ruleMap, "gb-"), retData);
+        NewGBRuleDataCheckUtil.checkDataFromWorkFlow(signalMap, getRuleMap(ruleMap, "gb-"), retData);
         //手动添加规则检测
         CheckRuleDataByHandNewUtil.checkData(signalMap, getRuleMap(ruleMap, "hand-"), retData);
         //校验规则数据

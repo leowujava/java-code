@@ -53,25 +53,6 @@ public class NewGBRuleDataCheckUtil {
 
     }
 
-    //新国标数据治理校验流程（规则配置模式-固定配置）
-    public static void checkDataFromConfig(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        try {
-            List<NewGbRuleCodeEnum> bySort = NewGbRuleCodeEnum.getBySort();
-            for (NewGbRuleCodeEnum newGbRuleCodeEnum : bySort) {
-                String ruleCode = newGbRuleCodeEnum.getCode();
-                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
-                if (ruleValidate != null) {
-                    ruleValidate.validate(signalMap, ruleMap, retData);
-                } else {
-                    GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
-                }
-            }
-        } catch (GbException e) {
-//            System.out.println(e.getMessage());
-//            e.printStackTrace();
-        }
-    }
-
     //新国标数据治理校验流程（规则配置模式-读取数据库）
     public static void checkDataFromDB(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
         for (String ruleCode : ruleMap.keySet()) {

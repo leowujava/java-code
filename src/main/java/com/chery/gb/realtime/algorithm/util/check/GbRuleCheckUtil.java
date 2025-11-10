@@ -9,7 +9,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
-import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
+import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -132,7 +132,7 @@ public class GbRuleCheckUtil {
         if (CollectionUtil.isEmpty(ruleDetailMap)) {
             return true;
         }
-        BaseConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
+        BaseRuleConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
 
         if (config != null && checkByCondition(signalMap, config.getPreCondition(), retData, null)) {
             return false;

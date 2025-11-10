@@ -45,27 +45,42 @@ public class RuleValidateWorkFlowUtil {
         }
         System.out.println("执行工作流：" + workFlow.getName());
         boolean result;
-
-        //2、获取处理结果进行下一步
-        //2-1、如果是判断的工作流，并且结果为true，则进入支流
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
-        //把主流给支流的下一步
-        RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
         RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
+        //运行判断
         if (ruleConditionBO != null) {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
-            if (subWorkFlow != null && result) {
-                run(signalMap, ruleMap, retData, subWorkFlow);
-            }
+            //如果条件判断结果为true，需要返回时，抛出异常
             if (result && ruleConditionBO.isReturn()) {
                 throw new GbException(workFlow.getName());
             }
+            //如果工作流有判断条件时，条件为true才能进入支流
+            if (subWorkFlow != null && result) {
+                run(signalMap, ruleMap, retData, subWorkFlow);
+            }
         }
-        runWorkFlow(signalMap, ruleMap, retData, workFlow);
+        //校验规则
+        List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
+        if (CollectionUtils.isNotEmpty(ruleCodeList)) {
+            for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
+                String ruleCode = newGbRuleCodeEnum.getCode();
+                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
+                if (ruleValidate != null) {
+                    boolean validate = ruleValidate.validate(signalMap, ruleMap, retData);
+                    if (validate && workFlow.isReturn()) {
+                        throw new GbException(workFlow.getName());
+                    }
+                } else {
+                    GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
+                }
+            }
+        }
+        //运行支流
         if (ruleConditionBO == null && subWorkFlow != null) {
             run(signalMap, ruleMap, retData, subWorkFlow);
         }
-        //2-2、进入主流下一步
+        RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
+        //进入下一步
         if (next != null) {
             run(signalMap, ruleMap, retData, next);
         }
@@ -87,35 +102,6 @@ public class RuleValidateWorkFlowUtil {
         }
         return workFlow;
     }
-
-    /**
-     * 运行校验工作流
-     *
-     * @param signalMap
-     * @param ruleMap
-     * @param retData
-     * @param workFlow
-     * @return
-     */
-    private static boolean runWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlowBO workFlow) {
-        List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
-        if (CollectionUtils.isNotEmpty(ruleCodeList)) {
-            for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
-                String ruleCode = newGbRuleCodeEnum.getCode();
-                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
-                if (ruleValidate != null) {
-                    boolean validate = ruleValidate.validate(signalMap, ruleMap, retData);
-                    if (validate && workFlow.isReturn()) {
-                        throw new GbException(workFlow.getName());
-                    }
-                } else {
-                    GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
-                }
-            }
-        }
-        return false;
-    }
-
 
     /**
      * 设置下一步的工作流

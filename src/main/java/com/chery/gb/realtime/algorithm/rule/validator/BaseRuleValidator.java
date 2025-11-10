@@ -14,7 +14,7 @@ import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
-import com.chery.gb.realtime.algorithm.rule.config.BaseConfig;
+import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -40,7 +40,7 @@ public abstract class BaseRuleValidator {
             desc += ":" + gbRuleCodeEnum.getName();
         }
         System.out.println("执行校验器：" + desc);
-        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
+        BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (CollectionUtils.isNotEmpty(preCondition)) {
             boolean preFlag = GbRuleCheckUtil.checkByCondition(signalMap, preCondition, retData, null);
@@ -59,7 +59,7 @@ public abstract class BaseRuleValidator {
     }
 
     public void checkPreReturn(boolean flag) {
-        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
+        BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
         if ((config != null && config.isPreReturn() && flag) || (config == null && flag)) {
             String preDesc = config.getPreDesc();
             if (StrUtil.isNotBlank(preDesc)) {
@@ -70,7 +70,7 @@ public abstract class BaseRuleValidator {
     }
 
     public void checkReturn(boolean flag, String vin) {
-        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
+        BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
         String desc = "";
         RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
         NewGbRuleCodeEnum rule = NewGbRuleCodeEnum.getByCode(getRuleCode());
@@ -134,8 +134,8 @@ public abstract class BaseRuleValidator {
      * @param ruleMap
      * @return
      */
-    protected BaseConfig getConfig(Map<String, Map<String, List<RuleDetailBO>>> ruleMap) {
-        BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
+    protected BaseRuleConfig getConfig(Map<String, Map<String, List<RuleDetailBO>>> ruleMap) {
+        BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         return config;
     }
 }

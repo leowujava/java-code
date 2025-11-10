@@ -25,25 +25,7 @@ public class RuleValidateTest {
 
     @Test
     public void test() {
-        NewGbRuleCodeEnum ruleCode1 = NewGbRuleCodeEnum.RULE_CODE_VEHICLE_STATE_IS_NULL;
 
-        BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode1.getCode());
-        JSONArray retData = new JSONArray();
-        if (ruleValidate != null) {
-            try {
-                ruleValidate.validate(null
-                        , null
-                        , retData);
-            } catch (GbException e) {
-                e.printStackTrace();
-            }
-            System.out.println(retData);
-        } else {
-            //处理逻辑
-            if (ruleCode1.isReturn()) {
-                throw new GbException(ruleCode1);
-            }
-        }
     }
 
     @Test
@@ -57,7 +39,7 @@ public class RuleValidateTest {
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));
         HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
-        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, ruleMap, retData);
+        NewGBRuleDataCheckUtil.checkDataFromWorkFlow(signalMap, ruleMap, retData);
         System.out.println(retData);
     }
 
@@ -74,7 +56,7 @@ public class RuleValidateTest {
         SignalUtil.convert(signalMap);
         System.out.println("处理后的数据：" + JSON.toJSONString(signalMap));
         HashMap<String, Map<String, List<RuleDetailBO>>> ruleMap = new HashMap<>();
-        NewGBRuleDataCheckUtil.checkDataFromConfig(signalMap, ruleMap, retData);
+        NewGBRuleDataCheckUtil.checkDataFromWorkFlow(signalMap, ruleMap, retData);
         System.out.println(retData);
     }
 
@@ -84,7 +66,7 @@ public class RuleValidateTest {
         JSONArray retData = new JSONArray();
         SignalBO tmpl = BaseDataTest.getTmpl();
 //        tmpl = new SignalBO();
-        tmpl.set_220C(1);
+        tmpl.set_220C(null);
         tmpl.set_21AA(2);
         tmpl.set_2001(65535);
         tmpl.set_2009(65535);

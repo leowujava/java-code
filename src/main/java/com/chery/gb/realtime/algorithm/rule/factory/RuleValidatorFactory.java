@@ -62,12 +62,7 @@ public class RuleValidatorFactory {
         }
         BaseRuleValidator baseRuleValidator = ruleValidateMap.get(ruleCode);
         if (baseRuleValidator == null && NewGbRuleCodeEnum.getByCode(ruleCode) != null) {
-            baseRuleValidator = new BaseRuleValidator() {
-                @Override
-                public boolean validate(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-                    return super.validate(signalMap, ruleMap, retData);
-                }
-            };
+            baseRuleValidator = new BaseRuleValidator();
             baseRuleValidator.setRuleCode(ruleCode);
             ruleValidateMap.put(ruleCode, baseRuleValidator);
         }

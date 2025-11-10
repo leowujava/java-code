@@ -29,7 +29,7 @@ import java.util.Objects;
  *
  */
 @Data
-public abstract class BaseRuleValidator {
+public class BaseRuleValidator {
 
     private String ruleCode;
 
@@ -63,7 +63,7 @@ public abstract class BaseRuleValidator {
         if ((config != null && config.isPreReturn() && flag) || (config == null && flag)) {
             String preDesc = config.getPreDesc();
             if (StrUtil.isNotBlank(preDesc)) {
-                System.out.println(getClass().getName() + ":" + preDesc);
+                System.out.println(getClassName() + ":" + preDesc);
             }
             throw new GbException(config.getPreDesc());
         }
@@ -80,7 +80,7 @@ public abstract class BaseRuleValidator {
             desc = config.getDesc();
         }
         if (StrUtil.isNotBlank(desc) && flag) {
-            System.out.println(getClass().getName() + ":" + desc + "; vin:" + vin);
+            System.out.println(getClassName() + ":" + desc + "; vin:" + vin);
         }
         if ((config != null && config.isReturn() && flag) || (config == null && flag)) {
             if (declaredAnnotation != null) {
@@ -137,5 +137,9 @@ public abstract class BaseRuleValidator {
     protected BaseRuleConfig getConfig(Map<String, Map<String, List<RuleDetailBO>>> ruleMap) {
         BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         return config;
+    }
+
+    public String getClassName() {
+        return getClass().getPackage().getName() + ".RuleValidator_" + getRuleCode();
     }
 }

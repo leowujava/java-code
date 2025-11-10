@@ -19,7 +19,7 @@ public enum WorkFlowEnum {
     VEHICLE_STATE_IS_NULL("2-1", "车辆状态为null检测", "车辆状态为null检测", false, 0, PRE_STATE),
     VEHICLE_STATE_IS_ERROR_OR_INVALID("2-2", "车辆状态为异常或无效检测", "车辆状态为异常或无效检测", false, 0, PRE_STATE),
     VEHICLE_STATE_IS_NOT_IN_RANGE("2-3", "车辆状态未定义检测", "车辆状态未定义检测", false, 0, PRE_STATE),
-    VEHICLE_STATE_IS_NOT_1_2("2-4", "车辆状态非1启动且非2熄火检测", "车辆状态非1启动且非2熄火检测", false, 0, PRE_STATE),
+    VEHICLE_STATE_IS_NOT_1_2("2-4", "车辆状态非1启动且非2熄火检测", "车辆状态非1启动且非2熄火检测", true  , 0, PRE_STATE),
     VEHICLE_STATE_IS_2_SPEED_GT_5("2-5", "车辆状态为2熄火车速不为0", "车辆状态为2熄火车速不为0", false, 0, PRE_STATE),
     //充电状态
     CHARGING_STATE_IS_NULL("2-6", "充电状态为空", "充电状态为空", true, 0, PRE_STATE),

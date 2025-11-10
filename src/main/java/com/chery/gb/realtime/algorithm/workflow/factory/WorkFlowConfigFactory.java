@@ -2,6 +2,7 @@ package com.chery.gb.realtime.algorithm.workflow.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
+import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
 import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
 import org.reflections.Reflections;
@@ -41,7 +42,11 @@ public class WorkFlowConfigFactory {
             annotatedClasses.forEach(clazz -> {
 //                System.out.println(" - " + clazz.getName());
                 try {
-                    signalConfigMap.put(clazz.getDeclaredAnnotation(annotation).value().getCode(), (BaseWorkFlowConfig) clazz.newInstance());
+                    String code = clazz.getDeclaredAnnotation(annotation).value().getCode();
+                    if (signalConfigMap.containsKey(code)) {
+                        throw new GbException("code重复");
+                    }
+                    signalConfigMap.put(code, (BaseWorkFlowConfig) clazz.newInstance());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

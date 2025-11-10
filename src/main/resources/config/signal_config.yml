@@ -17,6 +17,15 @@ signal:
     max: 3000
     errorValue: 65534
     invalidValue: 65535
+  #车速
+  2009:
+    scale: null
+    point: null
+    offset: null
+    min: 0
+    max: 9999999
+    errorValue: 65534
+    invalidValue: 65535
   #总电流
   215D:
     scale: 10

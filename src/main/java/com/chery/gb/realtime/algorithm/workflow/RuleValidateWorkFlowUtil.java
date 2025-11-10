@@ -5,13 +5,15 @@ import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlow;
+import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlowBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.config.CommonCondition;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
+import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
+import com.chery.gb.realtime.algorithm.workflow.factory.WorkFlowConfigFactory;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class RuleValidateWorkFlowUtil {
      */
     public static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
 //        RuleValidateWorkFlow workFlow = initWorkFlow();
-        RuleValidateWorkFlow workFlow = buildFlowFromEnums();
+        RuleValidateWorkFlowBO workFlow = buildFlowFromEnums();
         run(signalMap, ruleMap, retData, workFlow);
     }
 
@@ -46,14 +48,14 @@ public class RuleValidateWorkFlowUtil {
      *
      * @return
      */
-    private static RuleValidateWorkFlow initWorkFlow() {
-        RuleValidateWorkFlow workFlow = buildDataIntegrityValidateFlow();
-        RuleValidateWorkFlow preStateValidateFow = buildPreStateValidateFow(workFlow);
-        RuleValidateWorkFlow workFlow1 = buildWorkFlow(preStateValidateFow);
+    private static RuleValidateWorkFlowBO initWorkFlow() {
+        RuleValidateWorkFlowBO workFlow = buildDataIntegrityValidateFlow();
+        RuleValidateWorkFlowBO preStateValidateFow = buildPreStateValidateFow(workFlow);
+        RuleValidateWorkFlowBO workFlow1 = buildWorkFlow(preStateValidateFow);
         return workFlow;
     }
 
-    static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
+    static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlowBO workFlow) {
         //1、判断工作流是否为空
         if (workFlow == null) {
             return;
@@ -63,9 +65,9 @@ public class RuleValidateWorkFlowUtil {
 
         //2、获取处理结果进行下一步
         //2-1、如果是判断的工作流，并且结果为true，则进入支流
-        RuleValidateWorkFlow subWorkFlow = workFlow.getSubWorkFlow();
+        RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         //把主流给支流的下一步
-        RuleValidateWorkFlow next = getNextWorkFlow(workFlow);
+        RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
         if (subWorkFlow != null) {
             RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
             if (ruleConditionBO != null) {
@@ -85,7 +87,7 @@ public class RuleValidateWorkFlowUtil {
         }
     }
 
-    private static RuleValidateWorkFlow getNextWorkFlow(RuleValidateWorkFlow workFlow) {
+    private static RuleValidateWorkFlowBO getNextWorkFlow(RuleValidateWorkFlowBO workFlow) {
         workFlow = workFlow.getNextWorkFlow();
         if (workFlow == null) {
             return null;
@@ -111,7 +113,7 @@ public class RuleValidateWorkFlowUtil {
      * @param workFlow
      * @return
      */
-    private static boolean runWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlow workFlow) {
+    private static boolean runWorkFlow(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData, RuleValidateWorkFlowBO workFlow) {
         List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
         if (CollectionUtils.isNotEmpty(ruleCodeList)) {
             for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
@@ -136,13 +138,13 @@ public class RuleValidateWorkFlowUtil {
      * @param preWorkFlow
      * @return
      */
-    private static RuleValidateWorkFlow buildPreStateValidateFow(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildPreStateValidateFow(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("前置状态检测工作流");
         setNextFlow(preWorkFlow, workFlow, null);
-        RuleValidateWorkFlow vehicleStateIsNullFlow = buildVehicleStateIsNullFlow(workFlow);
-        RuleValidateWorkFlow vehicleStateValidate = buildVehicleStateValidate(vehicleStateIsNullFlow);
-        RuleValidateWorkFlow vehicleStateValidate2 = buildVehicleStateValidate2(vehicleStateValidate);
+        RuleValidateWorkFlowBO vehicleStateIsNullFlow = buildVehicleStateIsNullFlow(workFlow);
+        RuleValidateWorkFlowBO vehicleStateValidate = buildVehicleStateValidate(vehicleStateIsNullFlow);
+        RuleValidateWorkFlowBO vehicleStateValidate2 = buildVehicleStateValidate2(vehicleStateValidate);
         return vehicleStateValidate2;
     }
 
@@ -153,7 +155,7 @@ public class RuleValidateWorkFlowUtil {
      * @param workFlow
      * @param subWorkFlow
      */
-    private static void setNextFlow(RuleValidateWorkFlow preWorkFlow, RuleValidateWorkFlow workFlow, RuleValidateWorkFlow subWorkFlow) {
+    private static void setNextFlow(RuleValidateWorkFlowBO preWorkFlow, RuleValidateWorkFlowBO workFlow, RuleValidateWorkFlowBO subWorkFlow) {
         if (preWorkFlow != null) {
             preWorkFlow.setNextWorkFlow(workFlow);
             if (subWorkFlow != null) {
@@ -168,8 +170,8 @@ public class RuleValidateWorkFlowUtil {
      * @param preWorkFlow
      * @return
      */
-    private static RuleValidateWorkFlow buildWorkFlow(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildWorkFlow(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         setNextFlow(preWorkFlow, workFlow, null);
         workFlow.setName("车辆状态=2（熄火）并且车速大于5");
         workFlow.setReturn(false);
@@ -184,8 +186,8 @@ public class RuleValidateWorkFlowUtil {
      * @param preWorkFlow
      * @return
      */
-    private static RuleValidateWorkFlow buildWorkFlow2(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildWorkFlow2(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         setNextFlow(preWorkFlow, workFlow, null);
         workFlow.setReturn(false);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
@@ -198,8 +200,8 @@ public class RuleValidateWorkFlowUtil {
      *
      * @return
      */
-    private static RuleValidateWorkFlow buildDataIntegrityValidateFlow() {
-        RuleValidateWorkFlow ruleValidateWorkFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildDataIntegrityValidateFlow() {
+        RuleValidateWorkFlowBO ruleValidateWorkFlow = new RuleValidateWorkFlowBO();
         ruleValidateWorkFlow.setName("数据完整性校验");
         ruleValidateWorkFlow.setReturn(true);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
@@ -219,8 +221,8 @@ public class RuleValidateWorkFlowUtil {
      *
      * @return
      */
-    private static RuleValidateWorkFlow buildVehicleStateIsNullFlow(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildVehicleStateIsNullFlow(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("车辆状态为null的校验");
         workFlow.setReturn(true);
         workFlow.setRuleConditionBO(CommonCondition.buildVehicleByRule(RULE_CODE_VEHICLE_STATE_IS_NULL));
@@ -234,8 +236,8 @@ public class RuleValidateWorkFlowUtil {
      *
      * @param preWorkFlow
      */
-    private static RuleValidateWorkFlow buildVehicleStateValidate(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildVehicleStateValidate(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("车辆状态校验工作流：异常、无效、无定义");
         workFlow.setReturn(true);
         List<NewGbRuleCodeEnum> ruleCodeList = new ArrayList<>();
@@ -254,8 +256,8 @@ public class RuleValidateWorkFlowUtil {
      * @param preWorkFlow
      * @return
      */
-    private static RuleValidateWorkFlow buildVehicleStateValidate2(RuleValidateWorkFlow preWorkFlow) {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildVehicleStateValidate2(RuleValidateWorkFlowBO preWorkFlow) {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("车辆状态校验：不等于1并且不等于2");
         workFlow.setReturn(true);
         workFlow.setRuleConditionBO(CommonCondition.vehicleStateNot1_2(true));
@@ -270,19 +272,19 @@ public class RuleValidateWorkFlowUtil {
      * @param ruleCodeList
      * @return
      */
-    private static RuleValidateWorkFlow buildFlowWithRuleCodeList(String name, List<NewGbRuleCodeEnum> ruleCodeList) {
-        RuleValidateWorkFlow ruleValidateWorkFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildFlowWithRuleCodeList(String name, List<NewGbRuleCodeEnum> ruleCodeList) {
+        RuleValidateWorkFlowBO ruleValidateWorkFlow = new RuleValidateWorkFlowBO();
         ruleValidateWorkFlow.setName(name);
         ruleValidateWorkFlow.setRuleCodeList(ruleCodeList);
         return ruleValidateWorkFlow;
     }
 
-    private static RuleValidateWorkFlow buildFlowFromEnums() {
-        RuleValidateWorkFlow workFlow = new RuleValidateWorkFlow();
+    private static RuleValidateWorkFlowBO buildFlowFromEnums() {
+        RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("开始");
-        List<WorkFlowEnums> topFlows = WorkFlowEnums.getTopFlow();
-        RuleValidateWorkFlow preWorkFlow = null;
-        for (WorkFlowEnums topFlow : topFlows) {
+        List<WorkFlowEnum> topFlows = WorkFlowEnum.getTopFlow();
+        RuleValidateWorkFlowBO preWorkFlow = null;
+        for (WorkFlowEnum topFlow : topFlows) {
             if (preWorkFlow == null) {
                 preWorkFlow = buildFlowFromEnums2(workFlow, topFlow);
             } else {
@@ -292,14 +294,19 @@ public class RuleValidateWorkFlowUtil {
         return workFlow;
     }
 
-    private static RuleValidateWorkFlow buildFlowFromEnums2(RuleValidateWorkFlow preWorkFlow, WorkFlowEnums topFlow) {
-        RuleValidateWorkFlow workFlow = BeanUtil.copyProperties(topFlow, RuleValidateWorkFlow.class);
-        List<WorkFlowEnums> subEnums = WorkFlowEnums.getSubFlow(topFlow);
-        RuleValidateWorkFlow subFlow = null;
+    private static RuleValidateWorkFlowBO buildFlowFromEnums2(RuleValidateWorkFlowBO preWorkFlow, WorkFlowEnum topFlow) {
+        RuleValidateWorkFlowBO workFlow = BeanUtil.copyProperties(topFlow, RuleValidateWorkFlowBO.class);
+        BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(topFlow.getCode());
+        if (workFlowConfig != null) {
+            workFlow.setRuleCodeList(workFlowConfig.getRuleCodeList());
+            workFlow.setRuleConditionBO(workFlowConfig.getRuleConditionBO());
+        }
+        List<WorkFlowEnum> subEnums = WorkFlowEnum.getSubFlow(topFlow);
+        RuleValidateWorkFlowBO subFlow = null;
         if (CollectionUtils.isNotEmpty(subEnums)) {
-            for (WorkFlowEnums s : subEnums) {
+            for (WorkFlowEnum s : subEnums) {
                 if (subFlow == null) {
-                    subFlow = buildFlowFromEnums2(new RuleValidateWorkFlow(), s);
+                    subFlow = buildFlowFromEnums2(new RuleValidateWorkFlowBO(), s);
                     setNextFlow(preWorkFlow, workFlow, null);
                     setNextFlow(workFlow, null, subFlow);
                 } else {

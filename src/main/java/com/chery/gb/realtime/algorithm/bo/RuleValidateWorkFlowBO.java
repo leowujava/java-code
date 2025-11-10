@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RuleValidateWorkFlow {
+public class RuleValidateWorkFlowBO {
     /**
      * 名字
      */
@@ -42,10 +42,10 @@ public class RuleValidateWorkFlow {
     /**
      * 下一个工作流
      */
-    private RuleValidateWorkFlow nextWorkFlow;
+    private RuleValidateWorkFlowBO nextWorkFlow;
     /**
      * 支流
      */
-    private RuleValidateWorkFlow subWorkFlow;
+    private RuleValidateWorkFlowBO subWorkFlow;
 
 }

@@ -17,7 +17,7 @@ signal:
     max: 3000
     errorValue: 65534
     invalidValue: 65535
-  #车速
+  #里程
   2009:
     scale: null
     point: null

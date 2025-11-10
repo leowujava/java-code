@@ -26,7 +26,9 @@ public enum WorkFlowEnum {
     CHARGING_STATE_IS_ERROR_OR_INVALID("2-7", "充电状态为异常或无效", "充电状态为异常或无效", false, 1, PRE_STATE),
 
     BASIC_ITEM("3", "基础项", "基础项", false, 0, null),
-    CHARGING_STATE_IS_1_OR_4("4", "充电状态", "充电状态", false, 0, null),
+    CHARGING_STATE_IS_NOT_1_OR_4("4", "充电状态", "充电状态", false, 0, null),
+    SPEED_DISTANCE_IS_NULL("4-1", "车速、里程校验", "车速、里程校验是否为空", false, 0, CHARGING_STATE_IS_NOT_1_OR_4),
+
     DATA_LOGIC("5", "数据关联逻辑", "数据关联逻辑检测", false, 0, null),
     RUNNING_MODE("6", "运行模式", "运行模式检测", false, 0, null),
 

@@ -15,7 +15,6 @@ public enum SignalEnum {
     SIGNAL_2232("2232", "soc", SignalGroupEnum.HOLE_VEHICLE, null, null),
     SIGNAL_2076("2076", "档位", SignalGroupEnum.HOLE_VEHICLE, null, null),
     SIGNAL_2001("2001", "车速", SignalGroupEnum.HOLE_VEHICLE, new SignalConverter2001(), null),
-    SIGNAL_2160("2160", "绝缘电阻", SignalGroupEnum.HOLE_VEHICLE, null, null),
     SIGNAL_21B2("21B2", "制动踏板状态", SignalGroupEnum.HOLE_VEHICLE, null, null),
     SIGNAL_215D("215D", "总电流", SignalGroupEnum.HOLE_VEHICLE, new SignalConverter215D(), null),
     SIGNAL_21B1("21B1", "加速踏板行程值", SignalGroupEnum.HOLE_VEHICLE, null, null),

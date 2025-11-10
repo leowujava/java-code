@@ -93,7 +93,7 @@ public class RuleConfigFactory {
                     RuleConditionBO condition = configBO.getCondition();
                     RuleConditionBO ruleConditionBO = buildCondition(NewGbRuleCodeEnum.getByCode(ruleCode));
                     if (ruleConditionBO != null) {
-                        if (condition == null) {
+                        if (condition == null || CollectionUtils.isEmpty(condition.getConditions())) {
                             configBO.setCondition(ruleConditionBO);
                         } else {
                             List<RuleDetailBO> conditions = condition.getConditions();

@@ -37,7 +37,7 @@ public class SignalConfigFactory {
 
         // 输出结果
         if (annotatedClasses.isEmpty()) {
-            System.out.println("未找到带有 @RuleConfig 的类");
+            System.out.println("未找到带有 @SignalConfig 的类");
         } else {
 //            System.out.println("找到以下类：");
             annotatedClasses.forEach(clazz -> {

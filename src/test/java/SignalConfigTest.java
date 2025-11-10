@@ -145,6 +145,7 @@ public class SignalConfigTest {
         content.append("#" + signalEnum.getName() + "\n");
         content.append("  " + code + ": \n");
         content.append("    scale: " + signalConfigBO.getScale() + "\n");
+        content.append("    point: " + signalConfigBO.getPoint() + "\n");
         content.append("    offset: " + signalConfigBO.getOffset() + "\n");
         content.append("    min: " + signalConfigBO.getMin() + "\n");
         content.append("    max: " + signalConfigBO.getMax() + "\n");

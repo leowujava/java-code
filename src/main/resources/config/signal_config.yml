@@ -2,14 +2,25 @@ signal:
   #充电状态
   21AA:
     scale: null
+    point: null
     offset: null
     min: 1
     max: 4
     errorValue: 254
     invalidValue: 255
+  #车速
+  2001:
+    scale: null
+    point: null
+    offset: null
+    min: 0
+    max: 3000
+    errorValue: 65534
+    invalidValue: 65535
   #总电流
   215D:
     scale: 10
+    point: 1
     offset: 1000
     min: 0
     max: 60000
@@ -18,6 +29,7 @@ signal:
   #总电压
   215C:
     scale: 10
+    point: 1
     offset: null
     min: 0
     max: 60000
@@ -26,6 +38,7 @@ signal:
   #车辆状态
   220C:
     scale: null
+    point: null
     offset: null
     min: 1
     max: 3
@@ -34,6 +47,7 @@ signal:
   #纬度
   207B:
     scale: 1000000
+    point: 6
     offset: 90
     min: 0
     max: 90000000
@@ -42,6 +56,7 @@ signal:
   #经度
   207A:
     scale: 1000000
+    point: 6
     offset: 180
     min: 0
     max: 180000000
@@ -50,6 +65,7 @@ signal:
   #最低温度值
   2145:
     scale: null
+    point: null
     offset: null
     min: 0
     max: 250
@@ -58,6 +74,7 @@ signal:
   #最高报警等级
   220B:
     scale: null
+    point: null
     offset: null
     min: 1
     max: 4

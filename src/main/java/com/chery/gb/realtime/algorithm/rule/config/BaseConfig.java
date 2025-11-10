@@ -1,8 +1,6 @@
 package com.chery.gb.realtime.algorithm.rule.config;
 
 
-import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
-import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
@@ -10,7 +8,10 @@ import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import lombok.Data;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author wugaoyang
@@ -73,23 +74,26 @@ public abstract class BaseConfig {
     }
 
     public RuleConditionBO buildCondition(NewGbRuleCodeEnum ruleCodeEnum) {
-            String ruleSubType = ruleCodeEnum.getRuleSubType();
-            if (ruleSubType.equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
-                return null;
-            }
-            SignalEnum signalEnum = NewGbRuleCodeEnum.getSignalByRuleCode(ruleCodeEnum.getCode());
-            if (Objects.equals(ruleSubType, "缺失")) {
-                return CommonCondition.buildNullCondition(signalEnum, false);
-            }
-            if (Objects.equals(ruleSubType, "异常值")) {
-                return CommonCondition.buildErrorCondition(signalEnum, false);
-            }
-            if (Objects.equals(ruleSubType, "无效值")) {
-                return CommonCondition.buildInvalidCondition(signalEnum, false);
-            }
-            if (Objects.equals(ruleSubType, "数据越界")) {
-                return CommonCondition.buildRangeCondition(signalEnum, false);
-            }
+        String ruleSubType = ruleCodeEnum.getRuleSubType();
+        SignalEnum signalEnum = NewGbRuleCodeEnum.getSignalByRuleCode(ruleCodeEnum.getCode());
+        if (signalEnum == null) {
+            return null;
+        }
+        if (ruleSubType.equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
+            return CommonCondition.buildNullCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "缺失")) {
+            return CommonCondition.buildNullCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "异常值")) {
+            return CommonCondition.buildErrorCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "无效值")) {
+            return CommonCondition.buildInvalidCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "数据越界")) {
+            return CommonCondition.buildRangeCondition(signalEnum, false);
+        }
         return null;
     }
 }

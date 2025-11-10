@@ -43,7 +43,12 @@ public class RuleValidateWorkFlowUtil {
         if (workFlow == null) {
             return;
         }
-        System.out.println("执行工作流：" + workFlow.getName());
+        String workFlowName = workFlow.getName();
+        StringBuffer s = new StringBuffer();
+        for (int i = 0; i < 35 - workFlowName.length(); i++) {
+            s.append("=");
+        }
+        System.out.println("====================执行工作流：" + workFlowName + s);
         boolean result;
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
@@ -51,8 +56,8 @@ public class RuleValidateWorkFlowUtil {
         if (ruleConditionBO != null) {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
             //如果条件判断结果为true，需要返回时，抛出异常
-            if (result && ruleConditionBO.isReturn()) {
-                throw new GbException(workFlow.getName());
+            if (result && (ruleConditionBO.isReturn() || workFlow.isReturn())) {
+                throw new GbException(workFlowName);
             }
             //如果工作流有判断条件时，条件为true才能进入支流
             if (subWorkFlow != null && result) {
@@ -68,7 +73,7 @@ public class RuleValidateWorkFlowUtil {
                 if (ruleValidate != null) {
                     boolean validate = ruleValidate.validate(signalMap, ruleMap, retData);
                     if (validate && workFlow.isReturn()) {
-                        throw new GbException(workFlow.getName());
+                        throw new GbException(workFlowName);
                     }
                 } else {
                     GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);

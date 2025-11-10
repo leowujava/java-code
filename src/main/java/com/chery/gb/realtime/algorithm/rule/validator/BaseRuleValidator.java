@@ -39,7 +39,7 @@ public abstract class BaseRuleValidator {
         if (gbRuleCodeEnum != null) {
             desc += ":" + gbRuleCodeEnum.getName();
         }
-        System.out.println("执行校验器：" + desc);
+        System.out.println("校验器：" + desc);
         BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> preCondition = config.getPreCondition();
         if (CollectionUtils.isNotEmpty(preCondition)) {

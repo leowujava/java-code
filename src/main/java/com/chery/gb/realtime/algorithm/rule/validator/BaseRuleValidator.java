@@ -52,7 +52,7 @@ public abstract class BaseRuleValidator {
         List<RuleDetailBO> condition = config.getCondition();
         if (CollectionUtils.isNotEmpty(condition)) {
             boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition, retData, getRuleCode());
-            checkReturn(flag);
+            checkReturn(flag, (String) signalMap.get("vin"));
             return flag;
         }
         return false;
@@ -69,7 +69,7 @@ public abstract class BaseRuleValidator {
         }
     }
 
-    public void checkReturn(boolean flag) {
+    public void checkReturn(boolean flag, String vin) {
         BaseConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
         String desc = "";
         RuleValidate declaredAnnotation = getClass().getDeclaredAnnotation(RuleValidate.class);
@@ -80,7 +80,7 @@ public abstract class BaseRuleValidator {
             desc = config.getDesc();
         }
         if (StrUtil.isNotBlank(desc) && flag) {
-            System.out.println(getClass().getName() + ":" + desc);
+            System.out.println(getClass().getName() + ":" + desc + "; vin:" + vin);
         }
         if ((config != null && config.isReturn() && flag) || (config == null && flag)) {
             if (declaredAnnotation != null) {

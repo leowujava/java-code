@@ -51,18 +51,20 @@ public class RuleValidateWorkFlowUtil {
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         //把主流给支流的下一步
         RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
-        if (subWorkFlow != null) {
-            RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
-            if (ruleConditionBO != null) {
-                result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
-                if (result) {
-                    run(signalMap, ruleMap, retData, subWorkFlow);
-                }
-            } else {
+        RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
+        if (ruleConditionBO != null) {
+            result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
+            if (subWorkFlow != null && result) {
                 run(signalMap, ruleMap, retData, subWorkFlow);
+            }
+            if (result && ruleConditionBO.isReturn()) {
+                throw new GbException(workFlow.getName());
             }
         }
         runWorkFlow(signalMap, ruleMap, retData, workFlow);
+        if (ruleConditionBO == null && subWorkFlow != null) {
+            run(signalMap, ruleMap, retData, subWorkFlow);
+        }
         //2-2、进入主流下一步
         if (next != null) {
             run(signalMap, ruleMap, retData, next);

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * 车辆状态非 1 启动且非 2 熄火
  * 车辆状态既不是启动也不是熄火
- * 
+ *
  * @author wugaoyang
  * @date 2025/11/4 星期二
  *
@@ -31,8 +31,8 @@ public class RuleConfig_259 extends BaseConfig {
         conditions.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("2").detailRelation(RuleRelationEnum.AND.name()).build());
         condition.setConditions(conditions);
         condition.setReturn(true);
-        condition.setRuleCode("259");
-        condition.setDesc("车辆状态非 1 启动且非 2 熄火");
+        condition.setRuleCode(NewGbRuleCodeEnum.RULE_CODE_259.getCode());
+        condition.setDesc(NewGbRuleCodeEnum.RULE_CODE_259.getDesc());
         ruleConfigBO.setCondition(condition);
     }
 

@@ -89,7 +89,7 @@ public class NewGBRuleDataCheckUtil {
         try {
             RuleValidateWorkFlowUtil.run(signalMap, ruleMap, retData);
         } catch (GbException e) {
-            e.printStackTrace();
+            //            e.printStackTrace();
         }
     }
 

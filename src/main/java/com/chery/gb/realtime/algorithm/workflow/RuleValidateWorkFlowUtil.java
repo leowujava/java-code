@@ -49,7 +49,7 @@ public class RuleValidateWorkFlowUtil {
             s.append("=");
         }
         System.out.println("====================执行工作流：" + workFlowName + s);
-        boolean result;
+        boolean result = false;
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         RuleConditionBO ruleCondition = workFlow.getRuleCondition();
         //运行判断
@@ -71,12 +71,12 @@ public class RuleValidateWorkFlowUtil {
                 String ruleCode = newGbRuleCodeEnum.getCode();
                 BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
                 if (ruleValidate != null) {
-                    boolean validate = ruleValidate.validate(signalMap, ruleMap, retData);
-                    if (validate && workFlow.isReturn()) {
+                    result = result || ruleValidate.validate(signalMap, ruleMap, retData);
+                    if (result && workFlow.isReturn()) {
                         throw new GbException(workFlowName);
                     }
                 } else {
-                    GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
+                    result = result || GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
                 }
             }
         }
@@ -84,19 +84,23 @@ public class RuleValidateWorkFlowUtil {
         if (ruleCondition == null && subWorkFlow != null) {
             run(signalMap, ruleMap, retData, subWorkFlow);
         }
-        RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
+        RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow, result);
         //进入下一步
         if (next != null) {
             run(signalMap, ruleMap, retData, next);
         }
     }
 
-    private static RuleValidateWorkFlowBO getNextWorkFlow(RuleValidateWorkFlowBO workFlow) {
+    private static RuleValidateWorkFlowBO getNextWorkFlow(RuleValidateWorkFlowBO workFlow, boolean result) {
+        int skip = workFlow.getSkip();
         workFlow = workFlow.getNextWorkFlow();
         if (workFlow == null) {
             return null;
         }
-        for (int i = 1; i < workFlow.getSkip(); i++) {
+        if (!result) {
+            return workFlow;
+        }
+        for (int i = 1; i <= skip; i++) {
             if (workFlow == null) {
                 break;
             }

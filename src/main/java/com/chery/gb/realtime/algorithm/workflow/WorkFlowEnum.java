@@ -25,6 +25,8 @@ public enum WorkFlowEnum {
     //充电状态
     CHARGING_STATE_IS_NULL("2-6", "充电状态为空", "充电状态为空", true, 0, PRE_STATE),
     CHARGING_STATE_IS_ERROR_OR_INVALID("2-7", "充电状态为异常或无效", "充电状态为异常或无效", false, 1, PRE_STATE),
+    CHARGING_STATE_IS_OUT_OF_RANGE("2-8", "充电状态范围检测", "充电状态范无定义", false, 0, PRE_STATE),
+    VEHICLE_STATE_IS_2_AND_CHARGING_STATE_IS_3("2-9", "车辆状态为2且充电状态为3", "熄火未充电", true, 0, PRE_STATE),
 
     //基础项
     BASIC_ITEM("3", "基础项", "基础项", false, 0, null),

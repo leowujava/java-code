@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.SPEED_VALIDATE)
 public class WorkFlowConfig_SPEED_VALIDATE extends BaseWorkFlowConfig {
     public WorkFlowConfig_SPEED_VALIDATE() {
-        setRuleConditionBO(null);
+        setCondition(null);
         setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_31,
                 NewGbRuleCodeEnum.RULE_CODE_32,
                 NewGbRuleCodeEnum.RULE_CODE_33));

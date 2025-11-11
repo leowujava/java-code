@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.ALL_DATA)
 public class WorkFlowConfig_ALL_DATA extends BaseWorkFlowConfig {
     public WorkFlowConfig_ALL_DATA() {
-        setRuleConditionBO(null);
+        setCondition(null);
         setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_239,
                 NewGbRuleCodeEnum.RULE_CODE_240,
                 NewGbRuleCodeEnum.RULE_CODE_241,

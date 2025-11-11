@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_2_SPEED_GT_5)
 public class WorkFlowConfig_VEHICLE_STATE_IS_2_SPEED_GT_5 extends BaseWorkFlowConfig {
     public WorkFlowConfig_VEHICLE_STATE_IS_2_SPEED_GT_5() {
-        setRuleConditionBO(null);
+        setCondition(null);
         setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_250));
     }
 }

@@ -34,7 +34,7 @@ public class RuleValidateWorkFlowBO {
     /**
      * 判断条件
      */
-    private RuleConditionBO ruleConditionBO;
+    private RuleConditionBO ruleCondition;
     /**
      * 校验的规则
      */

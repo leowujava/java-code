@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_NOT_1_2)
 public class WorkFlowConfig_VEHICLE_STATE_IS_NOT_1_2 extends BaseWorkFlowConfig {
     public WorkFlowConfig_VEHICLE_STATE_IS_NOT_1_2() {
-        setRuleConditionBO(null);
+        setCondition(null);
         setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_259));
     }
 }

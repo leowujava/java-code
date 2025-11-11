@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WorkFlowConfig(WorkFlowEnum.DISTANCE_VALIDATE)
 public class WorkFlowConfig_DISTANCE_VALIDATE extends BaseWorkFlowConfig {
     public WorkFlowConfig_DISTANCE_VALIDATE() {
-        setRuleConditionBO(null);
+        setCondition(null);
         setRuleCodeList(Arrays.asList(NewGbRuleCodeEnum.RULE_CODE_34,
                 NewGbRuleCodeEnum.RULE_CODE_35,
                 NewGbRuleCodeEnum.RULE_CODE_36));

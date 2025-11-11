@@ -15,7 +15,10 @@ import java.util.List;
 @Data
 public class BaseWorkFlowConfig {
 
-    private RuleConditionBO ruleConditionBO;
+    /**
+     * 判断条件
+     */
+    private RuleConditionBO condition;
     /**
      * 校验的规则
      */

@@ -10,7 +10,6 @@ import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public class WorkFlowConfig_CHARGING_STATE_IS_NOT_1_OR_4 extends BaseWorkFlowCon
         ruleConditionBO.setConditions(list);
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalValue("1").signalRule(RuleSymbolEnum.NE.name()).detailRelation(RuleRelationEnum.AND.name()).build());
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalValue("4").signalRule(RuleSymbolEnum.NE.name()).detailRelation(RuleRelationEnum.AND.name()).build());
-        setRuleConditionBO(ruleConditionBO);
+        setCondition(ruleConditionBO);
         setRuleCodeList(null);
     }
 }

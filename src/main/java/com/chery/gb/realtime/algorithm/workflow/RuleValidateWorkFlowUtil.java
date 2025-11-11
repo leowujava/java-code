@@ -51,12 +51,12 @@ public class RuleValidateWorkFlowUtil {
         System.out.println("====================执行工作流：" + workFlowName + s);
         boolean result;
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
-        RuleConditionBO ruleConditionBO = workFlow.getRuleConditionBO();
+        RuleConditionBO ruleCondition = workFlow.getRuleCondition();
         //运行判断
-        if (ruleConditionBO != null) {
-            result = GbRuleCheckUtil.checkByCondition(signalMap, ruleConditionBO.getConditions(), retData, ruleConditionBO.getRuleCode());
+        if (ruleCondition != null) {
+            result = GbRuleCheckUtil.checkByCondition(signalMap, ruleCondition.getConditions(), retData, ruleCondition.getRuleCode());
             //如果条件判断结果为true，需要返回时，抛出异常
-            if (result && (ruleConditionBO.isReturn() || workFlow.isReturn())) {
+            if (result && (ruleCondition.isReturn() || workFlow.isReturn())) {
                 throw new GbException(workFlowName);
             }
             //如果工作流有判断条件时，条件为true才能进入支流
@@ -81,7 +81,7 @@ public class RuleValidateWorkFlowUtil {
             }
         }
         //运行支流
-        if (ruleConditionBO == null && subWorkFlow != null) {
+        if (ruleCondition == null && subWorkFlow != null) {
             run(signalMap, ruleMap, retData, subWorkFlow);
         }
         RuleValidateWorkFlowBO next = getNextWorkFlow(workFlow);
@@ -143,8 +143,8 @@ public class RuleValidateWorkFlowUtil {
         RuleValidateWorkFlowBO workFlow = BeanUtil.copyProperties(topFlow, RuleValidateWorkFlowBO.class);
         BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(topFlow.getCode());
         if (workFlowConfig != null) {
+            workFlow.setRuleCondition(workFlowConfig.getCondition());
             workFlow.setRuleCodeList(workFlowConfig.getRuleCodeList());
-            workFlow.setRuleConditionBO(workFlowConfig.getRuleConditionBO());
         }
         List<WorkFlowEnum> subEnums = WorkFlowEnum.getSubFlow(topFlow);
         RuleValidateWorkFlowBO subFlow = null;

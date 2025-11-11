@@ -12,9 +12,8 @@ import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
  *
  */
 @WorkFlowConfig(WorkFlowEnum.SPEED_IS_NULL)
-public class WorkFlowConfig_SPEED_IS_NULL extends BaseWorkFlowConfig {
-    public WorkFlowConfig_SPEED_IS_NULL() {
+public class WorkFlowConfig_4_1 extends BaseWorkFlowConfig {
+    public WorkFlowConfig_4_1() {
         setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_2001, false));
-        setRuleCodeList(null);
     }
 }

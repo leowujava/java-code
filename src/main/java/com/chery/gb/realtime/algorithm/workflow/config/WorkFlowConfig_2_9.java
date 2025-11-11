@@ -4,14 +4,12 @@ package com.chery.gb.realtime.algorithm.workflow.config;
 import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
-import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleRelationEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleSymbolEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,15 +18,13 @@ import java.util.List;
  *
  */
 @WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_2_AND_CHARGING_STATE_IS_3)
-public class WorkFlowConfig_VEHICLE_STATE_IS_2_AND_CHARGING_STATE_IS_3 extends BaseWorkFlowConfig {
-    public WorkFlowConfig_VEHICLE_STATE_IS_2_AND_CHARGING_STATE_IS_3() {
+public class WorkFlowConfig_2_9 extends BaseWorkFlowConfig {
+    public WorkFlowConfig_2_9() {
         RuleConditionBO condition = new RuleConditionBO();
         List<RuleDetailBO> list = new ArrayList<>();
         condition.setConditions(list);
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("2").detailRelation(RuleRelationEnum.AND.name()).build());
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("3").detailRelation(RuleRelationEnum.AND.name()).build());
         setCondition(condition);
-        setCondition(condition);
-        setRuleCodeList(null);
     }
 }

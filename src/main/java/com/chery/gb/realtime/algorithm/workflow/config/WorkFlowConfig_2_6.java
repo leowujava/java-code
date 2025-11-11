@@ -11,10 +11,9 @@ import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_NULL)
-public class WorkFlowConfig_VEHICLE_STATE_IS_NULL extends BaseWorkFlowConfig {
-    public WorkFlowConfig_VEHICLE_STATE_IS_NULL() {
-        setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_220C, true));
-        setRuleCodeList(null);
+@WorkFlowConfig(WorkFlowEnum.CHARGING_STATE_IS_NULL)
+public class WorkFlowConfig_2_6 extends BaseWorkFlowConfig {
+    public WorkFlowConfig_2_6() {
+        setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_21AA, false));
     }
 }

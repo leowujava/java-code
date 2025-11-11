@@ -18,14 +18,13 @@ import java.util.List;
  *
  */
 @WorkFlowConfig(WorkFlowEnum.CHARGING_STATE_IS_NOT_1_OR_4)
-public class WorkFlowConfig_CHARGING_STATE_IS_NOT_1_OR_4 extends BaseWorkFlowConfig {
-    public WorkFlowConfig_CHARGING_STATE_IS_NOT_1_OR_4() {
+public class WorkFlowConfig_4 extends BaseWorkFlowConfig {
+    public WorkFlowConfig_4() {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();
         List<RuleDetailBO> list = new ArrayList<>();
         ruleConditionBO.setConditions(list);
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalValue("1").signalRule(RuleSymbolEnum.NE.name()).detailRelation(RuleRelationEnum.AND.name()).build());
         list.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalValue("4").signalRule(RuleSymbolEnum.NE.name()).detailRelation(RuleRelationEnum.AND.name()).build());
         setCondition(ruleConditionBO);
-        setRuleCodeList(null);
     }
 }

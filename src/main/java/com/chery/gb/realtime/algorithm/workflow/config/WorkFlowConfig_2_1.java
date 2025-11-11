@@ -11,10 +11,9 @@ import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.DISTANCE_IS_NULL)
-public class WorkFlowConfig_DISTANCE_IS_NULL extends BaseWorkFlowConfig {
-    public WorkFlowConfig_DISTANCE_IS_NULL() {
-        setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_2009, false));
-        setRuleCodeList(null);
+@WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_NULL)
+public class WorkFlowConfig_2_1 extends BaseWorkFlowConfig {
+    public WorkFlowConfig_2_1() {
+        setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_220C, true));
     }
 }

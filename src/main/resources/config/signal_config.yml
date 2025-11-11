@@ -1,91 +1,90 @@
-signal:
-  #充电状态
-  21AA:
-    scale: null
-    point: null
-    offset: null
-    min: 1
-    max: 4
-    errorValue: 254
-    invalidValue: 255
-  #车速
-  2001:
-    scale: null
-    point: null
-    offset: null
-    min: 0
-    max: 3000
-    errorValue: 65534
-    invalidValue: 65535
-  #里程
-  2009:
-    scale: null
-    point: null
-    offset: null
-    min: 0
-    max: 9999999
-    errorValue: 65534
-    invalidValue: 65535
-  #总电流
-  215D:
-    scale: 10
-    point: 1
-    offset: 1000
-    min: 0
-    max: 60000
-    errorValue: 65534
-    invalidValue: 65535
-  #总电压
-  215C:
-    scale: 10
-    point: 1
-    offset: null
-    min: 0
-    max: 60000
-    errorValue: 65534
-    invalidValue: 65535
-  #车辆状态
-  220C:
-    scale: null
-    point: null
-    offset: null
-    min: 1
-    max: 3
-    errorValue: 254
-    invalidValue: 155
-  #纬度
-  207B:
-    scale: 1000000
-    point: 6
-    offset: 90
-    min: 0
-    max: 90000000
-    errorValue: null
-    invalidValue: null
-  #经度
-  207A:
-    scale: 1000000
-    point: 6
-    offset: 180
-    min: 0
-    max: 180000000
-    errorValue: null
-    invalidValue: null
-  #最低温度值
-  2145:
-    scale: null
-    point: null
-    offset: null
-    min: 0
-    max: 250
-    errorValue: 254
-    invalidValue: 255
-  #最高报警等级
-  220B:
-    scale: null
-    point: null
-    offset: null
-    min: 1
-    max: 4
-    errorValue: 254
-    invalidValue: 255
+#充电状态
+"21AA":
+  scale: null
+  point: null
+  offset: null
+  min: 1
+  max: 4
+  errorValue: 254
+  invalidValue: 255
+#车速
+"2001":
+  scale: null
+  point: null
+  offset: null
+  min: 0
+  max: 3000
+  errorValue: 65534
+  invalidValue: 65535
+#里程
+"2009":
+  scale: null
+  point: null
+  offset: null
+  min: 0
+  max: 9999999
+  errorValue: 65534
+  invalidValue: 65535
+#总电流
+"215D":
+  scale: 10
+  point: 1
+  offset: 1000
+  min: 0
+  max: 60000
+  errorValue: 65534
+  invalidValue: 65535
+#总电压
+"215C":
+  scale: 10
+  point: 1
+  offset: null
+  min: 0
+  max: 60000
+  errorValue: 65534
+  invalidValue: 65535
+#车辆状态
+"220C":
+  scale: null
+  point: null
+  offset: null
+  min: 1
+  max: 3
+  errorValue: 254
+  invalidValue: 155
+#纬度
+"207B":
+  scale: 1000000
+  point: 6
+  offset: 90
+  min: 0
+  max: 90000000
+  errorValue: null
+  invalidValue: null
+#经度
+"207A":
+  scale: 1000000
+  point: 6
+  offset: 180
+  min: 0
+  max: 180000000
+  errorValue: null
+  invalidValue: null
+#最低温度值
+"2145":
+  scale: null
+  point: null
+  offset: null
+  min: 0
+  max: 250
+  errorValue: 254
+  invalidValue: 255
+#最高报警等级
+"220B":
+  scale: null
+  point: null
+  offset: null
+  min: 1
+  max: 4
+  errorValue: 254
+  invalidValue: 255

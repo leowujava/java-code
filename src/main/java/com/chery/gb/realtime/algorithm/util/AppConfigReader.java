@@ -4,12 +4,10 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.chery.gb.realtime.algorithm.bo.KafkaConfigBO;
 import com.chery.gb.realtime.algorithm.bo.MySqlConfigBO;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
 import java.util.Map;
 
-public class YmlReader {
+public class AppConfigReader {
 
     private static KafkaConfigBO kafkaConfigBO;
 
@@ -45,20 +43,14 @@ public class YmlReader {
         return kafkaConfigBO;
     }
 
-    public static Map<String, Object> readConfig(String configFile) {
+    private static Map<String, Object> readConfig(String configFile) {
         if (configMap != null) {
             return configMap;
         }
         if (StrUtil.isBlank(configFile)) {
             configFile = "application.yml";
         }
-        Yaml yaml = new Yaml();
-        InputStream in = YmlReader.class.getClassLoader().getResourceAsStream(configFile);
-        if (in == null) {
-            throw new RuntimeException(configFile + " not found in classpath");
-        }
-        configMap = yaml.load(in);
-        System.out.println("读取到的配置文件：" + configFile + ":" + configMap);
+        configMap = YmlReaderUtil.readConfig(configFile);
         return configMap;
     }
 }

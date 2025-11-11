@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.chery.gb.realtime.algorithm.anotation.SignalConfig;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
-import com.chery.gb.realtime.algorithm.util.YmlReader;
+import com.chery.gb.realtime.algorithm.util.YmlReaderUtil;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -50,10 +50,8 @@ public class SignalConfigFactory {
             });
         }
 
-        Map<String, Object> map = YmlReader.readConfig("./config/signal_config.yml");
-        Object signal = map.get("signal");
-        Map<Object, Object> objectMap = (Map<Object, Object>) signal;
-        objectMap.forEach((key, value) -> {
+        Map<String, Object> signal = YmlReaderUtil.readConfig("./config/signal_config.yml");
+        signal.forEach((key, value) -> {
             SignalConfigBO signalConfigBO = JSON.parseObject(JSON.toJSONString(value), SignalConfigBO.class);
             BaseSignalConfig signalConfig = new BaseSignalConfig();
             signalConfig.setSignalConfigBO(signalConfigBO);

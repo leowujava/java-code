@@ -14,7 +14,7 @@ import com.ververica.cdc.debezium.JsonDebeziumDeserializationSchema;
 public class MysqlEnvUtil {
 
     public static MySqlSource<String> getMySqlSource(String configFile) {
-        return getMySqlSource(YmlReader.readMySqlConfigBO(configFile));
+        return getMySqlSource(AppConfigReader.readMySqlConfigBO(configFile));
     }
 
     /**

@@ -1,4 +1,4 @@
-import com.chery.gb.realtime.algorithm.util.YmlReader;
+import com.chery.gb.realtime.algorithm.util.YmlReaderUtil;
 import org.junit.Test;
 
 import java.util.Map;
@@ -12,7 +12,7 @@ public class YamlReaderTest {
 
     @Test
     public void test(){
-        Map<String, Object> map = YmlReader.readConfig("./config/signal_config.yml");
+        Map<String, Object> map = YmlReaderUtil.readConfig("./config/signal_config.yml");
         System.out.println(map.get("signal"));
     }
 }

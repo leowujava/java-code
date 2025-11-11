@@ -25,12 +25,12 @@ import java.util.Properties;
 public class KafkaEnvUtil {
 
     public static FlinkKafkaConsumer<String> getFlinkKafkaConsumer(String configFile) {
-        KafkaConfigBO kafkaConfigBO = YmlReader.readKafkaConfigBO(configFile);
+        KafkaConfigBO kafkaConfigBO = AppConfigReader.readKafkaConfigBO(configFile);
         return getFlinkKafkaConsumer(kafkaConfigBO.getServers(), kafkaConfigBO.getConsumerTopic(), kafkaConfigBO.getGroupId());
     }
 
     public static FlinkKafkaProducer getFlinkKafkaProducer(String configFile) {
-        KafkaConfigBO kafkaConfigBO = YmlReader.readKafkaConfigBO(configFile);
+        KafkaConfigBO kafkaConfigBO = AppConfigReader.readKafkaConfigBO(configFile);
         return getFlinkKafkaProducer(kafkaConfigBO.getServers(), kafkaConfigBO.getProducerTopic());
     }
 

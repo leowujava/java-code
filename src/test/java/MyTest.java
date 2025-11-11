@@ -1,7 +1,12 @@
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import org.junit.Test;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author wugaoyang
@@ -20,9 +25,22 @@ public class MyTest {
 
     @Test
     public void test2() {
-        List<NewGbRuleCodeEnum> byGroup = NewGbRuleCodeEnum.getByGroup("动力蓄电池数据");
-        for (NewGbRuleCodeEnum newGbRuleCodeEnum : byGroup) {
-            System.out.println(newGbRuleCodeEnum.getCode() + "\t" + newGbRuleCodeEnum.getName() + "\t" + newGbRuleCodeEnum.getGroup() + "\t" + newGbRuleCodeEnum.getDesc());
-        }
+        Map<String, SignalEnum> ruleSignalRelationMap = NewGbRuleCodeEnum.getRuleSignalRelationMap();
+        List<String> collect = ruleSignalRelationMap.keySet().stream().sorted(Comparator.comparing(s -> Long.valueOf(s))).collect(Collectors.toList());
+        collect.forEach(key -> {
+            SignalEnum value = ruleSignalRelationMap.get(key);
+            String code = null;
+            if (value != null) {
+                code = "\"" + value.getCode() + "\"";
+            }
+            System.out.println("\"" + key + "\": " + code);
+        });
+//        ruleSignalRelationMap.forEach((key, value) -> {
+//            String code = null;
+//            if (value != null) {
+//                code = value.getCode();
+//            }
+//            System.out.println(key + ": " + code);
+//        });
     }
 }

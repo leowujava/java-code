@@ -23,7 +23,7 @@ public class KafkaProducerUtil {
         if (StringUtils.isNotEmpty(env)) {
             configFile = "application-" + env + ".yml";
         }
-        KafkaConfigBO kafkaConfigBO = YmlReader.readKafkaConfigBO(configFile);
+        KafkaConfigBO kafkaConfigBO = AppConfigReader.readKafkaConfigBO(configFile);
         // 1. 配置生产者属性
         Properties props = new Properties();
         String servers = kafkaConfigBO.getServers();//本地环境

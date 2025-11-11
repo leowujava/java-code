@@ -43,6 +43,15 @@
   max: 60000
   errorValue: 65534
   invalidValue: 65535
+#运行模式
+"21AB":
+  scale: null
+  point: null
+  offset: null
+  min: 1
+  max: 3
+  errorValue: 254
+  invalidValue: 255
 #车辆状态
 "220C":
   scale: null

@@ -66,8 +66,9 @@ public class RuleValidateTest {
         JSONArray retData = new JSONArray();
         SignalBO tmpl = BaseDataTest.getTmpl();
 //        tmpl = new SignalBO();
-        tmpl.set_220C(2);
-//        tmpl.set_21AA(3);
+        tmpl.set_220C(1);
+        tmpl.set_21AB(2);
+        tmpl.set_21AA(3);
 //        tmpl.set_2001(65535);
 //        tmpl.set_2009(65535);
 //        tmpl.set_207A(120000000000L);

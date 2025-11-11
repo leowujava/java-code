@@ -70,6 +70,7 @@ public class NewGBRuleDataCheckUtil {
         try {
             RuleValidateWorkFlowUtil.run(signalMap, ruleMap, retData);
         } catch (GbException e) {
+            System.out.println("触发返回，工作流中断："+ e.getMessage());
             //            e.printStackTrace();
         }
     }

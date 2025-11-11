@@ -35,7 +35,13 @@ public class MyTest {
         Map<String, SignalEnum> ruleSignalRelationMap = NewGbRuleCodeEnum.getRuleSignalRelationMap();
         List<String> collect = ruleSignalRelationMap.keySet().stream().sorted(Comparator.comparing(s -> Long.valueOf(s))).collect(Collectors.toList());
         collect.forEach(key -> {
+            NewGbRuleCodeEnum gbRuleCodeEnum = NewGbRuleCodeEnum.getByCode(key);
             SignalEnum value = ruleSignalRelationMap.get(key);
+            String name = "";
+            if (value != null) {
+                name = value.getName();
+            }
+            System.out.println("#" + gbRuleCodeEnum.getName() + ":" + name);
             String code = null;
             if (value != null) {
                 code = "\"" + value.getCode() + "\"";
@@ -57,6 +63,7 @@ public class MyTest {
             BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(value.getCode());
             String CODE = "\"" + value.getCode() + "\"";
             List<NewGbRuleCodeEnum> ruleCodeList;
+            System.out.println("#" + value.getName());
             if (workFlowConfig != null) {
                 ruleCodeList = workFlowConfig.getRuleCodeList();
                 if (CollectionUtils.isNotEmpty(ruleCodeList)) {

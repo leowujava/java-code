@@ -391,10 +391,7 @@ public enum NewGbRuleCodeEnum {
             return;
         }
         map.forEach((key, value) -> {
-            if (value == null) {
-                return;
-            }
-            ruleSignalRelationMap.put(key, SignalEnum.getByCode(value.toString()));
+            ruleSignalRelationMap.put(key, SignalEnum.getByCode((String) value));
         });
     }
 

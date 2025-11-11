@@ -35,7 +35,9 @@ public class GbCodeGenTest {
         List<String> list = Arrays.asList("异常值", "数据越界", "无效值", "缺失");
         for (NewGbRuleCodeEnum ruleCodeEnum : NewGbRuleCodeEnum.values()) {
             if (!list.contains(ruleCodeEnum.getRuleSubType())) {
-                genValidateFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName());
+//                genValidateFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName());
+
+                genConfigFile2(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
             } else {
                 String string = ruleCodeEnum.getCode() + "\t" + ruleCodeEnum.getName() + "\t" + ruleCodeEnum.getDesc() + "\t" + ruleCodeEnum.getRuleSubType();
 
@@ -44,7 +46,7 @@ public class GbCodeGenTest {
                     continue;
                 }
 //            System.out.println(string);
-                System.out.println("signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_" + ruleCodeEnum.getCode() + ".getCode(), null);");
+//                System.out.println("signaleMap.put(NewGbRuleCodeEnum.RULE_CODE_" + ruleCodeEnum.getCode() + ".getCode(), null);");
 //            genConfigFile(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
 //            genConfigFile2(ruleCodeEnum.getCode(), ruleCodeEnum.getName(), ruleCodeEnum.getDesc());
             }
@@ -134,12 +136,7 @@ public class GbCodeGenTest {
                 "\n" +
                 "import com.chery.gb.realtime.algorithm.anotation.RuleConfig;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;\n" +
-                "import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;\n" +
-                "import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;\n" +
                 "import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;\n" +
-                "\n" +
-                "import java.util.ArrayList;\n" +
-                "import java.util.List;\n" +
                 "\n" +
                 "/**\n" +
                 " * " + name + "\n" +
@@ -150,12 +147,10 @@ public class GbCodeGenTest {
                 " *\n" +
                 " */\n" +
                 "@RuleConfig(rule = NewGbRuleCodeEnum.RULE_CODE_" + ruleCode + ")\n" +
-                "public class RuleConfig_" + ruleCode + " extends BaseConfig {\n" +
+                "public class RuleConfig_" + ruleCode + " extends BaseRuleConfig {\n" +
                 "\n" +
                 "    public RuleConfig_" + ruleCode + "() {\n" +
-                "        ruleConfigBO = new RuleConfigBO();\n" +
-                "        RuleConditionBO condition = buildCondition();\n" +
-                "        ruleConfigBO.setCondition(condition);\n" +
+                "        conditionBO = new RuleConditionBO();\n" +
                 "    }\n" +
                 "\n" +
                 "}\n";

@@ -336,10 +336,6 @@ public enum NewGbRuleCodeEnum {
         return group;
     }
 
-    public List<RuleDetailBO> getPreCondition() {
-        return RuleConfigFactory.getPreCondition(code);
-    }
-
     public String getDesc() {
         return desc;
     }

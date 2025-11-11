@@ -41,14 +41,6 @@ public class BaseRuleValidator {
         }
         System.out.println("校验器：" + desc);
         BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
-        List<RuleDetailBO> preCondition = config.getPreCondition();
-        if (CollectionUtils.isNotEmpty(preCondition)) {
-            boolean preFlag = GbRuleCheckUtil.checkByCondition(signalMap, preCondition, retData, null);
-            checkPreReturn(preFlag);
-            if (preFlag) {
-                return true;
-            }
-        }
         List<RuleDetailBO> condition = config.getCondition();
         if (CollectionUtils.isNotEmpty(condition)) {
             boolean flag = GbRuleCheckUtil.checkByCondition(signalMap, condition, retData, getRuleCode());
@@ -56,17 +48,6 @@ public class BaseRuleValidator {
             return flag;
         }
         return false;
-    }
-
-    public void checkPreReturn(boolean flag) {
-        BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), null);
-        if ((config != null && config.isPreReturn() && flag) || (config == null && flag)) {
-            String preDesc = config.getPreDesc();
-            if (StrUtil.isNotBlank(preDesc)) {
-                System.out.println(getClassName() + ":" + preDesc);
-            }
-            throw new GbException(config.getPreDesc());
-        }
     }
 
     public void checkReturn(boolean flag, String vin) {

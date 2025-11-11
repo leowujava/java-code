@@ -45,7 +45,7 @@ public class RuleValidateWorkFlowUtil {
         }
         String workFlowName = workFlow.getName();
         StringBuffer s = new StringBuffer();
-        for (int i = 0; i < 35 - workFlowName.length(); i++) {
+        for (int i = 0; i < 35 - workFlowName.length() * 1.5; i++) {
             s.append("=");
         }
         System.out.println("====================执行工作流：" + workFlowName + s);

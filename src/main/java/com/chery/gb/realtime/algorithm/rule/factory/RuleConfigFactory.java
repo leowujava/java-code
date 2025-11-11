@@ -3,10 +3,10 @@ package com.chery.gb.realtime.algorithm.rule.factory;
 
 import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
-import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
+import com.chery.gb.realtime.algorithm.rule.config.CommonCondition;
 import org.apache.commons.collections.CollectionUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -59,14 +59,6 @@ public class RuleConfigFactory {
         return config.getCondition();
     }
 
-    public static List<RuleDetailBO> getPreCondition(String ruleCode) {
-        BaseRuleConfig config = getConfig(ruleCode, null);
-        if (config == null) {
-            return null;
-        }
-        return config.getPreCondition();
-    }
-
     public static boolean isReturn(String ruleCode) {
         BaseRuleConfig config = getConfig(ruleCode, null);
         if (config == null) {
@@ -84,43 +76,25 @@ public class RuleConfigFactory {
             }
         }
         BaseRuleConfig baseRuleConfig = ruleConfigMap.get(ruleCode);
-        RuleConfigBO configBO = RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
         if (baseRuleConfig == null) {
-            baseRuleConfig = new BaseRuleConfig() {
-                @Override
-                public RuleConfigBO getRuleConfigBO() {
-                    RuleConditionBO condition = configBO.getCondition();
-                    RuleConditionBO ruleConditionBO = buildCondition(NewGbRuleCodeEnum.getByCode(ruleCode));
-                    if (ruleConditionBO != null) {
-                        if (condition == null || CollectionUtils.isEmpty(condition.getConditions())) {
-                            configBO.setCondition(ruleConditionBO);
-                        } else {
-                            List<RuleDetailBO> conditions = condition.getConditions();
-                            if (CollectionUtils.isEmpty(conditions)) {
-                                conditions = new ArrayList<>();
-                                condition.setConditions(conditions);
-                            }
-                            List<RuleDetailBO> conditions1 = ruleConditionBO.getConditions();
-                            if (CollectionUtils.isNotEmpty(conditions1)) {
-                                conditions.addAll(conditions1);
-                            }
-                        }
-                    }
-                    return configBO;
+            RuleConditionBO configBO = RuleConfigFactory.getRuleConfigBO(ruleDetailMap, ruleCode);
+            List<RuleDetailBO> conditions = configBO.getConditions();
+            baseRuleConfig = new BaseRuleConfig();
+            baseRuleConfig.setConditionBO(configBO);
+            RuleConditionBO condition = CommonCondition.buildCondition(NewGbRuleCodeEnum.getByCode(ruleCode));
+            if (condition != null) {
+                if (CollectionUtils.isNotEmpty(conditions)) {
+                    condition.getConditions().addAll(conditions);
                 }
-            };
-            ruleConfigMap.put(ruleCode, baseRuleConfig);
-        } else {
-            if (baseRuleConfig.getCondition() == null) {
-                RuleConfigBO ruleConfigBO = configBO;
-                baseRuleConfig.getRuleConfigBO().setCondition(ruleConfigBO.getCondition());
+                baseRuleConfig.setConditionBO(condition);
             }
+            ruleConfigMap.put(ruleCode, baseRuleConfig);
         }
         return baseRuleConfig;
     }
 
-    private static RuleConfigBO getRuleConfigBO(Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap, String ruleCode) {
-        RuleConfigBO ruleConfigBO = new RuleConfigBO();
+    private static RuleConditionBO getRuleConfigBO(Map<String, Map<String, List<RuleDetailBO>>> ruleDetailMap, String ruleCode) {
+        RuleConditionBO ruleConfigBO = new RuleConditionBO();
         if (ruleDetailMap != null) {
             Map<String, List<RuleDetailBO>> stringListMap = ruleDetailMap.get(ruleCode);
             if (stringListMap != null) {
@@ -128,7 +102,7 @@ public class RuleConfigFactory {
                 for (List<RuleDetailBO> value : stringListMap.values()) {
                     conditions.addAll(value);
                 }
-                ruleConfigBO.setCondition(RuleConditionBO.builder().conditions(conditions).build());
+                ruleConfigBO.getConditions().addAll(conditions);
             }
         }
         return ruleConfigBO;

@@ -132,11 +132,7 @@ public class GbRuleCheckUtil {
         if (CollectionUtil.isEmpty(ruleDetailMap)) {
             return true;
         }
-        BaseRuleConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
 
-        if (config != null && checkByCondition(signalMap, config.getPreCondition(), retData, null)) {
-            return false;
-        }
         JSONObject resultDetailData = new JSONObject();
         resultDetailData.put("ruleCode", ruleCode);
         JSONObject gbValue = new JSONObject();

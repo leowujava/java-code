@@ -67,7 +67,7 @@ public class RuleValidateTest {
         SignalBO tmpl = BaseDataTest.getTmpl();
 //        tmpl = new SignalBO();
         tmpl.set_220C(2);
-        tmpl.set_21AA(666);
+//        tmpl.set_21AA(3);
 //        tmpl.set_2001(65535);
 //        tmpl.set_2009(65535);
 //        tmpl.set_207A(120000000000L);

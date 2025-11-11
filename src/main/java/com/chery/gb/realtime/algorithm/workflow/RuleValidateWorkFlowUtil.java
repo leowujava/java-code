@@ -34,7 +34,8 @@ public class RuleValidateWorkFlowUtil {
      * @param retData
      */
     public static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        RuleValidateWorkFlowBO workFlow = buildFlowFromEnums();
+        List<WorkFlowEnum> topFlows = WorkFlowEnum.getTopFlow();
+        RuleValidateWorkFlowBO workFlow = buildFlowFromEnums(topFlows);
         run(signalMap, ruleMap, retData, workFlow);
     }
 
@@ -45,7 +46,11 @@ public class RuleValidateWorkFlowUtil {
         }
         String workFlowName = workFlow.getName();
         StringBuffer s = new StringBuffer();
-        for (int i = 0; i < 35 - workFlowName.length() * 1.5; i++) {
+        int length = workFlowName.length();
+        for (int i = 0; i < 35 - length * 1.5; i++) {
+            s.append("=");
+        }
+        if (length % 2 == 0) {
             s.append("=");
         }
         System.out.println("====================执行工作流：" + workFlowName + s);
@@ -56,6 +61,9 @@ public class RuleValidateWorkFlowUtil {
         if (ruleCondition != null) {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleCondition.getConditions(), retData, ruleCondition.getRuleCode());
             //如果条件判断结果为true，需要返回时，抛出异常
+            if (result) {
+                System.out.println("触发规则：" + workFlowName);
+            }
             if (result && (ruleCondition.isReturn() || workFlow.isReturn())) {
                 throw new GbException(workFlowName);
             }
@@ -128,10 +136,9 @@ public class RuleValidateWorkFlowUtil {
         }
     }
 
-    private static RuleValidateWorkFlowBO buildFlowFromEnums() {
+    private static RuleValidateWorkFlowBO buildFlowFromEnums(List<WorkFlowEnum> topFlows) {
         RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("开始");
-        List<WorkFlowEnum> topFlows = WorkFlowEnum.getTopFlow();
         RuleValidateWorkFlowBO preWorkFlow = null;
         for (WorkFlowEnum topFlow : topFlows) {
             if (preWorkFlow == null) {

@@ -11,7 +11,7 @@ import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.DISTANCE_IS_NULL)
+@WorkFlowConfig(WorkFlowEnum.WF_4_2)
 public class WorkFlowConfig_4_2 extends BaseWorkFlowConfig {
     public WorkFlowConfig_4_2() {
         setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_2009, false));

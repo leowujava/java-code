@@ -19,6 +19,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RuleValidateWorkFlowBO {
+
+    /**
+     * 编码
+     */
+    private String code;
     /**
      * 名字
      */

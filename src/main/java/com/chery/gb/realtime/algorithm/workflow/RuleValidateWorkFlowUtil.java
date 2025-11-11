@@ -53,7 +53,7 @@ public class RuleValidateWorkFlowUtil {
         if (length % 2 == 0) {
             s.append("=");
         }
-        System.out.println("====================执行工作流：" + workFlowName + s);
+        System.out.println("====================执行工作流：" + workFlow.getCode() + ":" + workFlowName + s);
         boolean result = false;
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         RuleConditionBO ruleCondition = workFlow.getRuleCondition();
@@ -61,9 +61,6 @@ public class RuleValidateWorkFlowUtil {
         if (ruleCondition != null) {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleCondition.getConditions(), retData, ruleCondition.getRuleCode());
             //如果条件判断结果为true，需要返回时，抛出异常
-            if (result) {
-                System.out.println("触发规则：" + workFlowName);
-            }
             if (result && (ruleCondition.isReturn() || workFlow.isReturn())) {
                 throw new GbException(workFlowName);
             }

@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.VEHICLE_STATE_IS_2_AND_CHARGING_STATE_IS_3)
+@WorkFlowConfig(WorkFlowEnum.WF_2_9)
 public class WorkFlowConfig_2_9 extends BaseWorkFlowConfig {
     public WorkFlowConfig_2_9() {
         RuleConditionBO condition = new RuleConditionBO();

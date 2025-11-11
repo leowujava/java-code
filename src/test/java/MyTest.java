@@ -1,3 +1,4 @@
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
@@ -6,6 +7,7 @@ import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
 import com.chery.gb.realtime.algorithm.workflow.factory.WorkFlowConfigFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.util.Comparator;
 import java.util.List;
@@ -72,15 +74,23 @@ public class MyTest {
     }
 
     @Test
-    public void test4() {
-        List<NewGbRuleCodeEnum> ruleCodeListByCode = WorkFlowEnum.getRuleCodeListByCode(WorkFlowEnum.ALL_DATA.getCode());
-        System.out.println(JSON.toJSONString(ruleCodeListByCode));
+    public void test5() {
+        for (int i = 77; i <= 94; i++) {
+            System.out.print(i + ",");
+        }
     }
 
     @Test
-    public void test5() {
-        for (int i = 77; i <= 94; i++) {
-            System.out.print(i +",");
+    public void test6() {
+        for (WorkFlowEnum value : WorkFlowEnum.values()) {
+            System.out.println("WF_" + value.getCode() + "(" + getDesc(value.getCode()) + "," + getDesc(value.getName()) + "," + getDesc(value.getDesc()) + "," + value.isReturn() + "," + value.getSkip() + "," + value.getParent() + " ),");
         }
+    }
+
+    private String getDesc(String code) {
+        if (StrUtil.isBlank(code)) {
+            return code;
+        }
+        return "\"" + code + "\"";
     }
 }

@@ -11,7 +11,7 @@ import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.SPEED_IS_NULL)
+@WorkFlowConfig(WorkFlowEnum.WF_4_1)
 public class WorkFlowConfig_4_1 extends BaseWorkFlowConfig {
     public WorkFlowConfig_4_1() {
         setCondition(CommonCondition.buildNullCondition(SignalEnum.SIGNAL_2001, false));

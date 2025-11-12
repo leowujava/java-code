@@ -12,6 +12,7 @@ import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
+import com.chery.gb.realtime.algorithm.util.CommonDataUtil;
 import com.chery.gb.realtime.algorithm.util.RetDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
@@ -39,7 +40,7 @@ public class BaseRuleValidator {
         if (gbRuleCodeEnum != null) {
             desc += ":" + gbRuleCodeEnum.getName();
         }
-        System.out.println("执行校验器：" + desc);
+        CommonDataUtil.log("执行校验器：" + desc);
         BaseRuleConfig config = RuleConfigFactory.getConfig(getRuleCode(), ruleMap);
         List<RuleDetailBO> condition = config.getCondition();
         if (CollectionUtils.isNotEmpty(condition)) {
@@ -61,7 +62,7 @@ public class BaseRuleValidator {
             desc = config.getDesc();
         }
         if (StrUtil.isNotBlank(desc) && flag) {
-            System.out.println(getClassName() + ":" + desc + "; vin:" + vin);
+            CommonDataUtil.log(getClassName() + ":" + desc + "; vin:" + vin);
         }
         if ((config != null && config.isReturn() && flag) || (config == null && flag)) {
             if (declaredAnnotation != null) {

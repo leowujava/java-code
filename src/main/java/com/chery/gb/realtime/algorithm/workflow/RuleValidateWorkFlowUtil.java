@@ -13,6 +13,7 @@ import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
+import com.chery.gb.realtime.algorithm.util.CommonDataUtil;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
 import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
 import com.chery.gb.realtime.algorithm.workflow.factory.WorkFlowConfigFactory;
@@ -55,7 +56,7 @@ public class RuleValidateWorkFlowUtil {
         if (length % 2 == 0) {
             s.append("=");
         }
-        System.out.println("====================执行工作流：" + workFlow.getCode() + ":" + workFlowName + s);
+        CommonDataUtil.log("====================工作流：" + workFlow.getCode() + ":" + workFlowName + s);
         //校验规则
         List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
         if (CollectionUtils.isNotEmpty(ruleCodeList)) {
@@ -71,10 +72,9 @@ public class RuleValidateWorkFlowUtil {
                 if (flag) {
                     BaseRuleConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
                     if (config != null && config.getConditionBO() != null) {
-                        System.out.println("触发规则：" + ruleCode + ":" + config.getConditionBO().getDesc());
+                        CommonDataUtil.log("触发规则：" + ruleCode + ":" + config.getConditionBO().getDesc());
                     }
                 }
-//                result = result || flag;
                 if (flag && workFlow.isReturn()) {
                     throw new GbException(workFlowName);
                 }
@@ -88,7 +88,7 @@ public class RuleValidateWorkFlowUtil {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleCondition.getConditions(), retData, ruleCondition.getRuleCode());
             String desc = ruleCondition.getDesc();
             if (result && StrUtil.isNotBlank(desc)) {
-                System.out.println(desc);
+                CommonDataUtil.log(desc);
             }
             //如果条件判断结果为true，需要返回时，抛出异常
             if (result && (ruleCondition.isReturn() || workFlow.isReturn())) {

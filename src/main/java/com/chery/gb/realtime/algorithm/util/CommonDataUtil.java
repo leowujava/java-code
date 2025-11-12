@@ -15,4 +15,8 @@ public class CommonDataUtil {
 
     //上一条数据
     public static volatile Map<String, Map<String, Object>> preData = new ConcurrentHashMap<>();
+
+    public static void log(String msg){
+        System.out.println(msg);
+    }
 }

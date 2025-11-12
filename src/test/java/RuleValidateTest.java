@@ -2697,6 +2697,7 @@ public class RuleValidateTest {
     @Test
     public void test_269() throws IOException {
         SignalBO tmpl = getTmpl();
+        tmpl.set_220B(4);
         validate(tmpl);
     }
 

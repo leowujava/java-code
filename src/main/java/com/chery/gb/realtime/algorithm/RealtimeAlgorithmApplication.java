@@ -36,7 +36,7 @@ public class RealtimeAlgorithmApplication {
         FlinkKafkaProducer flinkKafkaProducer = KafkaEnvUtil.getFlinkKafkaProducer(configFile);
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setParallelism(4);
+//        env.setParallelism(4);
 
         // 定义广播状态描述符
         MapStateDescriptor<String, Map<String, List<RuleDetailBO>>> dimensionDescriptor = new MapStateDescriptor<>(

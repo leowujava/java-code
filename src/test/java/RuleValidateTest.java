@@ -69,7 +69,7 @@ public class RuleValidateTest {
         tmpl.set_220C(1);
         tmpl.set_21AB(2);
         tmpl.set_21AA(3);
-        tmpl.set_2001(655350);
+        tmpl.set_2001(655351);
 //        tmpl.set_2009(65535);
 //        tmpl.set_207A(120000000000L);
 //        tmpl.set_207B(120000000000L);

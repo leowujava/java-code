@@ -34,7 +34,7 @@ public class RuleValidateWorkFlowUtil {
      * @param retData
      */
     public static void run(Map<String, Object> signalMap, Map<String, Map<String, List<RuleDetailBO>>> ruleMap, JSONArray retData) {
-        List<WorkFlowEnum> topFlows = WorkFlowEnum.getTopFlow();
+        List<GbWorkFlowEnum> topFlows = GbWorkFlowEnum.getTopFlow();
         RuleValidateWorkFlowBO workFlow = buildFlowFromEnums(topFlows);
         run(signalMap, ruleMap, retData, workFlow);
     }
@@ -133,11 +133,11 @@ public class RuleValidateWorkFlowUtil {
         }
     }
 
-    private static RuleValidateWorkFlowBO buildFlowFromEnums(List<WorkFlowEnum> topFlows) {
+    private static RuleValidateWorkFlowBO buildFlowFromEnums(List<GbWorkFlowEnum> topFlows) {
         RuleValidateWorkFlowBO workFlow = new RuleValidateWorkFlowBO();
         workFlow.setName("开始");
         RuleValidateWorkFlowBO preWorkFlow = null;
-        for (WorkFlowEnum topFlow : topFlows) {
+        for (GbWorkFlowEnum topFlow : topFlows) {
             if (preWorkFlow == null) {
                 preWorkFlow = buildFlowFromEnums2(workFlow, topFlow);
             } else {
@@ -147,17 +147,17 @@ public class RuleValidateWorkFlowUtil {
         return workFlow;
     }
 
-    private static RuleValidateWorkFlowBO buildFlowFromEnums2(RuleValidateWorkFlowBO preWorkFlow, WorkFlowEnum topFlow) {
+    private static RuleValidateWorkFlowBO buildFlowFromEnums2(RuleValidateWorkFlowBO preWorkFlow, GbWorkFlowEnum topFlow) {
         RuleValidateWorkFlowBO workFlow = BeanUtil.copyProperties(topFlow, RuleValidateWorkFlowBO.class);
         BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(topFlow.getCode());
         if (workFlowConfig != null) {
             workFlow.setRuleCondition(workFlowConfig.getCondition());
             workFlow.setRuleCodeList(workFlowConfig.getRuleCodeList());
         }
-        List<WorkFlowEnum> subEnums = WorkFlowEnum.getSubFlow(topFlow);
+        List<GbWorkFlowEnum> subEnums = GbWorkFlowEnum.getSubFlow(topFlow);
         RuleValidateWorkFlowBO subFlow = null;
         if (CollectionUtils.isNotEmpty(subEnums)) {
-            for (WorkFlowEnum s : subEnums) {
+            for (GbWorkFlowEnum s : subEnums) {
                 if (subFlow == null) {
                     subFlow = buildFlowFromEnums2(new RuleValidateWorkFlowBO(), s);
                     setNextFlow(preWorkFlow, workFlow, null);

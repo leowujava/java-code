@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.anotation;
 
 
-import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
+import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 
 import java.lang.annotation.*;
 
@@ -15,5 +15,5 @@ import static java.lang.annotation.ElementType.TYPE;
 @Documented
 @Inherited
 public @interface WorkFlowConfig {
-    WorkFlowEnum value();
+    GbWorkFlowEnum value();
 }

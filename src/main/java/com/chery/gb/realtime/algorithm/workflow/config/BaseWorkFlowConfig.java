@@ -4,7 +4,7 @@ package com.chery.gb.realtime.algorithm.workflow.config;
 import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
-import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
+import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -32,7 +32,7 @@ public class BaseWorkFlowConfig {
         if (declaredAnnotation == null) {
             return;
         }
-        List<NewGbRuleCodeEnum> ruleCodeListByCode = WorkFlowEnum.getRuleCodeListByCode(declaredAnnotation.value().getCode());
+        List<NewGbRuleCodeEnum> ruleCodeListByCode = GbWorkFlowEnum.getRuleCodeListByCode(declaredAnnotation.value().getCode());
         if (CollectionUtils.isEmpty(ruleCodeListByCode)) {
             return;
         }

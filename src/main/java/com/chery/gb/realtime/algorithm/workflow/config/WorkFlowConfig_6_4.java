@@ -7,7 +7,7 @@ import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.RuleRelationEnum;
 import com.chery.gb.realtime.algorithm.enums.RuleSymbolEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
+import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2025/11/10 星期一
  *
  */
-@WorkFlowConfig(WorkFlowEnum.WF_6_4)
+@WorkFlowConfig(GbWorkFlowEnum.WF_6_4)
 public class WorkFlowConfig_6_4 extends BaseWorkFlowConfig {
     public WorkFlowConfig_6_4() {
         RuleConditionBO ruleConditionBO = new RuleConditionBO();

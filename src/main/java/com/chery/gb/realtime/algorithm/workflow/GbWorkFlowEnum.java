@@ -14,15 +14,15 @@ import java.util.Map;
  *
  * @author S00003829
  */
-public enum WorkFlowEnum {
+public enum GbWorkFlowEnum {
 
 
-    WF_1("1", "数据完整性", "检测整车、动力蓄电池、车辆位置、驱动电机、发动机、报警数据信息体是否上传", false, 0, null),
+    WF_1("1", "数据完整性", "检测整车、动力蓄电池、车辆位置、驱动电机、发动机、报警数据信息体是否上传", true, 0, null),
 
     WF_2("2", "前置状态", "前置状态", false, 0, null),
-    WF_2_1("2_1", "车辆状态为null检测", "车辆状态为null检测", false, 0, WF_2),
-    WF_2_2("2_2", "车辆状态为异常或无效检测", "车辆状态为异常或无效检测", false, 0, WF_2),
-    WF_2_3("2_3", "车辆状态未定义检测", "车辆状态未定义检测", false, 0, WF_2),
+    WF_2_1("2_1", "车辆状态为null检测", "车辆状态为null检测", true, 0, WF_2),
+    WF_2_2("2_2", "车辆状态为异常或无效检测", "车辆状态为异常或无效检测", true, 0, WF_2),
+    WF_2_3("2_3", "车辆状态未定义检测", "车辆状态未定义检测", true, 0, WF_2),
     WF_2_4("2_4", "车辆状态非1启动且非2熄火检测", "车辆状态非1启动且非2熄火检测", true, 0, WF_2),
     WF_2_5("2_5", "车辆状态为2熄火车速不为0", "车辆状态为2熄火车速不为0", false, 0, WF_2),
     WF_2_6("2_6", "充电状态为空", "充电状态为空", true, 0, WF_2),
@@ -55,7 +55,7 @@ public enum WorkFlowEnum {
     WF_6_1("6_1", "运行模式为空检测", "运行模式为空检测", true, 0, WF_6),
     WF_6_2("6_2", "运行模式异常或无效检测", "运行模式异常或无效检测", true, 0, WF_6),
     WF_6_3("6_3", "运行模式范围检测", "运行模式范围检测", true, 0, WF_6),
-    WF_6_4("6_4", "充电模式不等于1且车辆状态不等于2", "充电模式不等于1且车辆状态不等于2", true, 0, WF_6),
+    WF_6_4("6_4", "充电模式不等于1且车辆状态不等于2", "充电模式不等于1且车辆状态不等于2", false, 0, WF_6),
 
     WF_6_4_1("6_4_1", "运行模式1", "运行模式1", false, 0, WF_6_4),
     WF_6_4_1_1("6_4_1_1", "运行模式1：曲轴转速>0", "纯电模式下曲轴转速>0", false, 0, WF_6_4_1),
@@ -76,10 +76,10 @@ public enum WorkFlowEnum {
     String desc;
     int skip;
     boolean isReturn;
-    WorkFlowEnum parent;
+    GbWorkFlowEnum parent;
     private static volatile Map<String, List<NewGbRuleCodeEnum>> workflowRuleCodeRelationMap = new HashMap<>();
 
-    WorkFlowEnum(String code, String name, String desc, boolean isReturn, int skip, WorkFlowEnum parent) {
+    GbWorkFlowEnum(String code, String name, String desc, boolean isReturn, int skip, GbWorkFlowEnum parent) {
         this.code = code;
         this.name = name;
         this.desc = desc;
@@ -88,24 +88,24 @@ public enum WorkFlowEnum {
         this.parent = parent;
     }
 
-    public static List<WorkFlowEnum> getTopFlow() {
-        List<WorkFlowEnum> workFlowEnums = new ArrayList<>();
-        for (WorkFlowEnum value : WorkFlowEnum.values()) {
+    public static List<GbWorkFlowEnum> getTopFlow() {
+        List<GbWorkFlowEnum> gbWorkFlowEnums = new ArrayList<>();
+        for (GbWorkFlowEnum value : GbWorkFlowEnum.values()) {
             if (value.parent == null) {
-                workFlowEnums.add(value);
+                gbWorkFlowEnums.add(value);
             }
         }
-        return workFlowEnums;
+        return gbWorkFlowEnums;
     }
 
-    public static List<WorkFlowEnum> getSubFlow(WorkFlowEnum parent) {
-        List<WorkFlowEnum> workFlowEnums = new ArrayList<>();
-        for (WorkFlowEnum value : WorkFlowEnum.values()) {
+    public static List<GbWorkFlowEnum> getSubFlow(GbWorkFlowEnum parent) {
+        List<GbWorkFlowEnum> gbWorkFlowEnums = new ArrayList<>();
+        for (GbWorkFlowEnum value : GbWorkFlowEnum.values()) {
             if (value.parent == parent) {
-                workFlowEnums.add(value);
+                gbWorkFlowEnums.add(value);
             }
         }
-        return workFlowEnums;
+        return gbWorkFlowEnums;
     }
 
     public static List<NewGbRuleCodeEnum> getRuleCodeListByCode(String code) {
@@ -149,7 +149,7 @@ public enum WorkFlowEnum {
         return desc;
     }
 
-    public WorkFlowEnum getParent() {
+    public GbWorkFlowEnum getParent() {
         return parent;
     }
 

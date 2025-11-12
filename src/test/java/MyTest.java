@@ -1,18 +1,15 @@
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
+import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
 import com.chery.gb.realtime.algorithm.workflow.factory.WorkFlowConfigFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +56,7 @@ public class MyTest {
 
     @Test
     public void test3() {
-        for (WorkFlowEnum value : WorkFlowEnum.values()) {
+        for (GbWorkFlowEnum value : GbWorkFlowEnum.values()) {
             BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(value.getCode());
             String CODE = "\"" + value.getCode() + "\"";
             List<NewGbRuleCodeEnum> ruleCodeList;
@@ -89,7 +86,7 @@ public class MyTest {
 
     @Test
     public void test6() {
-        for (WorkFlowEnum value : WorkFlowEnum.values()) {
+        for (GbWorkFlowEnum value : GbWorkFlowEnum.values()) {
             System.out.println("WF_" + value.getCode() + "(" + getDesc(value.getCode()) + "," + getDesc(value.getName()) + "," + getDesc(value.getDesc()) + "," + value.isReturn() + "," + value.getSkip() + "," + value.getParent() + " ),");
         }
     }

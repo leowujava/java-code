@@ -2,13 +2,9 @@ package com.chery.gb.realtime.algorithm.workflow.factory;
 
 
 import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
-import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
-import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
-import com.chery.gb.realtime.algorithm.util.YmlReaderUtil;
-import com.chery.gb.realtime.algorithm.workflow.WorkFlowEnum;
+import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;
-import org.apache.kafka.common.message.LeaderAndIsrResponseData;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -67,7 +63,7 @@ public class WorkFlowConfigFactory {
         BaseWorkFlowConfig workFlowConfig = signalConfigMap.get(code);
         if (workFlowConfig == null) {
             workFlowConfig = new BaseWorkFlowConfig();
-            workFlowConfig.setRuleCodeList(WorkFlowEnum.getRuleCodeListByCode(code));
+            workFlowConfig.setRuleCodeList(GbWorkFlowEnum.getRuleCodeListByCode(code));
             signalConfigMap.put(code, workFlowConfig);
         }
         return workFlowConfig;

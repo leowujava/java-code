@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
+import com.chery.gb.realtime.algorithm.annotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;

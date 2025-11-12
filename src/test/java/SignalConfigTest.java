@@ -38,7 +38,7 @@ public class SignalConfigTest {
         String content = "package com.chery.gb.realtime.algorithm.signal.config;\n" +
                 "\n" +
                 "\n" +
-                "import com.chery.gb.realtime.algorithm.anotation.SignalConfig;\n" +
+                "import com.chery.gb.realtime.algorithm.annotation.SignalConfig;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;\n" +
                 "import com.chery.gb.realtime.algorithm.enums.SignalEnum;\n\n" +
                 "\n" +

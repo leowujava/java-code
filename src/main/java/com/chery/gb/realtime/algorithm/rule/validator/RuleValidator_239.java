@@ -2,7 +2,7 @@ package com.chery.gb.realtime.algorithm.rule.validator;
 
 
 import com.alibaba.fastjson2.JSONArray;
-import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
+import com.chery.gb.realtime.algorithm.annotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.enums.SignalGroupEnum;

@@ -1,7 +1,7 @@
-package com.chery.gb.realtime.algorithm.anotation;
+package com.chery.gb.realtime.algorithm.annotation;
 
 
-import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
+import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 import java.lang.annotation.*;
 
@@ -14,6 +14,6 @@ import static java.lang.annotation.ElementType.TYPE;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface WorkFlowConfig {
-    GbWorkFlowEnum value();
+public @interface SignalConverter {
+    SignalEnum value();
 }

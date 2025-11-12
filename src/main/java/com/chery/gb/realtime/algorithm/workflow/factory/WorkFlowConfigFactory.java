@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.workflow.factory;
 
 
-import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
+import com.chery.gb.realtime.algorithm.annotation.WorkFlowConfig;
 import com.chery.gb.realtime.algorithm.exception.GbException;
 import com.chery.gb.realtime.algorithm.workflow.GbWorkFlowEnum;
 import com.chery.gb.realtime.algorithm.workflow.config.BaseWorkFlowConfig;

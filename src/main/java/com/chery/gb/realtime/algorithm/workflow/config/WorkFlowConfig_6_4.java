@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.workflow.config;
 
 
-import com.chery.gb.realtime.algorithm.anotation.WorkFlowConfig;
+import com.chery.gb.realtime.algorithm.annotation.WorkFlowConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.RuleRelationEnum;

@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.signal.factory;
 
 
-import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.annotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.signal.converter.BaseSignalConverter;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;

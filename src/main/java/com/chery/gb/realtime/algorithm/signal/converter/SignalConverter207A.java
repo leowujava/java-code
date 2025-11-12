@@ -1,9 +1,7 @@
 package com.chery.gb.realtime.algorithm.signal.converter;
 
 
-import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
-import com.chery.gb.realtime.algorithm.enums.SignalEnum;
 
 /**
  * @author wugaoyang

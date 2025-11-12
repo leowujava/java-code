@@ -1,15 +1,9 @@
 package com.chery.gb.realtime.algorithm.signal.converter;
 
 
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
-import com.chery.gb.realtime.algorithm.anotation.SignalConverter;
+import com.chery.gb.realtime.algorithm.annotation.SignalConverter;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author wugaoyang

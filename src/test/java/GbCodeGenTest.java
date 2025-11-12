@@ -60,7 +60,7 @@ public class GbCodeGenTest {
                 "\n" +
                 "\n" +
                 "import com.alibaba.fastjson2.JSONArray;\n" +
-                "import com.chery.gb.realtime.algorithm.anotation.RuleValidate;\n" +
+                "import com.chery.gb.realtime.algorithm.annotation.RuleValidate;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;\n" +
                 "import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;\n" +
                 "\n" +
@@ -94,7 +94,7 @@ public class GbCodeGenTest {
         String content = "package com.chery.gb.realtime.algorithm.rule.config;\n" +
                 "\n" +
                 "\n" +
-                "import com.chery.gb.realtime.algorithm.anotation.RuleConfig;\n" +
+                "import com.chery.gb.realtime.algorithm.annotation.RuleConfig;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleConfigBO;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;\n" +
@@ -134,7 +134,7 @@ public class GbCodeGenTest {
         String content = "package com.chery.gb.realtime.algorithm.rule.config;\n" +
                 "\n" +
                 "\n" +
-                "import com.chery.gb.realtime.algorithm.anotation.RuleConfig;\n" +
+                "import com.chery.gb.realtime.algorithm.annotation.RuleConfig;\n" +
                 "import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;\n" +
                 "import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;\n" +
                 "\n" +

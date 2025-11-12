@@ -1,7 +1,7 @@
 package com.chery.gb.realtime.algorithm.rule.factory;
 
 
-import com.chery.gb.realtime.algorithm.anotation.RuleConfig;
+import com.chery.gb.realtime.algorithm.annotation.RuleConfig;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;

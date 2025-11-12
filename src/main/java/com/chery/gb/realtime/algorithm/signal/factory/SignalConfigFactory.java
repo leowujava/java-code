@@ -2,7 +2,7 @@ package com.chery.gb.realtime.algorithm.signal.factory;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.chery.gb.realtime.algorithm.anotation.SignalConfig;
+import com.chery.gb.realtime.algorithm.annotation.SignalConfig;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.signal.config.BaseSignalConfig;
 import com.chery.gb.realtime.algorithm.util.YmlReaderUtil;

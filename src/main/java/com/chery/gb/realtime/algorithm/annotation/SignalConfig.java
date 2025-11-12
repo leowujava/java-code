@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.anotation;
+package com.chery.gb.realtime.algorithm.annotation;
 
 
 import com.chery.gb.realtime.algorithm.enums.SignalEnum;

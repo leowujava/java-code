@@ -2,7 +2,7 @@ package com.chery.gb.realtime.algorithm.signal.config;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.chery.gb.realtime.algorithm.anotation.SignalConfig;
+import com.chery.gb.realtime.algorithm.annotation.SignalConfig;
 import com.chery.gb.realtime.algorithm.bo.SignalConfigBO;
 import com.chery.gb.realtime.algorithm.util.SignalUtil;
 import lombok.Data;

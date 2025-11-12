@@ -1,16 +1,13 @@
 package com.chery.gb.realtime.algorithm.rule.factory;
 
 
-import com.alibaba.fastjson2.JSONArray;
-import com.chery.gb.realtime.algorithm.anotation.RuleValidate;
-import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
+import com.chery.gb.realtime.algorithm.annotation.RuleValidate;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

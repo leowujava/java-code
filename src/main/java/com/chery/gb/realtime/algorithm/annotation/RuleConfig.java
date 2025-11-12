@@ -1,4 +1,4 @@
-package com.chery.gb.realtime.algorithm.anotation;
+package com.chery.gb.realtime.algorithm.annotation;
 
 
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
@@ -8,14 +8,12 @@ import java.lang.annotation.*;
 import static java.lang.annotation.ElementType.TYPE;
 
 /**
- * @author wugaoyang
- * @date 2025/11/3 星期一
- *
+ * @author S00003829
  */
 @Target({TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface RuleValidate {
+public @interface RuleConfig {
     NewGbRuleCodeEnum rule();
 }

@@ -182,6 +182,29 @@ public class CommonCondition {
         return ruleConditionBO;
     }
 
+    public static RuleConditionBO buildCondition(NewGbRuleCodeEnum ruleCodeEnum) {
+        String ruleSubType = ruleCodeEnum.getRuleSubType();
+        SignalEnum signalEnum = NewGbRuleCodeEnum.getSignalByRuleCode(ruleCodeEnum.getCode());
+        if (signalEnum == null) {
+            return null;
+        }
+        if (ruleSubType.equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
+            return CommonCondition.buildNullCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "缺失")) {
+            return CommonCondition.buildNullCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "异常值")) {
+            return CommonCondition.buildErrorCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "无效值")) {
+            return CommonCondition.buildInvalidCondition(signalEnum, false);
+        }
+        if (Objects.equals(ruleSubType, "数据越界")) {
+            return CommonCondition.buildRangeCondition(signalEnum, false);
+        }
+        return null;
+    }
     /**
      * 构建空值条件
      *
@@ -301,27 +324,4 @@ public class CommonCondition {
     }
 
 
-    public static RuleConditionBO buildCondition(NewGbRuleCodeEnum ruleCodeEnum) {
-        String ruleSubType = ruleCodeEnum.getRuleSubType();
-        SignalEnum signalEnum = NewGbRuleCodeEnum.getSignalByRuleCode(ruleCodeEnum.getCode());
-        if (signalEnum == null) {
-            return null;
-        }
-        if (ruleSubType.equals("异常值") && !ruleCodeEnum.getDesc().contains("0xFE")) {
-            return CommonCondition.buildNullCondition(signalEnum, false);
-        }
-        if (Objects.equals(ruleSubType, "缺失")) {
-            return CommonCondition.buildNullCondition(signalEnum, false);
-        }
-        if (Objects.equals(ruleSubType, "异常值")) {
-            return CommonCondition.buildErrorCondition(signalEnum, false);
-        }
-        if (Objects.equals(ruleSubType, "无效值")) {
-            return CommonCondition.buildInvalidCondition(signalEnum, false);
-        }
-        if (Objects.equals(ruleSubType, "数据越界")) {
-            return CommonCondition.buildRangeCondition(signalEnum, false);
-        }
-        return null;
-    }
 }

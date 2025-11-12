@@ -2,12 +2,15 @@ package com.chery.gb.realtime.algorithm.workflow;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONArray;
 import com.chery.gb.realtime.algorithm.bo.RuleConditionBO;
 import com.chery.gb.realtime.algorithm.bo.RuleDetailBO;
 import com.chery.gb.realtime.algorithm.bo.RuleValidateWorkFlowBO;
 import com.chery.gb.realtime.algorithm.enums.NewGbRuleCodeEnum;
 import com.chery.gb.realtime.algorithm.exception.GbException;
+import com.chery.gb.realtime.algorithm.rule.config.BaseRuleConfig;
+import com.chery.gb.realtime.algorithm.rule.factory.RuleConfigFactory;
 import com.chery.gb.realtime.algorithm.rule.factory.RuleValidatorFactory;
 import com.chery.gb.realtime.algorithm.rule.validator.BaseRuleValidator;
 import com.chery.gb.realtime.algorithm.util.check.GbRuleCheckUtil;
@@ -24,7 +27,6 @@ import java.util.Map;
  *
  */
 public class RuleValidateWorkFlowUtil {
-
 
     /**
      * 运行工作流
@@ -54,12 +56,40 @@ public class RuleValidateWorkFlowUtil {
             s.append("=");
         }
         System.out.println("====================执行工作流：" + workFlow.getCode() + ":" + workFlowName + s);
+        //校验规则
+        List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
+        if (CollectionUtils.isNotEmpty(ruleCodeList)) {
+            for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
+                String ruleCode = newGbRuleCodeEnum.getCode();
+                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
+                boolean flag;
+                if (ruleValidate != null) {
+                    flag = ruleValidate.validate(signalMap, ruleMap, retData);
+                } else {
+                    flag = GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
+                }
+                if (flag) {
+                    BaseRuleConfig config = RuleConfigFactory.getConfig(ruleCode, ruleMap);
+                    if (config != null && config.getConditionBO() != null) {
+                        System.out.println("触发规则：" + ruleCode + ":" + config.getConditionBO().getDesc());
+                    }
+                }
+//                result = result || flag;
+                if (flag && workFlow.isReturn()) {
+                    throw new GbException(workFlowName);
+                }
+            }
+        }
+        //运行判断
         boolean result = false;
         RuleValidateWorkFlowBO subWorkFlow = workFlow.getSubWorkFlow();
         RuleConditionBO ruleCondition = workFlow.getRuleCondition();
-        //运行判断
         if (ruleCondition != null) {
             result = GbRuleCheckUtil.checkByCondition(signalMap, ruleCondition.getConditions(), retData, ruleCondition.getRuleCode());
+            String desc = ruleCondition.getDesc();
+            if (result && StrUtil.isNotBlank(desc)) {
+                System.out.println(desc);
+            }
             //如果条件判断结果为true，需要返回时，抛出异常
             if (result && (ruleCondition.isReturn() || workFlow.isReturn())) {
                 throw new GbException(workFlowName);
@@ -67,22 +97,6 @@ public class RuleValidateWorkFlowUtil {
             //如果工作流有判断条件时，条件为true才能进入支流
             if (subWorkFlow != null && result) {
                 run(signalMap, ruleMap, retData, subWorkFlow);
-            }
-        }
-        //校验规则
-        List<NewGbRuleCodeEnum> ruleCodeList = workFlow.getRuleCodeList();
-        if (CollectionUtils.isNotEmpty(ruleCodeList)) {
-            for (NewGbRuleCodeEnum newGbRuleCodeEnum : ruleCodeList) {
-                String ruleCode = newGbRuleCodeEnum.getCode();
-                BaseRuleValidator ruleValidate = RuleValidatorFactory.getRuleValidate(ruleCode);
-                if (ruleValidate != null) {
-                    result = result || ruleValidate.validate(signalMap, ruleMap, retData);
-                    if (result && workFlow.isReturn()) {
-                        throw new GbException(workFlowName);
-                    }
-                } else {
-                    result = result || GbRuleCheckUtil.checkByRuleCode(signalMap, ruleMap, retData, ruleCode);
-                }
             }
         }
         //运行支流

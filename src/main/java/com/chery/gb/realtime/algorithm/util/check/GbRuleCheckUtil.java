@@ -73,7 +73,7 @@ public class GbRuleCheckUtil {
         if (!(fieldValueObj instanceof List)) {
             String fieldValue = String.valueOf(fieldValueObj);
             boolean equals = Objects.equals(signalValue, fieldValue);
-            if (Objects.equals(signalRule, "EQ")) {
+            if (Objects.equals(signalRule, "EQ") || Objects.equals(signalRule, "NE")) {
                 if (!fieldValue.matches(numberRegex) || !signalValue.matches(numberRegex)) {
                     if (Objects.equals(signalValue, "") || Objects.equals(signalValue, "null")) {
                         flag2 = Objects.equals("", fieldValue) || Objects.equals("null", fieldValue);
@@ -85,8 +85,9 @@ public class GbRuleCheckUtil {
                     Double j = Double.valueOf(fieldValue);
                     flag2 = i.equals(j);
                 }
-            } else if (Objects.equals(signalRule, "NE")) {
-                flag2 = !equals;
+                if (Objects.equals(signalRule, "NE")) {
+                    flag2 = !flag2;
+                }
             } else if (Objects.equals(signalRule, "LT") || Objects.equals(signalRule, "GT") || Objects.equals(signalRule, "GE") || Objects.equals(signalRule, "LE")) {
                 if (!fieldValue.matches(numberRegex) || !signalValue.matches(numberRegex)) {
                     return false;

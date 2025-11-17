@@ -21,6 +21,11 @@ import java.util.HashMap;
 public class SignalConfigTest {
 
     @Test
+    public void test() {
+
+    }
+
+    @Test
     public void test4() throws IOException {
         for (SignalEnum signalEnum : SignalEnum.values()) {
             genConfigFile(signalEnum);
@@ -76,7 +81,6 @@ public class SignalConfigTest {
     @Test
     public void test5() throws IOException {
         StringBuffer content = new StringBuffer();
-        content.append("signal: \n");
         for (SignalEnum signalEnum : SignalEnum.values()) {
             BaseSignalConfig signalConfig = SignalConfigFactory.getByCode(signalEnum.getCode());
             if (signalConfig == null) {
@@ -88,7 +92,7 @@ public class SignalConfigTest {
             }
 
         }
-        System.out.println(content.toString());
+        System.out.println(content);
     }
 
 
@@ -99,14 +103,14 @@ public class SignalConfigTest {
         String desc = signalEnum.getName();
         String code = signalEnum.getCode();
         content.append("#" + signalEnum.getName() + "\n");
-        content.append("  " + code + ": \n");
-        content.append("    scale: " + signalConfigBO.getScale() + "\n");
-        content.append("    point: " + signalConfigBO.getPoint() + "\n");
-        content.append("    offset: " + signalConfigBO.getOffset() + "\n");
-        content.append("    min: " + signalConfigBO.getMin() + "\n");
-        content.append("    max: " + signalConfigBO.getMax() + "\n");
-        content.append("    errorValue: " + signalConfigBO.getErrorValue() + "\n");
-        content.append("    invalidValue: " + signalConfigBO.getInvalidValue() + "\n");
+        content.append("\"" + code + "\": \n");
+        content.append("  scale: " + signalConfigBO.getScale() + "\n");
+        content.append("  point: " + signalConfigBO.getPoint() + "\n");
+        content.append("  offset: " + signalConfigBO.getOffset() + "\n");
+        content.append("  min: " + signalConfigBO.getMin() + "\n");
+        content.append("  max: " + signalConfigBO.getMax() + "\n");
+        content.append("  errorValue: " + signalConfigBO.getErrorValue() + "\n");
+        content.append("  invalidValue: " + signalConfigBO.getInvalidValue() + "\n");
         return content.toString();
     }
 }

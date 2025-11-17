@@ -28,33 +28,6 @@ public class MyTest {
     }
 
     @Test
-    public void test2() {
-        Map<String, SignalEnum> ruleSignalRelationMap = NewGbRuleCodeEnum.getRuleSignalRelationMap();
-        List<String> collect = ruleSignalRelationMap.keySet().stream().sorted(Comparator.comparing(s -> Long.valueOf(s))).collect(Collectors.toList());
-        collect.forEach(key -> {
-            NewGbRuleCodeEnum gbRuleCodeEnum = NewGbRuleCodeEnum.getByCode(key);
-            SignalEnum value = ruleSignalRelationMap.get(key);
-            String name = "";
-            if (value != null) {
-                name = value.getName();
-            }
-            System.out.println("#" + gbRuleCodeEnum.getName() + ":" + name);
-            String code = null;
-            if (value != null) {
-                code = "\"" + value.getCode() + "\"";
-            }
-            System.out.println("\"" + key + "\": " + code);
-        });
-//        ruleSignalRelationMap.forEach((key, value) -> {
-//            String code = null;
-//            if (value != null) {
-//                code = value.getCode();
-//            }
-//            System.out.println(key + ": " + code);
-//        });
-    }
-
-    @Test
     public void test3() {
         for (GbWorkFlowEnum value : GbWorkFlowEnum.values()) {
             BaseWorkFlowConfig workFlowConfig = WorkFlowConfigFactory.getByCode(value.getCode());

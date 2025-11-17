@@ -27,21 +27,6 @@ import java.util.Objects;
 public class CommonCondition {
 
     /**
-     * 车辆状态 is null
-     *
-     * @return
-     */
-    public static RuleConditionBO buildVehicleStateIsNull(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue(null).detailRelation(RuleRelationEnum.AND.name()).build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setDesc("车辆状态 is null");
-        ruleConditionBO.setReturn(isReturn);
-        return ruleConditionBO;
-    }
-
-    /**
      * 车辆状态 = 2 (熄火)
      * 并且
      * 车速 > 50(5km/h)
@@ -60,23 +45,6 @@ public class CommonCondition {
     }
 
     /**
-     * 车辆状态不在 [1,2,3]内
-     *
-     * @return
-     */
-    public static RuleConditionBO vehicleStateNot1_2_3(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("1").detailRelation(RuleRelationEnum.AND.name()).build());
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("2").detailRelation(RuleRelationEnum.AND.name()).build());
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_220C.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("3").detailRelation(RuleRelationEnum.AND.name()).build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setDesc("车辆状态无定义");
-        ruleConditionBO.setReturn(isReturn);
-        return ruleConditionBO;
-    }
-
-    /**
      * 车辆状态非 1 启动且非 2 熄火
      *
      * @return
@@ -89,96 +57,6 @@ public class CommonCondition {
         ruleConditionBO.setConditions(condition);
         ruleConditionBO.setDesc("车辆状态非 1 启动且非 2 熄火");
         ruleConditionBO.setReturn(isReturn);
-        return ruleConditionBO;
-    }
-
-    /**
-     * 充电状态 is null
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingStateIsNull(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setReturn(isReturn);
-        ruleConditionBO.setDesc("充电状态 is null");
-        return ruleConditionBO;
-    }
-
-    /**
-     * 充电状态异常
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingStateIsError(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("254").build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setReturn(isReturn);
-        ruleConditionBO.setDesc("充电状态异常");
-        return ruleConditionBO;
-    }
-
-    /**
-     * 充电状态无效
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingStateIsInvalid(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("255").build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setReturn(isReturn);
-        ruleConditionBO.setDesc("充电状态异常");
-        return ruleConditionBO;
-    }
-
-    /**
-     * 充电状态有效范围[1,2,3,4]
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingStateRange(boolean isReturn) {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("255").build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setReturn(isReturn);
-        ruleConditionBO.setDesc("充电状态异常");
-        return ruleConditionBO;
-    }
-
-
-    /**
-     * 充电状态等于1或者等于4
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingStateIs1_4() {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("1").detailRelation(RuleRelationEnum.OR.name()).build());
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.EQ.name()).signalValue("4").detailRelation(RuleRelationEnum.OR.name()).build());
-        ruleConditionBO.setConditions(condition);
-        ruleConditionBO.setDesc("充电状态等于1或者等于4");
-        return ruleConditionBO;
-    }
-
-    /**
-     * 充电状态不等于1并且不等于4
-     *
-     * @return
-     */
-    public static RuleConditionBO chargingState2() {
-        RuleConditionBO ruleConditionBO = new RuleConditionBO();
-        List<RuleDetailBO> condition = new ArrayList<>();
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("1").detailRelation(RuleRelationEnum.AND.name()).build());
-        condition.add(RuleDetailBO.builder().signalId(SignalEnum.SIGNAL_21AA.getCode()).signalRule(RuleSymbolEnum.NE.name()).signalValue("4").detailRelation(RuleRelationEnum.AND.name()).build());
-        ruleConditionBO.setConditions(condition);
         return ruleConditionBO;
     }
 
@@ -205,6 +83,7 @@ public class CommonCondition {
         }
         return null;
     }
+
     /**
      * 构建空值条件
      *
